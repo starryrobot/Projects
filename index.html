@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Work Tracker" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="normalize.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Callback Log</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <main>
+          <h1 class="main-header">Callback Log</h1>
+          <div class="top-bar">
+            <h2 class="date">date here</h2>
+            <h2 class="time">time here</h2>
+          </div>
+          <section class="log-area">
+            <ul class="logs">
+              <li>Demo text</li>
+              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
+              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
+              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
+              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
+              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
+            </ul>
+          </section>
+          <section class="log-menu">
+            <form action="">
+              <div class="form-item">
+                <label for="priority">What is the priority?</label>
+                <select name="priority" required>
+                  <option value="low">Low</option>
+                  <option value="low" selected>Normal</option>
+                  <option value="low">High</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label for="datetime">When should this entry be saved?</label>
+                <input
+                  type="datetime-local"
+                  name="datetime"
+                  id="datetime"
+                  required
+                />
+              </div>
+              <div class="form-item">
+                <label for="datescheduled"
+                  >When is the callback scheduled?</label
+                >
+                <input
+                  type="datetime-local"
+                  name="datescheduled"
+                  id="datescheduled"
+                  required
+                />
+              </div>
+              <div class="form-item">
+                <label for="custname">What is the name of the customer?</label>
+                <input type="text" name="custname" id="custname" required />
+              </div>
+              <div class="form-item">
+                <label for="loginfo">What is the callback about?</label>
+                <textarea
+                  name="loginfo"
+                  id="loginfo"
+                  cols="30"
+                  rows="10"
+                  required
+                ></textarea>
+              </div>
+              <div class="form-btns">
+                <button class="btn btn-secondary btn-reset" type="reset">
+                  <i class="fa-solid fa-xmark fa-2xl"></i>
+                </button>
+                <button class="btn btn-primary btn-save">
+                  <i class="fa-solid fa-floppy-disk fa-2xl"></i>
+                </button>
+              </div>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
