@@ -22,24 +22,31 @@
         <main>
           <h1 class="main-header">Callback Log</h1>
           <div class="top-bar">
-            <h2 class="date">date here</h2>
-            <h2 class="time">time here</h2>
+            <div class="status">
+              <ul>
+                <li id="status-local"></li>
+              </ul>
+            </div>
+            <div class="time-date">
+              <h2 class="date" id="date">Loading date, please wait...</h2>
+            </div>
           </div>
           <section class="log-area">
-            <ul class="logs">
-              <li>Demo text</li>
-              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
-              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
-              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
-              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
-              <li>Demo text 2 Lorem ipsum dolor sit amet.</li>
-            </ul>
+            <ul class="logs"></ul>
+          </section>
+          <section class="cards">
+            <article class="card-item">
+              <h3 class="card-title">Callbacks</h3>
+              <p class="card-text">Loading...</p>
+            </article>
+            <article class="card-item"></article>
+            <article class="card-item"></article>
           </section>
           <section class="log-menu">
             <form action="">
               <div class="form-item">
                 <label for="priority">What is the priority?</label>
-                <select name="priority" required>
+                <select name="priority" id="logpriority" required>
                   <option value="low">Low</option>
                   <option value="low" selected>Normal</option>
                   <option value="low">High</option>
@@ -80,10 +87,14 @@
                 ></textarea>
               </div>
               <div class="form-btns">
-                <button class="btn btn-secondary btn-reset" type="reset">
+                <button
+                  class="btn btn-secondary btn-reset"
+                  type="reset"
+                  title="Reset form"
+                >
                   <i class="fa-solid fa-xmark fa-2xl"></i>
                 </button>
-                <button class="btn btn-primary btn-save">
+                <button class="btn btn-primary btn-save" title="Save form">
                   <i class="fa-solid fa-floppy-disk fa-2xl"></i>
                 </button>
               </div>

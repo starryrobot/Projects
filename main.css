@@ -13,6 +13,10 @@
     rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Manrope", sans-serif;
   height: 100vh;
@@ -32,6 +36,9 @@ body {
   width: 90vw;
   max-width: 95vw;
   background-color: var(--primary-white);
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
 main {
@@ -57,9 +64,24 @@ main .top-bar {
   align-items: center;
 }
 
-.date,
-.time {
-  font-size: 14px;
+main .top-bar .status ul {
+  list-style-type: none;
+}
+
+main .top-bar .status ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  padding: 0.25rem;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.date {
+  font-size: 16px;
   color: var(--gray);
 }
 
@@ -70,7 +92,10 @@ main .log-area {
   max-height: 150px;
   overflow-x: hidden;
   margin-bottom: 2rem;
+  scroll-behavior: smooth;
 }
+
+/* Unordered List Element */
 
 main .log-area ul {
   list-style-type: none;
@@ -78,8 +103,16 @@ main .log-area ul {
   border-radius: 10px;
 }
 
+/* List Item Element */
+
 main .log-area ul li {
   padding: 1rem;
+}
+
+main .log-area ul li .li-text {
+  display: inline-block;
+  font-size: 20px;
+  margin-bottom: 0.25rem;
 }
 
 main .log-area ul li:nth-child(odd) {
