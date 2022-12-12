@@ -37,10 +37,16 @@
           <section class="cards">
             <article class="card-item">
               <h3 class="card-title">Callbacks</h3>
+              <p class="card-text" id="callbacks">Loading...</p>
+            </article>
+            <article class="card-item">
+              <h3 class="card-title">Callbacks</h3>
               <p class="card-text">Loading...</p>
             </article>
-            <article class="card-item"></article>
-            <article class="card-item"></article>
+            <article class="card-item">
+              <h3 class="card-title">Callbacks</h3>
+              <p class="card-text">Loading...</p>
+            </article>
           </section>
           <section class="log-menu">
             <form action="">
@@ -48,8 +54,8 @@
                 <label for="priority">What is the priority?</label>
                 <select name="priority" id="logpriority" required>
                   <option value="low">Low</option>
-                  <option value="low" selected>Normal</option>
-                  <option value="low">High</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="high">High</option>
                 </select>
               </div>
               <div class="form-item">
@@ -75,6 +81,18 @@
               <div class="form-item">
                 <label for="custname">What is the name of the customer?</label>
                 <input type="text" name="custname" id="custname" required />
+              </div>
+              <div class="form-item">
+                <label for="ccnumber"
+                  >What is the Clarify reference number?</label
+                >
+                <input type="text" name="ccnumber" id="ccnumber" required />
+              </div>
+              <div class="form-item">
+                <label for="custref"
+                  >What is the order reference (CUR/LDO etc.)</label
+                >
+                <input type="text" name="custref" id="custref" required />
               </div>
               <div class="form-item">
                 <label for="loginfo">What is the callback about?</label>

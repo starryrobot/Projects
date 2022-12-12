@@ -19,8 +19,8 @@ html {
 
 body {
   font-family: "Manrope", sans-serif;
-  height: 100vh;
-  min-height: 100vh;
+  /* height: 100vh;
+  min-height: 100vh; */
   display: grid;
   place-content: center;
   color: var(--primary-black);
@@ -30,6 +30,10 @@ body {
     rgba(204, 106, 146, 1) 35%,
     rgba(73, 94, 171, 1) 100%
   );
+}
+
+.container {
+  margin: 2rem;
 }
 
 .wrapper {
@@ -80,6 +84,34 @@ main .top-bar .status ul li {
   border-radius: 50%;
 }
 
+main .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin-bottom: 2rem;
+  gap: 20px;
+}
+
+main .cards .card-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  padding: 2rem 1.5rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 16px;
+  color: var(--gray);
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  margin: 0;
+  font-size: 50px;
+  font-weight: 700;
+}
+
 .date {
   font-size: 16px;
   color: var(--gray);
@@ -89,8 +121,8 @@ main .log-area {
   /* border: 1px solid var(--gray); */
   border-radius: 10px;
   padding: 1rem;
-  max-height: 150px;
-  overflow-x: hidden;
+  /* max-height: 150px;
+  overflow-x: hidden; */
   margin-bottom: 2rem;
   scroll-behavior: smooth;
 }
@@ -107,17 +139,18 @@ main .log-area ul {
 
 main .log-area ul li {
   padding: 1rem;
+  border-bottom: 2px solid var(--accent);
 }
 
 main .log-area ul li .li-text {
   display: inline-block;
   font-size: 20px;
-  margin-bottom: 0.25rem;
+  margin-bottom: 1rem;
 }
 
-main .log-area ul li:nth-child(odd) {
+/* main .log-area ul li:nth-child(odd) {
   background-color: var(--accent);
-}
+} */
 
 main .log-menu {
   /* display: none; */
