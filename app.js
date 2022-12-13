@@ -23,12 +23,12 @@ function onLoad() {
   if (fromLocal) {
     console.log(fromLocal);
     formArray = fromLocal;
-    statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-check"></i>`;
+    statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-check" style="color:#019c01";></i>`;
     callbackText.textContent = formArray.length;
     renderForm(fromLocal);
   } else {
     console.log("Not found");
-    statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark"></i></i>`;
+    statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
   }
 }
 
@@ -38,9 +38,12 @@ statusClear.addEventListener("click", function () {
     "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
   );
   if (alert) {
-    localStorage.removeItem("Entry");
-    location.reload();
-    onLoad();
+    let alert2 = confirm("Are you sure?");
+    if (alert2) {
+      localStorage.removeItem("Entry");
+      location.reload();
+      onLoad();
+    }
   }
 });
 
