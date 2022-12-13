@@ -24,15 +24,24 @@
           <div class="top-bar">
             <div class="status">
               <ul>
-                <li id="status-local"></li>
+                <li class="li-status" id="status-local"></li>
+                <li class="li-status" id="status-clear">Clear</li>
               </ul>
             </div>
             <div class="time-date">
               <h2 class="date" id="date">Loading date, please wait...</h2>
             </div>
           </div>
+          <section class="form-interact interact-logs" id="logs">
+            <i class="fa-solid fa-chevron-down fa-2xl"></i
+            ><span class="normal" id="interact-text">Hide Logs</span>
+          </section>
           <section class="log-area">
             <ul class="logs"></ul>
+          </section>
+          <section class="form-interact interact-stats" id="stats">
+            <i class="fa-solid fa-chevron-down fa-2xl"></i
+            ><span class="normal" id="interact-text">Hide Stats</span>
           </section>
           <section class="cards">
             <article class="card-item">
@@ -47,6 +56,10 @@
               <h3 class="card-title">Callbacks</h3>
               <p class="card-text">Loading...</p>
             </article>
+          </section>
+          <section class="form-interact interact-form" id="form">
+            <i class="fa-solid fa-chevron-down fa-2xl"></i
+            ><span class="normal" id="interact-text">Hide Form</span>
           </section>
           <section class="log-menu">
             <form action="">

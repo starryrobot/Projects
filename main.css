@@ -70,18 +70,21 @@ main .top-bar {
 
 main .top-bar .status ul {
   list-style-type: none;
+  padding: 0;
 }
 
-main .top-bar .status ul li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--primary-black);
-  color: var(--primary-white);
+.li-status {
+  display: inline;
+  color: var(--primary-black);
+  border: 1px solid var(--accent);
   padding: 0.25rem;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.li-status#status-local i {
+  margin-left: 0.25rem;
 }
 
 main .cards {
@@ -158,6 +161,34 @@ main .log-menu {
 
 main .log-menu.enabled {
   display: initial;
+}
+
+main .form-interact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  cursor: pointer;
+  background-color: var(--primary-black);
+  margin-bottom: 2rem;
+  color: var(--primary-white);
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.normal {
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+main .log-menu form {
+  opacity: 1;
+  transition: all 500ms ease-out;
+}
+
+.hidden {
+  opacity: 0;
 }
 
 main .log-menu form .form-item {
