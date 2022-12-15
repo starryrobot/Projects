@@ -87,6 +87,10 @@ main .top-bar .status ul {
   margin-left: 0.25rem;
 }
 
+.li-status#status-clear.disabled {
+  cursor: not-allowed;
+}
+
 main .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -187,6 +191,10 @@ main .log-menu form {
   transition: all 500ms ease-out;
 }
 
+form.disabled {
+  display: none;
+}
+
 .hidden {
   opacity: 0;
 }
@@ -255,4 +263,8 @@ main .log-menu form select {
 
 .btn.btn-secondary {
   border: 2px solid var(--accent);
+}
+
+.option-disabled {
+  display: none !important;
 }

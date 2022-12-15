@@ -8,9 +8,11 @@ const statusClear = document.getElementById("status-clear");
 const callbackText = document.getElementById("callbacks");
 const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
+const textArea = document.querySelector("textarea");
 let formArray = [];
 let ulHeight = 0;
 let callbackCounter = 0;
+let consoleCounter = 0;
 let formEnabled = false;
 let interactState = false;
 let clearState = false;
@@ -20,61 +22,130 @@ let clearState = false;
 window.addEventListener("DOMContentLoaded", onLoad);
 
 function onLoad() {
+  consoleCounter++;
+  console.log(
+    `[#${consoleCounter}] -- onLoad DOMContentLoaded event triggered`
+  );
   if (fromLocal) {
-    console.log(fromLocal);
+    clearState = true;
+    console.log(
+      `LocalStorage found. Parsed content of LocalStorage (array) is ${fromLocal}`
+    );
     formArray = fromLocal;
     statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-check" style="color:#019c01";></i>`;
-    callbackText.textContent = formArray.length;
+    formShowCallbacks();
     renderForm(fromLocal);
   } else {
-    console.log("Not found");
+    clearState = false;
+    console.log("Not found. Not calling renderForm");
     statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
+    statusClear.classList.add("disabled");
   }
 }
 
 /* Clear LocalStorage */
 statusClear.addEventListener("click", function () {
-  let alert = confirm(
-    "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
-  );
-  if (alert) {
-    let alert2 = confirm("Are you sure?");
-    if (alert2) {
-      localStorage.removeItem("Entry");
-      location.reload();
-      onLoad();
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- statusClear onClick event triggered`);
+  if (clearState === true) {
+    let alert = confirm(
+      "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
+    );
+    if (alert) {
+      let alert2 = confirm("Are you sure?");
+      if (alert2) {
+        localStorage.removeItem("Entry");
+        location.reload();
+        onLoad();
+      }
     }
   }
 });
 
 /* Form interaction */
 
-formInteract.forEach(function (element) {
+// formInteract.forEach(function (element) {
+//   const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
+//   const faChevronUp = `<i class="fa-solid fa-chevron-up fa-2xl"></i>`;
+//   const showForm = `<span class="normal" id="interact-text">Show Form</span>`;
+//   const hideForm = `<span class="normal" id="interact-text">Hide Form</span>`;
+//   const children = document.querySelector(".form-interact").childNodes;
+//   console.log(children);
+//   element.addEventListener("click", function (e) {
+//     const styles = e.currentTarget.classList;
+//     if (styles.contains("interact-form")) {
+//       form.classList.toggle("hidden");
+//       if (form.classList.contains("hidden")) {
+//         console.log(this.innerHTML);
+//         e.currentTarget.innerHTML = faChevronUp + showForm;
+//         setTimeout(function () {
+//           form.style.display = "none";
+//         }, 1000);
+//       } else {
+//         console.log(this.innerHTML);
+//         e.currentTarget.innerHTML = faChevronDown + hideForm;
+//         setTimeout(function () {
+//           form.style.display = "initial";
+//         }, 1000);
+//       }
+//     }
+//   });
+// });
+
+function tabHandler(el) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- tabHandler function called`);
   const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
   const faChevronUp = `<i class="fa-solid fa-chevron-up fa-2xl"></i>`;
-  const showForm = `<span class="normal" id="interact-text">Show Form</span>`;
-  const hideForm = `<span class="normal" id="interact-text">Hide Form</span>`;
-  element.addEventListener("click", function (e) {
-    const styles = e.currentTarget.classList;
-    if (styles.contains("interact-form")) {
-      form.classList.toggle("hidden");
-      if (form.classList.contains("hidden")) {
-        console.log(this.innerHTML);
-        this.innerHTML = faChevronUp + showForm;
-        setTimeout(function () {
-          form.style.display = "none";
-        }, 1000);
-      } else {
-        console.log(this.innerHTML);
-        this.innerHTML = faChevronDown + hideForm;
-        setTimeout(function () {
-          form.style.display = "initial";
-        }, 1000);
-      }
-    } else if (styles.contains("interact-stats")) {
+  const mainEl = document.querySelector("main");
+  const elementsArray = Array.from(mainEl.childNodes);
+  console.log(
+    `NodeList of main element converted to an array. Contents are ${elementsArray}`
+  );
+  let elClassList = el.classList;
+  console.log(`ClassList of event is ${elClassList}`);
+  if (elClassList.contains("interact-stats")) {
+    console.log(stats);
+    const cards = document
+      .querySelector(".cards")
+      .classList.toggle("option-disabled");
+    if (cards) {
+      el.innerHTML =
+        faChevronDown +
+        `<span class="normal" id="interact-text">Show Stats</span>`;
+    } else {
+      el.innerHTML =
+        faChevronUp +
+        `<span class="normal" id="interact-text">Hide Stats</span>`;
     }
-  });
-});
+  } else if (elClassList.contains("interact-logs")) {
+    const logs = document
+      .querySelector(".log-area")
+      .classList.toggle("option-disabled");
+    if (logs) {
+      el.innerHTML =
+        faChevronDown +
+        `<span class="normal" id="interact-text">Show Logs</span>`;
+    } else {
+      el.innerHTML =
+        faChevronUp +
+        `<span class="normal" id="interact-text">Hide Logs</span>`;
+    }
+  } else {
+    const formEl = document
+      .querySelector("form")
+      .classList.toggle("option-disabled");
+    if (formEl) {
+      el.innerHTML =
+        faChevronDown +
+        `<span class="normal" id="interact-text">Show Form</span>`;
+    } else {
+      el.innerHTML =
+        faChevronUp +
+        `<span class="normal" id="interact-text">Hide Form</span>`;
+    }
+  }
+}
 
 // formInteract.addEventListener("click", function (element) {
 //   const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
@@ -98,6 +169,16 @@ formInteract.forEach(function (element) {
 /* Add EventListener to form */
 
 form.addEventListener("submit", function (e) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- form onSubmit event triggered`);
+  /* Prevent refresh */
+  e.preventDefault();
+  processForm();
+});
+
+function processForm() {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- processForm function called`);
   /* Set LocalStorage */
   localStorage.setItem("Entry", JSON.stringify(fromLocal));
   /* Get values of form elements */
@@ -124,15 +205,28 @@ form.addEventListener("submit", function (e) {
   localStorage.setItem("Entry", JSON.stringify(formArray));
   /* Call renderForm */
   renderForm(formArray);
-  /* Prevent refresh */
-  e.preventDefault();
+}
+
+/* Add EventListener for onKeyPress to form */
+
+
+textArea.addEventListener("click", function () {
+  textArea.classList.toggle("active");
 });
 
-/* Process Form function */
+window.addEventListener("keypress", function (e) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- form onKeyPress event triggered`);
+  if (e.key == "Enter" && !textArea.classList.contains("active")) {
+    processForm();
+  }
+});
 
 /* Render Form function */
 
 function renderForm(form) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- renderForm function called`);
   let listItems = "";
   for (let i = 0; i < form.length; i++) {
     console.log(form[i]);
@@ -149,6 +243,7 @@ function renderForm(form) {
                        </li>`;
   }
   ulEl.innerHTML = listItems;
+  formShowCallbacks();
   /* Scroll to bottom of log-area element */
   // logArea.scrollTop = logArea.scrollHeight;
 }
@@ -165,6 +260,14 @@ setInterval(function () {
 /* Counter function */
 
 function countCallbacks() {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- countCallbacks function called`);
   let returnedCount = formArray.length + 1;
   return returnedCount;
+}
+
+function formShowCallbacks() {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- formShowCallbacks function called`);
+  callbackText.textContent = formArray.length;
 }
