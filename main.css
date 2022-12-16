@@ -143,9 +143,15 @@ main .cards .card-item:nth-child(3) {
 
 .card-title {
   margin: 0;
-  font-size: 16px;
-  color: var(--gray);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--def-text);
   margin-bottom: 1rem;
+}
+
+.log-status {
+  text-align: center;
+  font-size: 52px;
 }
 
 .card-text {
@@ -321,7 +327,7 @@ main .log-menu form .form-item {
 }
 
 main .log-menu form label {
-  font-size: 14px;
+  font-size: 20px;
   color: var(--gray);
 }
 
@@ -332,7 +338,7 @@ main .log-menu form textarea {
   border: 1px solid var(--accent);
   border-radius: 30px;
   padding: 1rem 0.5rem;
-  font-weight: 300;
+  font-size: 20px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -378,10 +384,14 @@ main .log-menu form select {
   cursor: pointer;
 }
 
+.btn.btn-big {
+  padding: 2rem 4rem;
+  font-size: 32px;
+}
+
 .btn.btn-primary {
-  background-color: var(--primary-black);
+  background-color: var(--primary-purple);
   color: var(--primary-white);
-  border: 1px solid var(--primary-black);
 }
 
 .btn.btn-primary.delete {

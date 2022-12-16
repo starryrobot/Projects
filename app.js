@@ -42,6 +42,10 @@ function onLoad() {
     statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
     statusClear.classList.add("disabled");
   }
+  /* Get child element count on divLogs */
+  if (divLogs.childElementCount === 0) {
+    divLogs.innerHTML = `<span class="log-status">Nothing here, yet</span>`;
+  }
 }
 
 /* Clear LocalStorage */
@@ -239,30 +243,48 @@ function renderForm(form) {
   for (let i = 0; i < form.length; i++) {
     console.log(form[i]);
     listItems += `
-                       <div class="renderedEntry" onclick="liHandler(this)">
+                       <div class="renderedEntry" onclick="liHandler(this)" data-attribute="${formArray.indexOf(
+                         form[i]
+                       )}" >
                        <div class="entry-top">
-                       <h4 class="li-head">Call back Log # ${form[i].lognumber}</h4>
+                       <h4 class="li-head">Call back Log # ${
+                         form[i].lognumber
+                       }</h4>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>Priority:</b></span><span class="li-text text-main">${form[i].priority}</span>
+                       <span class="li-text"><b>Priority:</b></span><span class="li-text text-main">${
+                         form[i].priority
+                       }</span>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>Date & Time Now:</b></span><span class="li-text text-main">${form[i].datenow}</span>
+                       <span class="li-text"><b>Date & Time Now:</b></span><span class="li-text text-main">${
+                         form[i].datenow
+                       }</span>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>Date Scheduled:</b></span><span class="li-text text-main">${form[i].datescheduled}</span>
+                       <span class="li-text"><b>Date Scheduled:</b></span><span class="li-text text-main">${
+                         form[i].datescheduled
+                       }</span>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>Customer Name:</b></span><span class="li-text text-main">${form[i].custname}</span>
+                       <span class="li-text"><b>Customer Name:</b></span><span class="li-text text-main">${
+                         form[i].custname
+                       }</span>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>CC Number:</b></span><span class="li-text text-main">${form[i].ccnumber}</span>
+                       <span class="li-text"><b>CC Number:</b></span><span class="li-text text-main">${
+                         form[i].ccnumber
+                       }</span>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>Order Ref:</b></span><span class="li-text text-main">${form[i].custref}</span>
+                       <span class="li-text"><b>Order Ref:</b></span><span class="li-text text-main">${
+                         form[i].custref
+                       }</span>
                        </div>
                        <div class="entry-item">
-                       <span class="li-text"><b>Notes:</b></span><span class="li-text text-main">${form[i].log}</span>
+                       <span class="li-text"><b>Notes:</b></span><span class="li-text text-main">${
+                         form[i].log
+                       }</span>
                        </div>
                        <div class="render-btn-space">
                        <button class="btn btn-primary delete" onclick="liHandler(this)">Delete</button>
