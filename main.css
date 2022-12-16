@@ -1,16 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@font-face {
+  font-family: "Currys Sans";
+  src: url("Currys\ Sans.otf") format("opentype");
+}
+@font-face {
+  font-family: "Currys Sans Headline";
+  src: url("Currys\ Sans\ Headline.otf") format("opentype");
+}
 
 :root {
-  --primary-black: #111727;
+  --primary-purple: #4c13a2;
   --primary-white: #fff;
   --accent: #c0c0c0;
   --gray: #858892;
-  --orange: #c87b75;
-  --pink: #cc6a92;
-  --blue: #495eab;
-  --def-text: rgba(26, 25, 25, 1);
+  --l-gray: #f3f3f3;
+  --green: #cae6e7;
+  --yellow: #fdecb7;
+  --purple: #cfc8f6;
+  --def-text: #213038;
   --boxshadow-1: rgba(0, 0, 0, 0.19) 0px 10px 20px,
     rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  --font-c1: "Currys Sans";
+  --font-c2: "Currys Sans Headline";
 }
 
 html {
@@ -18,18 +28,14 @@ html {
 }
 
 body {
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-c1);
+  text-rendering: geometricPrecision;
   /* height: 100vh;
   min-height: 100vh; */
   display: grid;
   place-content: center;
-  color: var(--primary-black);
-  background: linear-gradient(
-    90deg,
-    rgba(200, 123, 117, 1) 0%,
-    rgba(204, 106, 146, 1) 35%,
-    rgba(73, 94, 171, 1) 100%
-  );
+  color: var(--primary-purple);
+  background: var(--primary-purple);
 }
 
 .container {
@@ -45,6 +51,11 @@ body {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
+.logo {
+  display: block;
+  width: 100px;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -54,15 +65,23 @@ main {
   padding: 3rem 1.5rem;
 }
 
+main .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 main .main-para {
-  text-align: center;
+  text-align: right;
   font-size: 18px;
 }
 
 .main-header {
+  font-family: var(--font-c1);
+  color: var(--def-text);
   margin: 0;
   font-size: 42px;
-  font-weight: 600;
+  font-size: 300;
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -80,7 +99,7 @@ main .top-bar .status ul {
 
 .li-status {
   display: inline;
-  color: var(--primary-black);
+  color: var(--primary-purple);
   border: 1px solid var(--accent);
   padding: 0.25rem;
   border-radius: 5px;
@@ -106,9 +125,20 @@ main .cards {
 main .cards .card-item {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--accent);
   border-radius: 5px;
   padding: 2rem 1.5rem;
+}
+
+main .cards .card-item:nth-child(1) {
+  background-color: var(--green);
+}
+
+main .cards .card-item:nth-child(2) {
+  background-color: var(--purple);
+}
+
+main .cards .card-item:nth-child(3) {
+  background-color: var(--yellow);
 }
 
 .card-title {
@@ -142,9 +172,9 @@ main .log-area {
 /* Unordered List Element */
 
 main .log-area .logs {
-  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  flex-wrap: wrap;
   padding: 0;
   border-radius: 10px;
   gap: 10px;
@@ -154,11 +184,23 @@ main .log-area .logs {
 /* List Item Element */
 
 main .log-area .logs .renderedEntry {
-  padding: 1rem;
+  /* padding: 1rem; */
   border: 1px solid var(--accent);
   border-radius: 5px;
   background-color: var(--primary-white);
-  transition: all 25ms ease-out;
+  transition: all 250ms ease-out;
+}
+
+main .log-area .logs .renderedEntry p {
+  font-size: 32px;
+  padding: 0.5rem;
+  margin: 0;
+  color: var(--def-text);
+}
+
+main .log-area .logs .renderedEntry.highlighted {
+  border: 6px solid var(--yellow);
+  box-shadow: inset 0px 0px 20px 0px var(--yellow);
 }
 
 /* main .log-area .logs .renderedEntry:hover {
@@ -191,10 +233,40 @@ main .log-area .logs .renderedEntry:last-child {
   }
 }
 
-main .log-area ul li .li-text {
-  display: inline-block;
+.entry-top {
+  background-color: var(--primary-purple);
+  padding: 0.5rem;
+  color: var(--primary-white);
+}
+
+.li-head {
+  margin: 0;
   font-size: 20px;
-  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.li-text {
+  display: inline-block;
+  font-size: 32px;
+  margin-bottom: 0.25rem;
+  color: var(--def-text);
+}
+
+.li-text.text-main {
+  display: inline-block;
+  font-size: 32px;
+  margin-bottom: 0.25rem;
+}
+
+.entry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.entry-item:nth-child(odd) {
+  background-color: var(--purple);
 }
 
 /* main .log-area ul li:nth-child(odd) {
@@ -215,9 +287,9 @@ main .form-interact {
   justify-content: center;
   gap: 20px;
   cursor: pointer;
-  background-color: var(--primary-black);
+  background-color: var(--l-gray);
   margin-bottom: 2rem;
-  color: var(--primary-white);
+  color: var(--def-text);
   padding: 0.5rem;
   border-radius: 5px;
 }
@@ -258,8 +330,16 @@ main .log-menu form select,
 main .log-menu form textarea {
   margin-bottom: 0.5rem;
   border: 1px solid var(--accent);
-  border-radius: 5px;
-  padding: 0.25rem 0.5rem;
+  border-radius: 30px;
+  padding: 1rem 0.5rem;
+  font-weight: 300;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+main .log-menu form input:hover,
+main .log-menu form select:hover,
+main .log-menu form textarea:hover {
+  box-shadow: 0 0 6px 0 #cdd8df;
 }
 
 main .log-menu form textarea {
@@ -304,6 +384,14 @@ main .log-menu form select {
   border: 1px solid var(--primary-black);
 }
 
+.btn.btn-primary.delete {
+  background-color: var(--primary-purple);
+}
+
+.btn.btn.btn-secondary.highlight {
+  background-color: var(--green);
+}
+
 .btn.btn-secondary {
   outline: none;
   border: 1px solid var(--accent);
@@ -316,4 +404,5 @@ main .log-menu form select {
 .render-btn-space {
   display: flex;
   justify-content: space-between;
+  padding: 0.5rem;
 }

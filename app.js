@@ -96,30 +96,7 @@ statusClear.addEventListener("click", function () {
 /* Entry Handler */
 
 function liHandler(liEl) {
-  if (liEl.classList.contains("min")) {
-    liEl.classList.toggle("enlarged");
-    if (liEl.classList.contains("enlarged")) {
-      console.log("Contains min!");
-      liEl.style.display = "initial";
-      liEl.style.width = "initial";
-      liEl.style.height = "initial";
-      liEl.style.zIndex = "unset";
-      liEl.style.position = "unset";
-      liEl.style.justifyContent = "unset";
-      liEl.style.flexDirection = "unset";
-    } else {
-      console.log("Doesn't contain min!");
-      liEl.style.display = "flex";
-      liEl.style.flexdirection = "column";
-      liEl.style.width = "90vw";
-      liEl.style.height = "90vh";
-      liEl.style.zIndex = "9999";
-      liEl.style.position = "absolute";
-      liEl.style.justifyContent = "center";
-      liEl.style.flexDirection = "column";
-      liEl.scrollIntoView();
-    }
-  }
+  liEl.classList.toggle("highlighted");
 }
 
 /* Tab Handler */
@@ -263,18 +240,33 @@ function renderForm(form) {
     console.log(form[i]);
     listItems += `
                        <div class="renderedEntry" onclick="liHandler(this)">
+                       <div class="entry-top">
                        <h4 class="li-head">Call back Log # ${form[i].lognumber}</h4>
-                       <span class="li-text"><b>Priority:</b> ${form[i].priority}</span><br>
-                       <span class="li-text"><b>Date & Time Now:</b> ${form[i].datenow}</span><br>
-                       <span class="li-text"><b>Date Scheduled:</b> ${form[i].datescheduled}</span><br>
-                       <span class="li-text"><b>Customer Name:</b> ${form[i].custname}</span><br>
-                       <span class="li-text"><b>CC Number:</b> ${form[i].ccnumber}</span><br>
-                       <span class="li-text"><b>Order Ref:</b> ${form[i].custref}</span><br>
-                       <p><b>Log:</b> ${form[i].log}</p>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Priority:</b></span><span class="li-text text-main">${form[i].priority}</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Date & Time Now:</b></span><span class="li-text text-main">${form[i].datenow}</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Date Scheduled:</b></span><span class="li-text text-main">${form[i].datescheduled}</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Customer Name:</b></span><span class="li-text text-main">${form[i].custname}</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>CC Number:</b></span><span class="li-text text-main">${form[i].ccnumber}</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Order Ref:</b></span><span class="li-text text-main">${form[i].custref}</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Notes:</b></span><span class="li-text text-main">${form[i].log}</span>
+                       </div>
                        <div class="render-btn-space">
-                       <button class="btn btn-primary" onclick="liHandler(this)">Delete</button>
-                       <button class="btn btn-secondary min" onclick="liHandler(this)">Minimize</button>
-                       <button class="btn btn-secondary" onclick="liHandler(this)">Highlight</button>
+                       <button class="btn btn-primary delete" onclick="liHandler(this)">Delete</button>
+                       <button class="btn btn-secondary highlight" onclick="liHandler(this)">Highlight</button>
                        </div>
                        </div>`;
   }
