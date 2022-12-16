@@ -20,7 +20,10 @@
     <div class="container">
       <div class="wrapper">
         <main>
-          <h1 class="main-header">Callback Log</h1>
+          <h1 class="main-header">Call back Log</h1>
+          <p class="main-para">
+            Keep a useful log of all your call backs
+          </p>
           <div class="top-bar">
             <div class="status">
               <ul>
@@ -41,7 +44,7 @@
             ><span class="normal" id="interact-text">Hide Logs</span>
           </section>
           <section class="log-area">
-            <ul class="logs"></ul>
+            <div class="logs"></div>
           </section>
           <section
             class="form-interact interact-stats"
@@ -57,11 +60,11 @@
               <p class="card-text" id="callbacks">Loading...</p>
             </article>
             <article class="card-item">
-              <h3 class="card-title">Callbacks</h3>
+              <h3 class="card-title">Today</h3>
               <p class="card-text">Loading...</p>
             </article>
             <article class="card-item">
-              <h3 class="card-title">Callbacks</h3>
+              <h3 class="card-title">High Priority</h3>
               <p class="card-text">Loading...</p>
             </article>
           </section>
@@ -105,19 +108,38 @@
               </div>
               <div class="form-item">
                 <label for="custname">What is the name of the customer?</label>
-                <input type="text" name="custname" id="custname" required />
+                <input
+                  type="text"
+                  name="custname"
+                  id="custname"
+                  placeholder="Customer Name"
+                  required
+                />
               </div>
               <div class="form-item">
                 <label for="ccnumber"
                   >What is the Clarify reference number?</label
                 >
-                <input type="text" name="ccnumber" id="ccnumber" required />
+                <input
+                  type="text"
+                  name="ccnumber"
+                  id="ccnumber"
+                  placeholder="Clarify Reference"
+                  minlength="6"
+                  required
+                />
               </div>
               <div class="form-item">
                 <label for="custref"
                   >What is the order reference (CUR/LDO etc.)</label
                 >
-                <input type="text" name="custref" id="custref" required />
+                <input
+                  type="text"
+                  name="custref"
+                  id="custref"
+                  placeholder="Order Reference"
+                  required
+                />
               </div>
               <div class="form-item">
                 <label for="loginfo">What is the callback about?</label>
@@ -126,6 +148,7 @@
                   id="loginfo"
                   cols="30"
                   rows="10"
+                  placeholder="Enter description here"
                   required
                 ></textarea>
               </div>

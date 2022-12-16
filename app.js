@@ -1,4 +1,4 @@
-const ulEl = document.querySelector(".logs");
+const divLogs = document.querySelector(".logs");
 const submitBtn = document.querySelector(".btn-save");
 let form = document.querySelector("form");
 const dateText = document.getElementById("date");
@@ -9,6 +9,7 @@ const callbackText = document.getElementById("callbacks");
 const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
 const textArea = document.querySelector("textarea");
+let currentPos = window.scrollY;
 let formArray = [];
 let ulHeight = 0;
 let callbackCounter = 0;
@@ -91,6 +92,37 @@ statusClear.addEventListener("click", function () {
 //     }
 //   });
 // });
+
+/* Entry Handler */
+
+function liHandler(liEl) {
+  if (liEl.classList.contains("min")) {
+    liEl.classList.toggle("enlarged");
+    if (liEl.classList.contains("enlarged")) {
+      console.log("Contains min!");
+      liEl.style.display = "initial";
+      liEl.style.width = "initial";
+      liEl.style.height = "initial";
+      liEl.style.zIndex = "unset";
+      liEl.style.position = "unset";
+      liEl.style.justifyContent = "unset";
+      liEl.style.flexDirection = "unset";
+    } else {
+      console.log("Doesn't contain min!");
+      liEl.style.display = "flex";
+      liEl.style.flexdirection = "column";
+      liEl.style.width = "90vw";
+      liEl.style.height = "90vh";
+      liEl.style.zIndex = "9999";
+      liEl.style.position = "absolute";
+      liEl.style.justifyContent = "center";
+      liEl.style.flexDirection = "column";
+      liEl.scrollIntoView();
+    }
+  }
+}
+
+/* Tab Handler */
 
 function tabHandler(el) {
   consoleCounter++;
@@ -209,7 +241,6 @@ function processForm() {
 
 /* Add EventListener for onKeyPress to form */
 
-
 textArea.addEventListener("click", function () {
   textArea.classList.toggle("active");
 });
@@ -231,20 +262,28 @@ function renderForm(form) {
   for (let i = 0; i < form.length; i++) {
     console.log(form[i]);
     listItems += `
-                       <li>
-                       <h4 class="li-head">Callback # ${form[i].lognumber}</h4>
+                       <div class="renderedEntry" onclick="liHandler(this)">
+                       <h4 class="li-head">Call back Log # ${form[i].lognumber}</h4>
                        <span class="li-text"><b>Priority:</b> ${form[i].priority}</span><br>
                        <span class="li-text"><b>Date & Time Now:</b> ${form[i].datenow}</span><br>
                        <span class="li-text"><b>Date Scheduled:</b> ${form[i].datescheduled}</span><br>
                        <span class="li-text"><b>Customer Name:</b> ${form[i].custname}</span><br>
                        <span class="li-text"><b>CC Number:</b> ${form[i].ccnumber}</span><br>
                        <span class="li-text"><b>Order Ref:</b> ${form[i].custref}</span><br>
-                       <span class="li-text"><b>Log:</b> ${form[i].log}</span>
-                       </li>`;
+                       <p><b>Log:</b> ${form[i].log}</p>
+                       <div class="render-btn-space">
+                       <button class="btn btn-primary" onclick="liHandler(this)">Delete</button>
+                       <button class="btn btn-secondary min" onclick="liHandler(this)">Minimize</button>
+                       <button class="btn btn-secondary" onclick="liHandler(this)">Highlight</button>
+                       </div>
+                       </div>`;
   }
-  ulEl.innerHTML = listItems;
+  divLogs.innerHTML = listItems;
   formShowCallbacks();
   /* Scroll to bottom of log-area element */
+  setTimeout(function () {
+    window.scrollTo(0, divLogs.scrollHeight);
+  }, 1250);
   // logArea.scrollTop = logArea.scrollHeight;
 }
 
@@ -270,4 +309,14 @@ function formShowCallbacks() {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- formShowCallbacks function called`);
   callbackText.textContent = formArray.length;
+}
+
+/* Scroll Position Function & Timer */
+
+setInterval(getScroll, 2500);
+
+function getScroll() {
+  currentPos = window.scrollY;
+  console.log(currentPos);
+  return currentPos;
 }
