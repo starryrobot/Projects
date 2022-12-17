@@ -34,6 +34,18 @@
                 <li class="li-status" id="status-local"></li>
                 <li class="li-status" id="status-clear">Clear</li>
               </ul>
+              <div class="help-window">
+                <div class="help-container">
+                  <span class="help-header">Help</span>
+                  <div class="sections">
+                    <article class="section">
+                      <h4 class="section-title">Coming soon...</h4>
+                    </article>
+                    <article class="section"></article>
+                    <article class="section"></article>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="time-date">
               <h2 class="date" id="date">Loading date, please wait...</h2>
@@ -48,6 +60,9 @@
                 id="search"
                 placeholder="Search logs..."
               />
+              <span class="search-text"
+                ><i class="fa-solid fa-info-circle"></i>Searching...</span
+              >
             </div>
           </div>
           <section
@@ -96,9 +111,9 @@
               <div class="form-item">
                 <label for="priority">What is the priority?</label>
                 <select name="priority" id="logpriority" required>
-                  <option value="low">Low</option>
-                  <option value="normal" selected>Normal</option>
-                  <option value="high">High</option>
+                  <option value="Low">Low</option>
+                  <option value="Normal" selected>Normal</option>
+                  <option value="High">High</option>
                 </select>
               </div>
               <div class="form-item">

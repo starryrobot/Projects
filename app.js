@@ -5,10 +5,12 @@ const dateText = document.getElementById("date");
 const fromLocal = JSON.parse(localStorage.getItem("Entry"));
 const statusLocal = document.getElementById("status-local");
 const statusClear = document.getElementById("status-clear");
+const statusHelp = document.getElementById("status-help");
 const callbackText = document.getElementById("callbacks");
 const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
 const textArea = document.querySelector("textarea");
+const searchText = document.querySelector(".search-text");
 const searchInput = document.getElementById("search");
 let delState = false;
 let highlightState = false;
@@ -57,6 +59,7 @@ function onLoad() {
 /* Search Function */
 
 function createSearch(searchTerm) {
+  searchText.classList.add("enabled");
   const entries = document.querySelectorAll(".renderedEntry");
   searchArray.push(Array.from(entries));
   for (let i = 0; i < searchArray[0].length; i++) {
@@ -66,13 +69,18 @@ function createSearch(searchTerm) {
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
     ) {
-      searchArray[0][i].classList.remove("hide");
       console.log(`Search match found: ${searchArray[0][i].innerText}`);
       console.log(currState);
+      setTimeout(function () {
+        searchArray[0][i].classList.remove("hide");
+      }, 1000);
       // divLogs.innerHTML = currState;
     } else {
       searchArray[0][i].classList.add("hide");
     }
+    setTimeout(function () {
+      searchText.classList.remove("enabled");
+    }, 2000);
   }
 }
 // getSearch();
@@ -82,6 +90,15 @@ searchInput.addEventListener("input", (e) => createSearch(e.target.value));
 // function filterData(searchTerm) {
 //   renderedEntry.forEach();
 // }
+
+/* Help */
+
+statusHelp.addEventListener("click", getHelp);
+
+function getHelp() {
+  const helpWindow = statusHelp.parentElement.parentElement.lastElementChild;
+  helpWindow.childNodes[1].classList.toggle("visible");
+}
 
 /* Clear LocalStorage */
 statusClear.addEventListener("click", function () {
