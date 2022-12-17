@@ -101,7 +101,7 @@ main .top-bar .status ul {
   display: inline;
   color: var(--primary-purple);
   border: 1px solid var(--accent);
-  padding: 0.25rem;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
   margin-right: 0.5rem;
   cursor: pointer;
@@ -161,8 +161,30 @@ main .cards .card-item:nth-child(3) {
 }
 
 .date {
-  font-size: 16px;
+  font-size: 22px;
+  font-weight: 400;
   color: var(--gray);
+}
+
+/* .search-bar .search-input {
+  position: relative;
+} */
+
+.search-bar {
+  position: relative;
+}
+
+.search-bar .search-input i {
+  border-radius: 50%;
+  padding: 0.5rem;
+  background-color: var(--primary-purple);
+  color: var(--primary-white);
+  z-index: 9999;
+}
+.srch-btn {
+  border: none;
+  outline: none;
+  background: transparent;
 }
 
 main .log-area {
@@ -226,6 +248,10 @@ main .log-area .logs .renderedEntry.highlighted {
 
 main .log-area .logs .renderedEntry:last-child {
   animation: entryAnim 500ms 100ms both;
+}
+
+.hide {
+  display: none;
 }
 
 @keyframes entryAnim {
@@ -333,7 +359,8 @@ main .log-menu form label {
 
 main .log-menu form input,
 main .log-menu form select,
-main .log-menu form textarea {
+main .log-menu form textarea,
+.search {
   margin-bottom: 0.5rem;
   border: 1px solid var(--accent);
   border-radius: 30px;

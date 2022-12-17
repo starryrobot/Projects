@@ -9,8 +9,12 @@ const callbackText = document.getElementById("callbacks");
 const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
 const textArea = document.querySelector("textarea");
+const searchInput = document.getElementById("search");
+let currState = "";
+let div = "";
 let currentPos = window.scrollY;
 let formArray = [];
+let searchArray = [];
 let ulHeight = 0;
 let callbackCounter = 0;
 let consoleCounter = 0;
@@ -47,6 +51,36 @@ function onLoad() {
     divLogs.innerHTML = `<span class="log-status">Nothing here, yet</span>`;
   }
 }
+
+/* Search Function */
+
+function createSearch(searchTerm) {
+  const entries = document.querySelectorAll(".renderedEntry");
+  searchArray.push(Array.from(entries));
+  for (let i = 0; i < searchArray[0].length; i++) {
+    // console.log(`Search array: ${searchArray[0][i].innerText}`);
+    if (
+      searchArray[0][i].innerText
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    ) {
+      searchArray[0][i].classList.remove("hide");
+      console.log(searchArray[0][i].innerText);
+      // divLogs.innerHTML = currState;
+    } else {
+      currState = divLogs.innerHTML;
+      searchArray[0][i].classList.add("hide");
+      // divLogs.innerHTML = `<span class="log-status">No results found</span>`;
+    }
+  }
+}
+// getSearch();
+
+searchInput.addEventListener("input", (e) => createSearch(e.target.value));
+
+// function filterData(searchTerm) {
+//   renderedEntry.forEach();
+// }
 
 /* Clear LocalStorage */
 statusClear.addEventListener("click", function () {
@@ -299,6 +333,9 @@ function renderForm(form) {
     window.scrollTo(0, divLogs.scrollHeight);
   }, 1250);
   // logArea.scrollTop = logArea.scrollHeight;
+
+  // Save current state of divLogs
+  currState = divLogs.innerHTML;
 }
 
 /* Time function */
