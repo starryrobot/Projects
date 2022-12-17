@@ -10,6 +10,8 @@ const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
 const textArea = document.querySelector("textarea");
 const searchInput = document.getElementById("search");
+let delState = false;
+let highlightState = false;
 let currState = "";
 let div = "";
 let currentPos = window.scrollY;
@@ -65,12 +67,11 @@ function createSearch(searchTerm) {
         .includes(searchTerm.toLowerCase())
     ) {
       searchArray[0][i].classList.remove("hide");
-      console.log(searchArray[0][i].innerText);
+      console.log(`Search match found: ${searchArray[0][i].innerText}`);
+      console.log(currState);
       // divLogs.innerHTML = currState;
     } else {
-      currState = divLogs.innerHTML;
       searchArray[0][i].classList.add("hide");
-      // divLogs.innerHTML = `<span class="log-status">No results found</span>`;
     }
   }
 }
@@ -134,7 +135,14 @@ statusClear.addEventListener("click", function () {
 /* Entry Handler */
 
 function liHandler(liEl) {
-  liEl.classList.toggle("highlighted");
+  if (delState === true) {
+    liEl.classList.add("puff-out-center");
+    setTimeout(function () {
+      liEl.remove();
+    }, 500);
+  } else {
+    liEl.classList.toggle("highlighted");
+  }
 }
 
 /* Tab Handler */
@@ -327,6 +335,19 @@ function renderForm(form) {
                        </div>`;
   }
   divLogs.innerHTML = listItems;
+  const renderedBtns = document.querySelectorAll(".btn");
+  renderedBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      const targetClassList = e.currentTarget.classList;
+      if (targetClassList.contains("delete")) {
+        delState = true;
+        highlightState = false;
+      } else {
+        delState = false;
+        highlightState = true;
+      }
+    });
+  });
   formShowCallbacks();
   /* Scroll to bottom of log-area element */
   setTimeout(function () {
