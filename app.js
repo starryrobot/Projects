@@ -59,6 +59,8 @@ function checkContents() {
 
 /* Top Menu function */
 statusLi.forEach(function (liEl) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- Top Menu (statusLi) function called`);
   liEl.addEventListener("click", function (e) {
     const liElClassList = e.currentTarget.classList;
     console.log(liElClassList);
@@ -335,8 +337,18 @@ function processForm() {
     state: "active",
   });
   console.log(formArray);
+  /* Clear values of all form items */
+  document.getElementById("logpriority").value = "";
+  document.getElementById("datetime").value = "";
+  document.getElementById("datescheduled").value = "";
+  document.getElementById("custname").value = "";
+  document.getElementById("ccnumber").value = "";
+  document.getElementById("custref").value = "";
+  document.getElementById("loginfo").value = "";
+
   /* Save to Local Storage */
   localStorage.setItem("Entry", JSON.stringify(formArray));
+
   /* Call renderForm */
   renderForm(formArray);
 }
