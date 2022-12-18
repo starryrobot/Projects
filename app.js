@@ -1,4 +1,5 @@
-const divLogs = document.querySelector(".logs");
+let divLogs = document.querySelector(".logs");
+let divLogsChildren = document.querySelector(".logs").childElementCount;
 const submitBtn = document.querySelector(".btn-save");
 let form = document.querySelector("form");
 const dateText = document.getElementById("date");
@@ -30,6 +31,17 @@ let clearState = false;
 
 window.addEventListener("DOMContentLoaded", onLoad);
 
+/* Check to see if there are any entries */
+function checkContents(div) {
+  console.log("called");
+  if (div === 0) {
+    divLogs.innerHTML = `<span class="log-status">Nothing here, yet</span>`;
+  } else {
+    console.log("Not 0");
+  }
+}
+
+/* Start routine procedure on page fully loaded in browser */
 function onLoad() {
   consoleCounter++;
   console.log(
@@ -42,6 +54,7 @@ function onLoad() {
     );
     formArray = fromLocal;
     statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-check" style="color:#019c01";></i>`;
+    statusLocal.title = "Local Storage has been found";
     formShowCallbacks();
     renderForm(fromLocal);
   } else {
@@ -49,10 +62,7 @@ function onLoad() {
     console.log("Not found. Not calling renderForm");
     statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
     statusClear.classList.add("disabled");
-  }
-  /* Get child element count on divLogs */
-  if (divLogs.childElementCount === 0) {
-    divLogs.innerHTML = `<span class="log-status">Nothing here, yet</span>`;
+    statusLocal.title = "Local Storage has not been found";
   }
 }
 
@@ -83,18 +93,18 @@ function createSearch(searchTerm) {
     }, 2000);
   }
 }
-// getSearch();
 
+/* Add event listener to search input element */
 searchInput.addEventListener("input", (e) => createSearch(e.target.value));
 
 // function filterData(searchTerm) {
 //   renderedEntry.forEach();
 // }
 
-/* Help */
-
+/* Add event listener to help element */
 statusHelp.addEventListener("click", getHelp);
 
+/* Help function */
 function getHelp() {
   const helpWindow = statusHelp.parentElement.parentElement.lastElementChild;
   helpWindow.childNodes[1].classList.toggle("visible");
@@ -150,20 +160,25 @@ statusClear.addEventListener("click", function () {
 // });
 
 /* Entry Handler */
-
 function liHandler(liEl) {
+  divLogs = document.querySelector(".logs");
   if (delState === true) {
     liEl.classList.add("puff-out-center");
     setTimeout(function () {
       liEl.remove();
     }, 500);
+    callbackText.textContent = divLogsChildren;
+    if (divLogsChildren === 0) {
+      callbackText.textContent = `${divLogsChildren} (Soft Delete)`;
+      callbackText.title = "Entry still exists. Available again by refreshing";
+    }
   } else {
     liEl.classList.toggle("highlighted");
   }
+  checkContents(divLogsChildren);
 }
 
 /* Tab Handler */
-
 function tabHandler(el) {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- tabHandler function called`);
@@ -239,7 +254,6 @@ function tabHandler(el) {
 // });
 
 /* Add EventListener to form */
-
 form.addEventListener("submit", function (e) {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- form onSubmit event triggered`);
@@ -248,6 +262,7 @@ form.addEventListener("submit", function (e) {
   processForm();
 });
 
+/* Process Form */
 function processForm() {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- processForm function called`);
@@ -280,7 +295,6 @@ function processForm() {
 }
 
 /* Add EventListener for onKeyPress to form */
-
 textArea.addEventListener("click", function () {
   textArea.classList.toggle("active");
 });
@@ -294,7 +308,6 @@ window.addEventListener("keypress", function (e) {
 });
 
 /* Render Form function */
-
 function renderForm(form) {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- renderForm function called`);
@@ -371,13 +384,12 @@ function renderForm(form) {
     window.scrollTo(0, divLogs.scrollHeight);
   }, 1250);
   // logArea.scrollTop = logArea.scrollHeight;
-
+  checkContents();
   // Save current state of divLogs
   currState = divLogs.innerHTML;
 }
 
 /* Time function */
-
 setInterval(function () {
   let current = new Date();
   const options = { hour: "numeric", minute: "numeric", hour12: true };
@@ -386,7 +398,6 @@ setInterval(function () {
 }, 1000);
 
 /* Counter function */
-
 function countCallbacks() {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- countCallbacks function called`);
@@ -401,7 +412,6 @@ function formShowCallbacks() {
 }
 
 /* Scroll Position Function & Timer */
-
 setInterval(getScroll, 2500);
 
 function getScroll() {
