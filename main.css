@@ -387,6 +387,7 @@ main .log-area .logs .renderedEntry:last-child {
   transition: opacity 250ms ease-out, left 1s ease-out;
   background-color: var(--l-gray);
   padding: 0.5rem 2rem;
+  z-index: -1;
 }
 
 .search-text i {
@@ -715,6 +716,21 @@ main .log-menu form select {
     font-weight: 400;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
       outline 0.15s ease-in-out;
+  }
+
+  .search-bar {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .search {
+    text-align: center;
+    width: 60vw;
+  }
+  .search-text.enabled {
+    top: 50px;
+    left: 10vw;
+    z-index: 9999;
   }
 
   main .log-menu form input {
