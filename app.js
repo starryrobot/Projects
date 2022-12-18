@@ -1,9 +1,10 @@
 let divLogs = document.querySelector(".logs");
-let divLogsChildren = document.querySelector(".logs").childElementCount;
+let divLogsChildren = divLogs.childElementCount;
 const submitBtn = document.querySelector(".btn-save");
 let form = document.querySelector("form");
 const dateText = document.getElementById("date");
 const fromLocal = JSON.parse(localStorage.getItem("Entry"));
+const statusLi = document.querySelectorAll(".li-status");
 const statusLocal = document.getElementById("status-local");
 const statusClear = document.getElementById("status-clear");
 const statusHelp = document.getElementById("status-help");
@@ -31,15 +32,63 @@ let clearState = false;
 
 window.addEventListener("DOMContentLoaded", onLoad);
 
-/* Check to see if there are any entries */
-function checkContents(div) {
-  console.log("called");
-  if (div === 0) {
+/* Timer Function for checking current number of call backs */
+setInterval(function () {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- setInterval (checkContents) called`);
+  checkContents();
+}, 2000);
+
+/* Function for checking current number of call backs */
+function checkContents() {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- checkContents function called`);
+  divLogsChildren = divLogs.childElementCount;
+  console.log(`Children in Logs: ${divLogsChildren}`);
+  if (divLogsChildren === 0) {
+    console.log("No children found");
     divLogs.innerHTML = `<span class="log-status">Nothing here, yet</span>`;
+    callbackText.textContent = `${divLogsChildren}`;
+    callbackText.title = "Entry still exists. Available again by refreshing";
+    divLogs.innerHTML = "";
+    divLogsChildren = divLogs.childElementCount;
   } else {
-    console.log("Not 0");
+    callbackText.textContent = `${divLogsChildren}`;
   }
 }
+
+/* Top Menu function */
+statusLi.forEach(function (liEl) {
+  liEl.addEventListener("click", function (e) {
+    const liElClassList = e.currentTarget.classList;
+    console.log(liElClassList);
+    /* Refresh Page */
+    if (liElClassList.contains("status-refresh")) {
+      document.location.reload();
+      /* Help Section */
+    } else if (liElClassList.contains("status-help")) {
+      const helpWindow =
+        statusHelp.parentElement.parentElement.lastElementChild;
+      helpWindow.childNodes[1].classList.toggle("visible");
+      helpWindow.childNodes[1].scrollTop = helpWindow.scrollHeight;
+      /* Clear Local Storage */
+    } else {
+      if (clearState === true) {
+        let alert = confirm(
+          "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
+        );
+        if (alert) {
+          let alert2 = confirm("Are you sure?");
+          if (alert2) {
+            localStorage.removeItem("Entry");
+            location.reload();
+            onLoad();
+          }
+        }
+      }
+    }
+  });
+});
 
 /* Start routine procedure on page fully loaded in browser */
 function onLoad() {
@@ -63,11 +112,15 @@ function onLoad() {
     statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
     statusClear.classList.add("disabled");
     statusLocal.title = "Local Storage has not been found";
+    // checkContents(divLogsChildren);
   }
+  checkContents();
 }
 
-/* Search Function */
+/* Add event listener to search input element */
+searchInput.addEventListener("input", (e) => createSearch(e.target.value));
 
+/* Search Function */
 function createSearch(searchTerm) {
   searchText.classList.add("enabled");
   const entries = document.querySelectorAll(".renderedEntry");
@@ -94,40 +147,28 @@ function createSearch(searchTerm) {
   }
 }
 
-/* Add event listener to search input element */
-searchInput.addEventListener("input", (e) => createSearch(e.target.value));
-
 // function filterData(searchTerm) {
 //   renderedEntry.forEach();
 // }
 
-/* Add event listener to help element */
-statusHelp.addEventListener("click", getHelp);
-
-/* Help function */
-function getHelp() {
-  const helpWindow = statusHelp.parentElement.parentElement.lastElementChild;
-  helpWindow.childNodes[1].classList.toggle("visible");
-}
-
 /* Clear LocalStorage */
-statusClear.addEventListener("click", function () {
-  consoleCounter++;
-  console.log(`[#${consoleCounter}] -- statusClear onClick event triggered`);
-  if (clearState === true) {
-    let alert = confirm(
-      "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
-    );
-    if (alert) {
-      let alert2 = confirm("Are you sure?");
-      if (alert2) {
-        localStorage.removeItem("Entry");
-        location.reload();
-        onLoad();
-      }
-    }
-  }
-});
+// statusClear.addEventListener("click", function () {
+//   consoleCounter++;
+//   console.log(`[#${consoleCounter}] -- statusClear onClick event triggered`);
+//   if (clearState === true) {
+//     let alert = confirm(
+//       "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
+//     );
+//     if (alert) {
+//       let alert2 = confirm("Are you sure?");
+//       if (alert2) {
+//         localStorage.removeItem("Entry");
+//         location.reload();
+//         onLoad();
+//       }
+//     }
+//   }
+// });
 
 /* Form interaction */
 
@@ -161,21 +202,26 @@ statusClear.addEventListener("click", function () {
 
 /* Entry Handler */
 function liHandler(liEl) {
-  divLogs = document.querySelector(".logs");
-  if (delState === true) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- liHandler function called`);
+  console.log(this);
+  divLogsChildren = divLogs.childElementCount;
+  if (delState === true && highlightState === false) {
     liEl.classList.add("puff-out-center");
     setTimeout(function () {
       liEl.remove();
     }, 500);
+    divLogsChildren = divLogs.childElementCount;
     callbackText.textContent = divLogsChildren;
-    if (divLogsChildren === 0) {
-      callbackText.textContent = `${divLogsChildren} (Soft Delete)`;
-      callbackText.title = "Entry still exists. Available again by refreshing";
-    }
-  } else {
+    delState = false;
+    checkContents();
+  } else if (delState === false && highlightState === true) {
+    callbackText.textContent = divLogsChildren;
     liEl.classList.toggle("highlighted");
+    highlightState = false;
+    delState = false;
+    checkContents();
   }
-  checkContents(divLogsChildren);
 }
 
 /* Tab Handler */
@@ -286,6 +332,7 @@ function processForm() {
     ccnumber: formCC,
     custref: formRef,
     log: formLog,
+    state: "active",
   });
   console.log(formArray);
   /* Save to Local Storage */
@@ -370,11 +417,15 @@ function renderForm(form) {
     btn.addEventListener("click", function (e) {
       const targetClassList = e.currentTarget.classList;
       if (targetClassList.contains("delete")) {
+        console.log(this);
         delState = true;
         highlightState = false;
+        checkContents();
       } else {
+        console.log(this);
         delState = false;
         highlightState = true;
+        checkContents();
       }
     });
   });
@@ -383,8 +434,8 @@ function renderForm(form) {
   setTimeout(function () {
     window.scrollTo(0, divLogs.scrollHeight);
   }, 1250);
-  // logArea.scrollTop = logArea.scrollHeight;
-  checkContents();
+  // // logArea.scrollTop = logArea.scrollHeight;
+  // checkContents();
   // Save current state of divLogs
   currState = divLogs.innerHTML;
 }

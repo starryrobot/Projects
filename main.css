@@ -617,3 +617,126 @@ main .log-menu form select {
   justify-content: space-between;
   padding: 0.5rem;
 }
+
+@media screen and (max-width: 798px) {
+  .container {
+    margin: 0.5rem;
+  }
+
+  .wrapper {
+    width: 95vw;
+  }
+
+  main {
+    padding: 0.5rem 1rem;
+  }
+
+  main .top {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  main .main-header {
+    font-size: 24px;
+    margin-top: 1rem;
+  }
+
+  main .main-para {
+    text-align: center;
+  }
+
+  main .top-bar {
+    flex-direction: column;
+    margin-bottom: 2.5rem;
+  }
+
+  .li-status {
+    display: block;
+    text-align: center;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .help-window .help-container {
+    position: unset;
+    top: -100px;
+    width: 60vw;
+    display: none;
+    box-shadow: none;
+    transition: all 250ms ease-out;
+  }
+
+  .help-window .help-container.visible {
+    display: block;
+  }
+
+  .li-status#status-local i {
+    margin-left: 0.25rem;
+  }
+
+  main .cards,
+  main .log-area .logs {
+    grid-template-columns: 1fr;
+  }
+
+  .card-text {
+    font-size: 32px;
+  }
+
+  .date {
+    font-size: 24px;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  .li-text,
+  .li-text.text-main {
+    font-size: 18px;
+  }
+
+  main .log-menu form .form-item {
+    flex-direction: column;
+  }
+
+  main .log-menu form label {
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+  }
+
+  main .log-menu form input,
+  main .log-menu form select,
+  main .log-menu form textarea,
+  .search {
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    font-weight: 400;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+      outline 0.15s ease-in-out;
+  }
+
+  main .log-menu form input {
+    width: auto;
+    transition: all 100ms ease-out;
+  }
+
+  main .log-menu form textarea {
+    width: unset;
+    height: auto;
+    min-width: 325px;
+    max-width: 325px;
+    min-height: 75px;
+    max-height: 150px;
+  }
+
+  .form-btns {
+    justify-content: center;
+  }
+
+  .btn.btn.btn-big {
+    padding: 0.5rem 1rem;
+    font-size: 24px;
+  }
+}
