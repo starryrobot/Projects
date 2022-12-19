@@ -1,0 +1,179 @@
+@font-face {
+  font-family: "Currys Sans";
+  src: url(Currys\ Sans.otf);
+}
+
+@font-face {
+  font-family: "Currys Sans Headlines";
+  src: url(Currys\ Sans\ Headline.otf);
+}
+
+:root {
+  --primary-purple: #4b12a1;
+  --secondary-purple: #cfc7f8;
+  --white: #fff;
+  --def-text: #213038;
+  --l-gray: #f3f3f3;
+}
+
+.mar-bottom {
+  margin-bottom: 2rem;
+}
+
+.pad {
+  padding: 2rem 4rem;
+}
+
+body {
+  font-family: "Currys Sans", sans-serif;
+  display: grid;
+  place-content: center;
+  /* height: 100vh;
+  min-height: 100vh; */
+  background-color: var(--secondary-purple);
+  color: var(--def-text);
+}
+
+.wrapper {
+  background-color: var(--white);
+  width: 700px;
+  max-width: 900px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  padding: 2rem 4rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.head.main-head {
+  font-weight: 400;
+  font-size: 42px;
+}
+
+.sub-head.option-head {
+  font-weight: 300;
+  margin: 0;
+}
+
+.logo {
+  display: block;
+  width: 100px;
+}
+
+main .options {
+  margin-bottom: 2rem;
+}
+
+main .options .options-area {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+}
+
+.options-area .option {
+  color: var(--primary-purple);
+  justify-content: center;
+  background-color: var(--l-gray);
+  padding: 2rem;
+  border-radius: 30px;
+  transition: all 250ms ease-out;
+}
+
+.options-area .option:hover {
+  box-shadow: 0 0 6px 0 #cdd8df;
+  filter: brightness(95%);
+}
+
+.section-top {
+  background-color: var(--primary-purple);
+  padding: 1rem 2rem;
+  color: var(--white);
+  margin-bottom: 2rem;
+}
+
+.section-top .section-title {
+  display: inline-block;
+  font-size: 24px;
+}
+
+label {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 0.5rem;
+}
+
+input[name="value"] {
+  border: 1px solid #cdd8df;
+  padding: 0.5rem;
+  scrollbar-gutter: none;
+  border-radius: 30px;
+  font-size: 18px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+input[name="value"]:focus {
+  outline: 1px solid var(--primary-purple);
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border: none;
+  background: transparent;
+}
+
+.btn.btn-submit {
+  border: 2px solid var(--primary-purple);
+  border-radius: 30px;
+  color: var(--primary-purple);
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 50ms ease-in-out;
+}
+
+.btn.btn-submit:hover {
+  background-color: var(--primary-purple);
+  color: var(--white);
+  scale: 1.1;
+}
+
+.btns,
+.options-area .option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.price-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.result-text {
+  display: inline-block;
+  font-size: 62px;
+}
+
+.history-ul {
+  list-style-type: none;
+  padding: 0;
+  overflow-y: auto;
+  height: 200px;
+}
+
+.new-entry {
+  font-size: 18px;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 2rem;
+}
+
+.new-entry:nth-child(odd) {
+  background-color: var(--secondary-purple);
+}

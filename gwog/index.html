@@ -11,7 +11,71 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Document</title>
+    <link rel="stylesheet" href="main.css" />
+    <meta name="description" content="GOGW Calculator" />
+    <title>GOGW Calculator</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <header class="mar-bottom">
+          <img class="logo" src="./logo.jpg" alt="Logo" title="Logo" />
+          <h1 class="head main-head">GOGW Calculator</h1>
+        </header>
+        <main class="mar-bottom">
+          <section class="price">
+            <div class="section-top pad">
+              <span class="section-title">Value</span>
+            </div>
+
+            <div class="price-area">
+              <div class="value-section">
+                <label for="value">Product Value</label>
+                <input type="number" name="value" id="value" />
+              </div>
+              <div class="result-section">
+                <span class="result-text">Loading...</span>
+              </div>
+            </div>
+          </section>
+          <section class="options">
+            <div class="section-top pad">
+              <span class="section-title">Options</span>
+            </div>
+            <div class="options-area">
+              <div
+                class="option one"
+                onclick="optionHandler(this)"
+                data-attribute="10"
+              >
+                <i class="fa-solid fa-money-bill fa-2x"></i>
+                <h2 class="sub-head option-head" data-attribute="10">10%</h2>
+              </div>
+              <div
+                class="option two"
+                onclick="optionHandler(this)"
+                data-attribute="15"
+              >
+                <i class="fa-solid fa-money-bill fa-2x"></i>
+                <h2 class="sub-head option-head">15%</h2>
+              </div>
+              <div class="option three" onclick="optionHandler(this)">
+                <i class="fa-solid fa-money-bill fa-2x"></i>
+                <h2 class="sub-head option-head">Custom</h2>
+              </div>
+            </div>
+          </section>
+        </main>
+        <footer class="mar-bottom">
+          <div class="section-top pad">
+            <span class="section-title">History</span>
+          </div>
+          <div class="history">
+            <ul class="history-ul"></ul>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
 </html>
