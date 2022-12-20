@@ -21,6 +21,10 @@ a {
   color: unset;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .mar-bottom {
   margin-bottom: 2rem;
 }
@@ -41,6 +45,29 @@ body {
   min-height: 100vh; */
   background-color: var(--secondary-purple);
   color: var(--def-text);
+}
+
+.top-nav {
+  display: flex;
+  justify-content: right;
+}
+
+.top-nav li {
+  display: inline;
+  margin-right: 20px;
+  background-color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: var(--primary-purple);
+  transition: all 250ms ease-out;
+}
+
+.top-nav li:hover {
+  outline: 1px solid var(--primary-purple);
+}
+
+.top-nav li:last-child {
+  margin-right: 0;
 }
 
 .wrapper {
