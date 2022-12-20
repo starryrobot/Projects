@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="favicon-128.png" sizes="128x128" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon-196x196.png"
+      sizes="196x196"
+    />
+    <meta name="description" content="A calculator for food and fuel" />
+    <title>Currys | Food & Fuel Calculator</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <header class="mar-bottom">
+          <img class="logo" src="./logo.jpg" alt="Logo" title="Logo" />
+          <h1 class="head main-head">Food & Fuel Calculator</h1>
+        </header>
+        <main class="mar-bottom">
+          <section class="price">
+            <div class="section-top pad">
+              <span class="section-title">Value</span>
+            </div>
+
+            <div class="price-area">
+              <div class="value-section">
+                <label for="value">Enter Units</label>
+                <input type="number" name="value" id="value" />
+              </div>
+              <div class="result-section">
+                <span class="result-text">Waiting...</span>
+              </div>
+            </div>
+          </section>
+          <section class="options">
+            <div class="section-top pad">
+              <span class="section-title">Options</span>
+            </div>
+            <div class="options-area">
+              <div
+                class="option one"
+                onclick="optionHandler(this)"
+                data-attribute="food"
+              >
+                <i class="fa-solid fa-bowl-food fa-3x"></i>
+                <h2 class="sub-head option-head">Food</h2>
+              </div>
+              <div
+                class="option two"
+                onclick="optionHandler(this)"
+                data-attribute="fuel"
+              >
+                <i class="fa-solid fa-gas-pump fa-3x"></i>
+                <h2 class="sub-head option-head">Fuel</h2>
+              </div>
+            </div>
+          </section>
+        </main>
+        <footer class="mar-bottom">
+          <div class="section-top pad flex-jc-sb">
+            <span class="section-title">History</span>
+            <a href="#" id="clear-history"
+              ><i class="fa-solid fa-trash fa-2x"></i
+            ></a>
+          </div>
+          <div class="history" id="history">
+            <ul class="history-ul"></ul>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
