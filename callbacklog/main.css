@@ -43,6 +43,25 @@ body {
   margin: 2rem;
 }
 
+.top-nav {
+  display: flex;
+  justify-content: right;
+}
+
+.top-nav li {
+  display: inline;
+  margin-right: 20px;
+  background-color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: var(--primary-purple);
+  transition: all 250ms ease-out;
+}
+
+.top-nav li:hover {
+  outline: 1px solid var(--primary-purple);
+}
+
 .wrapper {
   width: 90vw;
   max-width: 95vw;
