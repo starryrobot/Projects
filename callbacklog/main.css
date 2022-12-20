@@ -63,6 +63,10 @@ body {
   transition: all 250ms ease-out;
 }
 
+.top-nav li:last-child {
+  margin-right: 0;
+}
+
 .top-nav li:hover {
   outline: 1px solid var(--primary-purple);
 }
