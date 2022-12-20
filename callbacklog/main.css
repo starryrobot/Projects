@@ -51,7 +51,7 @@ body {
 .top-nav li {
   display: inline;
   margin-right: 20px;
-  background-color: var(--white);
+  background-color: var(--primary-white);
   padding: 0.5rem 1rem;
   border-radius: 5px;
   color: var(--primary-purple);
