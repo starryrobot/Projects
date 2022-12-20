@@ -16,6 +16,11 @@
   --l-gray: #f3f3f3;
 }
 
+a {
+  text-decoration: none;
+  color: unset;
+}
+
 .mar-bottom {
   margin-bottom: 2rem;
 }
@@ -51,6 +56,10 @@ body {
 
 .top-nav li:hover {
   outline: 1px solid var(--primary-purple);
+}
+
+.top-nav li:last-child {
+  margin-right: 0;
 }
 
 .wrapper {
