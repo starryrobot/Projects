@@ -24,6 +24,11 @@
   --font-c2: "Currys Sans Headline";
 }
 
+a {
+  text-decoration: none;
+  color: unset;
+}
+
 html {
   scroll-behavior: smooth;
 }
