@@ -9,7 +9,7 @@
 }
 
 :root {
-  --primary-purple: #4b12a1;
+  --primary-purple: #111727;
   --secondary-purple: #cfc7f8;
   --white: #fff;
   --def-text: #213038;
@@ -35,7 +35,7 @@ body {
   place-content: center;
   /* height: 100vh;
   min-height: 100vh; */
-  background-color: var(--secondary-purple);
+  background-color: var(--primary-purple);
   color: var(--def-text);
 }
 
