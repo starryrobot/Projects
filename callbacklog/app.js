@@ -97,8 +97,8 @@ statusLi.forEach(function (liEl) {
     } else if (liElClassList.contains("status-pop")) {
       currScrollPos = 0;
       // form.classList.toggle("bottom-fixed");
-    } else if (liElClassList.contains("status-clear")) {
-      clearState = false;
+    } else {
+      clearState = true;
       if (clearState === true) {
         let alert = confirm(
           "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
