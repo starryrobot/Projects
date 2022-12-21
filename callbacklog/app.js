@@ -313,6 +313,24 @@ function tabHandler(el) {
   }
 }
 
+function checkPriority() {
+  const reasonLi = document.querySelectorAll(".priority");
+  reasonLi.forEach(function (e) {
+    const lowerCase = e.childNodes[2];
+    const text = lowerCase.textContent;
+    console.log(lowerCase);
+    if (text == "High") {
+      lowerCase.classList.add("red");
+      // lowerCase.style.color = "red";
+      // lowerCase.style.fontWeight = "800";
+    } else if (text == "Normal") {
+      lowerCase.classList.add("blue");
+    } else {
+      lowerCase.classList.add("green");
+    }
+  });
+}
+
 // formInteract.addEventListener("click", function (element) {
 //   const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
 //   const faChevronUp = `<i class="fa-solid fa-chevron-up fa-2xl"></i>`;
@@ -416,42 +434,42 @@ function renderForm(form) {
                          form[i].lognumber
                        }</h4>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item priority">
                        <span class="li-text"><b>Priority:</b></span><span class="li-text text-main">${
                          form[i].priority
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item reason">
                        <span class="li-text"><b>Reason:</b></span><span class="li-text text-main">${
                          form[i].reason
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item datenow">
                        <span class="li-text"><b>Date & Time Now:</b></span><span class="li-text text-main">${
                          form[i].datenow
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item datethen">
                        <span class="li-text"><b>Date Scheduled:</b></span><span class="li-text text-main">${
                          form[i].datescheduled
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item custname">
                        <span class="li-text"><b>Customer Name:</b></span><span class="li-text text-main">${
                          form[i].custname
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item ccnum">
                        <span class="li-text"><b>CC Number:</b></span><span class="li-text text-main">${
                          form[i].ccnumber
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item orderef">
                        <span class="li-text"><b>Order Ref:</b></span><span class="li-text text-main">${
                          form[i].custref
                        }</span>
                        </div>
-                       <div class="entry-item">
+                       <div class="entry-item notes">
                        <span class="li-text"><b>Notes:</b></span><span class="li-text text-main">${
                          form[i].log
                        }</span>
@@ -463,6 +481,7 @@ function renderForm(form) {
                        </div>`;
   }
   divLogs.innerHTML = listItems;
+  checkPriority();
   const renderedBtns = document.querySelectorAll(".btn");
   renderedBtns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {

@@ -273,6 +273,41 @@ main .cards .card-item:nth-child(3) {
   color: var(--gray);
 }
 
+.red {
+  background-color: rgb(209, 24, 24);
+  border-radius: 5px;
+  padding: 0.5rem;
+  font-weight: 800;
+  animation: warning 2s infinite both;
+}
+
+.blue {
+  background-color: rgb(66, 141, 253);
+  color: var(--primary-white) !important;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.green {
+  background-color: rgb(34, 189, 13);
+  color: var(--primary-white) !important;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+@keyframes warning {
+  0% {
+    scale: 1;
+    background-color: rgb(209, 24, 24);
+  }
+  50% {
+    scale: 1.1;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 .puff-out-center {
   -webkit-animation: puff-out-center 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation: puff-out-center 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
