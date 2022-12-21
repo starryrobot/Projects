@@ -31,6 +31,92 @@
   <body>
     <div class="container">
       <div class="top-nav">
+        <div class="top-bar">
+          <div class="status">
+            <ul>
+              <li class="li-status status-help" id="status-help" title="Help">
+                <i class="fa-solid fa-question-circle"></i>
+              </li>
+              <li
+                class="li-status status-refresh"
+                id="status-refresh"
+                title="Refresh Page"
+              >
+                <i class="fa-solid fa-refresh"></i>
+              </li>
+              <li
+                class="li-status status-pop"
+                id="status-pop"
+                title="Pop-up Window"
+              >
+                <i class="fa-solid fa-object-group"></i>
+              </li>
+              <li
+                class="li-status"
+                id="status-clear"
+                title="Clear all entries (permanent)"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </li>
+              <li
+                class="li-status"
+                id="status-local"
+                title="Status of Local Storage"
+              >
+                <i class="fa-solid fa-hard-drive"></i>
+              </li>
+            </ul>
+            <div class="help-window">
+              <div class="help-container">
+                <span class="help-header">Help</span>
+                <div class="sections">
+                  <article class="section">
+                    <h4 class="section-title">
+                      <i class="fa-solid fa-save"></i>Saving
+                    </h4>
+                    <p class="section-para">
+                      All entries are saved locally. Nothing leaves the
+                      browser.<br />
+                    </p>
+                  </article>
+                  <article class="section">
+                    <h4 class="section-title">
+                      <i class="fa-solid fa-search"></i>Searching
+                    </h4>
+                    <p class="section-para">
+                      Searching is automatic and results will appear as you
+                      type, if there is a match. Search is not case-sensitive as
+                      all results are filtered lower-case before being shown
+                    </p>
+                  </article>
+                  <article class="section">
+                    <h4 class="section-title">
+                      <i class="fa-solid fa-trash"></i>Deleting
+                    </h4>
+                    <p class="section-para">
+                      There are two options to delete a log:<br />
+                      <b>- Temporary Delete</b><br />
+                      By using the delete button in the log, you can remove the
+                      log from the screen but it will still be saved locally.<br />
+                      When you refresh the page, all removed logs will appear
+                      again.<br />
+                      This can be used when you want to remove certain logs you
+                      don't need anymore but still want to refer to them if
+                      necessary.<br />
+                      <b>- Permanent Delete</b><br />
+                      By using the 'Clear' button, you remove all logs
+                      permanently. This cannot be undone.<br />
+                      This can be used when you're done and don't need your logs
+                      anymore and won't be coming back to them.<br />
+                      NOTE: If your browser is set to clean automatically when
+                      it exits, all logs will be removed.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <ul>
           <li>
             <a
@@ -56,88 +142,6 @@
             <h1 class="main-header">Call back Dashboard</h1>
           </div>
           <p class="main-para">Keep a useful log of all your call backs</p>
-          <div class="top-bar">
-            <div class="status">
-              <ul>
-                <li class="li-status status-help" id="status-help" title="Help">
-                  <i class="fa-solid fa-question-circle"></i>
-                </li>
-                <li
-                  class="li-status status-refresh"
-                  id="status-refresh"
-                  title="Refresh Page"
-                >
-                  <i class="fa-solid fa-refresh"></i>
-                </li>
-                <li
-                  class="li-status"
-                  id="status-local"
-                  title="Status of Local Storage"
-                ></li>
-                <li
-                  class="li-status"
-                  id="status-clear"
-                  title="Clear all entries (permanent)"
-                >
-                  Clear
-                </li>
-              </ul>
-              <div class="help-window">
-                <div class="help-container">
-                  <span class="help-header">Help</span>
-                  <div class="sections">
-                    <article class="section">
-                      <h4 class="section-title">
-                        <i class="fa-solid fa-save"></i>Saving
-                      </h4>
-                      <p class="section-para">
-                        All entries are saved locally. Nothing leaves the
-                        browser.<br />
-                      </p>
-                    </article>
-                    <article class="section">
-                      <h4 class="section-title">
-                        <i class="fa-solid fa-search"></i>Searching
-                      </h4>
-                      <p class="section-para">
-                        Searching is automatic and results will appear as you
-                        type, if there is a match. Search is not case-sensitive
-                        as all results are filtered lower-case before being
-                        shown
-                      </p>
-                    </article>
-                    <article class="section">
-                      <h4 class="section-title">
-                        <i class="fa-solid fa-trash"></i>Deleting
-                      </h4>
-                      <p class="section-para">
-                        There are two options to delete a log:<br />
-                        <b>- Temporary Delete</b><br />
-                        By using the delete button in the log, you can remove
-                        the log from the screen but it will still be saved
-                        locally.<br />
-                        When you refresh the page, all removed logs will appear
-                        again.<br />
-                        This can be used when you want to remove certain logs
-                        you don't need anymore but still want to refer to them
-                        if necessary.<br />
-                        <b>- Permanent Delete</b><br />
-                        By using the 'Clear' button, you remove all logs
-                        permanently. This cannot be undone.<br />
-                        This can be used when you're done and don't need your
-                        logs anymore and won't be coming back to them.<br />
-                        NOTE: If your browser is set to clean automatically when
-                        it exits, all logs will be removed.
-                      </p>
-                    </article>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="time-date">
-              <h2 class="date" id="date">Loading date, please wait...</h2>
-            </div>
-          </div>
           <div class="search-bar">
             <div class="search-input">
               <input
@@ -202,6 +206,17 @@
                   <option value="Normal" selected>Normal</option>
                   <option value="High">High</option>
                 </select>
+              </div>
+              <div class="form-item">
+                <label for="category">What is the reason?</label>
+                <input
+                  type="text"
+                  name="reason"
+                  id="reason"
+                  placeholder="Reason for call back"
+                  minlength="4"
+                  required
+                />
               </div>
               <div class="form-item">
                 <label for="datetime">When should this entry be saved?</label>
@@ -287,6 +302,9 @@
             </form>
           </section>
         </main>
+        <footer>
+          <div class="bottom-bar"></div>
+        </footer>
       </div>
     </div>
     <script src="app.js"></script>

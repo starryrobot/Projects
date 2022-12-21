@@ -11,9 +11,11 @@ const statusHelp = document.getElementById("status-help");
 const callbackText = document.getElementById("callbacks");
 const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
+const interactForm = document.querySelector(".interact-form");
 const textArea = document.querySelector("textarea");
 const searchText = document.querySelector(".search-text");
 const searchInput = document.getElementById("search");
+let currScrollPos = 0;
 let delState = false;
 let highlightState = false;
 let currState = "";
@@ -57,6 +59,24 @@ function checkContents() {
   }
 }
 
+// getScrollInteractForm();
+
+// setInterval(function () {
+//   const bottomBar = document.querySelector(".bottom-bar");
+//   currScrollPos = window.scrollY;
+//   console.log(currScrollPos);
+//   const formScrollPos = interactForm.scrollHeight;
+//   console.log(formScrollPos);
+//   if (currScrollPos < formScrollPos) {
+//     bottomBar.classList.add("visible");
+//     form.classList.add("bottom-fixed");
+//   } else {
+//     bottomBar.classList.remove("visible");
+//     form.classList.remove("bottom-fixed");
+//     console.log("No");
+//   }
+// }, 1000);
+
 /* Top Menu function */
 statusLi.forEach(function (liEl) {
   consoleCounter++;
@@ -74,7 +94,10 @@ statusLi.forEach(function (liEl) {
       helpWindow.childNodes[1].classList.toggle("visible");
       helpWindow.childNodes[1].scrollTop = helpWindow.scrollHeight;
       /* Clear Local Storage */
-    } else {
+    } else if (liElClassList.contains("status-pop")) {
+      currScrollPos = 0;
+      // form.classList.toggle("bottom-fixed");
+    } else if (liElClassList.contains("status-clear")) {
       if (clearState === true) {
         let alert = confirm(
           "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
@@ -92,6 +115,14 @@ statusLi.forEach(function (liEl) {
   });
 });
 
+function createPop(url) {
+  window.open(
+    url,
+    "Call Log Form",
+    "height=auto,width=auto,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no"
+  );
+}
+
 /* Start routine procedure on page fully loaded in browser */
 function onLoad() {
   consoleCounter++;
@@ -104,14 +135,14 @@ function onLoad() {
       `LocalStorage found. Parsed content of LocalStorage (array) is ${fromLocal}`
     );
     formArray = fromLocal;
-    statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-check" style="color:#019c01";></i>`;
+    statusLocal.innerHTML += `<i class="fa-solid fa-check" style="color:#019c01";></i>`;
     statusLocal.title = "Local Storage has been found";
     formShowCallbacks();
     renderForm(fromLocal);
   } else {
     clearState = false;
     console.log("Not found. Not calling renderForm");
-    statusLocal.innerHTML = `Loaded from Local Storage <i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
+    statusLocal.innerHTML += `<i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
     statusClear.classList.add("disabled");
     statusLocal.title = "Local Storage has not been found";
     // checkContents(divLogsChildren);
@@ -318,6 +349,7 @@ function processForm() {
   localStorage.setItem("Entry", JSON.stringify(fromLocal));
   /* Get values of form elements */
   let formPriority = document.getElementById("logpriority").value;
+  let formReason = document.getElementById("reason").value;
   let formDateTimeNow = document.getElementById("datetime").value;
   let formDateTimeScheduled = document.getElementById("datescheduled").value;
   let formCustName = document.getElementById("custname").value;
@@ -328,6 +360,7 @@ function processForm() {
   formArray.push({
     lognumber: countCallbacks(),
     priority: formPriority,
+    reason: formReason,
     datenow: formDateTimeNow,
     datescheduled: formDateTimeScheduled,
     custname: formCustName,
@@ -337,8 +370,9 @@ function processForm() {
     state: "active",
   });
   console.log(formArray);
-  /* Clear values of all form items */
+  /* Clear values of all form items / reset */
   document.getElementById("logpriority").value = "";
+  document.getElementById("reason").value = "";
   document.getElementById("datetime").value = "";
   document.getElementById("datescheduled").value = "";
   document.getElementById("custname").value = "";
@@ -385,6 +419,11 @@ function renderForm(form) {
                        <div class="entry-item">
                        <span class="li-text"><b>Priority:</b></span><span class="li-text text-main">${
                          form[i].priority
+                       }</span>
+                       </div>
+                       <div class="entry-item">
+                       <span class="li-text"><b>Reason:</b></span><span class="li-text text-main">${
+                         form[i].reason
                        }</span>
                        </div>
                        <div class="entry-item">
@@ -453,12 +492,12 @@ function renderForm(form) {
 }
 
 /* Time function */
-setInterval(function () {
-  let current = new Date();
-  const options = { hour: "numeric", minute: "numeric", hour12: true };
-  let date = current.toLocaleDateString("en-GB", options);
-  dateText.textContent = date;
-}, 1000);
+// setInterval(function () {
+//   let current = new Date();
+//   const options = { hour: "numeric", minute: "numeric", hour12: true };
+//   let date = current.toLocaleDateString("en-GB", options);
+//   dateText.textContent = date;
+// }, 1000);
 
 /* Counter function */
 function countCallbacks() {

@@ -50,7 +50,11 @@ body {
 
 .top-nav {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+}
+
+.top-nav ul {
+  padding: 0;
 }
 
 .top-nav li {
@@ -522,6 +526,7 @@ main .form-interact:hover {
 }
 
 main .log-menu form {
+  z-index: 9999;
   opacity: 1;
   transition: all 500ms ease-out;
 }
@@ -645,6 +650,33 @@ main .log-menu form select {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
+}
+
+.bottom-fixed {
+  position: fixed;
+  bottom: 10px;
+  right: 25px;
+  background-color: #4c13a29c;
+  padding: 1rem;
+}
+
+.form-fixed {
+  color: var(--primary-white);
+}
+
+.bottom-bar {
+  opacity: 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: var(--purple);
+  padding: 2rem 4rem;
+  width: 100%;
+  transition: all 500ms ease-out;
+}
+
+.bottom-bar.visible {
+  opacity: 1;
 }
 
 @media screen and (max-width: 798px) {
