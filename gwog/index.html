@@ -44,7 +44,7 @@
         </header>
         <main class="mar-bottom">
           <section class="price">
-            <div class="section-top pad">
+            <div class="section-top sect-value pad">
               <span class="section-title">Value</span>
             </div>
 
@@ -59,7 +59,7 @@
             </div>
           </section>
           <section class="options">
-            <div class="section-top pad">
+            <div class="section-top sect-options pad">
               <span class="section-title">Options</span>
             </div>
             <div class="options-area">
@@ -69,7 +69,7 @@
                 data-attribute="10"
               >
                 <i class="fa-solid fa-money-bill fa-2x"></i>
-                <h2 class="sub-head option-head" data-attribute="10">10%</h2>
+                <h2 class="sub-head option-head">10%</h2>
               </div>
               <div
                 class="option two"
@@ -79,16 +79,38 @@
                 <i class="fa-solid fa-money-bill fa-2x"></i>
                 <h2 class="sub-head option-head">15%</h2>
               </div>
-              <div class="option three" onclick="optionHandler(this)">
-                <i class="fa-solid fa-money-bill fa-2x"></i>
-                <h2 class="sub-head option-head">Custom</h2>
+            </div>
+            <div class="custom-area">
+              <span class="custom-span"
+                >Enter custom value
+                <i class="fa-solid fa-chevron-circle-down"></i
+              ></span>
+              <div class="option cust">
+                <input
+                  class="value-custom"
+                  type="number"
+                  name="custom"
+                  placeholder="Enter custom value"
+                />
+                <button class="btn-custom" onclick="custom(this)">
+                  Calculate
+                </button>
+              </div>
+              <span class="custom-span"
+                >Add to value <i class="fa-solid fa-chevron-circle-down"></i
+              ></span>
+              <div class="option add">
+                <button class="btn-custom add-value" onclick="custom(this)">
+                  Add
+                </button>
               </div>
             </div>
           </section>
         </main>
         <footer class="mar-bottom">
-          <div class="section-top pad">
+          <div class="section-top sect-history pad">
             <span class="section-title">History</span>
+            <i class="fa-solid fa-trash fa-2x" id="trash"></i>
           </div>
           <div class="history">
             <ul class="history-ul"></ul>
