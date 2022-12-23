@@ -29,6 +29,7 @@ function calculate(perc, price) {
     console.log(historyArray);
     localStorage.setItem("gogw", JSON.stringify(historyArray));
     addHistory(historyArray);
+    window.scrollTo(0, document.body.scrollHeight);
   } else {
     result.textContent = `Nothing to calculate`;
   }
