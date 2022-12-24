@@ -24,6 +24,7 @@ a {
 
 ul {
   margin: 0;
+  padding: 0;
 }
 
 .mar-bottom {
@@ -259,4 +260,80 @@ input[name="value"]:focus {
 
 .li-blue {
   color: var(--li-alt-text);
+}
+
+@media screen and (max-width: 798px) {
+  body {
+    place-content: unset;
+  }
+
+  .wrapper {
+    width: auto;
+    padding: 0;
+    background-color: #cdd8df;
+  }
+
+  .top-nav {
+    justify-content: unset;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .top-nav li {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  main .options {
+  }
+
+  main .options .options-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1rem 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    background-color: var(--white);
+  }
+
+  .custom-area .option {
+    display: flex;
+    justify-content: unset;
+    align-items: center;
+    flex-direction: column;
+    margin: 1rem !important;
+    padding: 0.5rem;
+  }
+
+  .price-area {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+  }
+
+  .section-top {
+    padding: 0.25rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 0;
+  }
+
+  .section-top .section-title {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .value-section {
+    text-align: center;
+  }
+
+  label {
+    margin-bottom: 4rem;
+  }
 }
