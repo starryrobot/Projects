@@ -271,6 +271,20 @@ input[name="value"]:focus {
     place-content: unset;
   }
 
+  header {
+    display: unset;
+  }
+
+  .head.main-head {
+    font-weight: 400;
+    font-size: 38px;
+    text-align: center !important;
+  }
+
+  .result-text {
+    font-size: 30px;
+  }
+
   .wrapper {
     width: auto;
     padding: 0;
@@ -292,10 +306,41 @@ input[name="value"]:focus {
   main .options .options-area {
     display: grid;
     grid-template-columns: 1fr;
-    padding: 1rem 2rem;
+    background-color: var(--white);
+  }
+
+  .option {
+    justify-content: space-between !important;
+    padding: 1rem;
+    background-color: #087fee;
+    color: var(--white);
+  }
+
+  main .options .options-area,
+  .custom-area,
+  .custom-area .option,
+  .price-area,
+  .section-top,
+  .history,
+  .custom-span,
+  .top-nav li {
     margin-right: 1rem;
     margin-left: 1rem;
+  }
+
+  .top-nav li:last-child {
+    margin-right: 1rem;
+  }
+
+  main .options .options-area,
+  .custom-area .option,
+  .price-area {
+    padding: 1rem 2rem;
+  }
+
+  .custom-area {
     background-color: var(--white);
+    padding-bottom: 1rem;
   }
 
   .custom-area .option {
@@ -303,26 +348,18 @@ input[name="value"]:focus {
     justify-content: unset;
     align-items: center;
     flex-direction: column;
-    padding: 1rem 2rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
   }
 
   .price-area {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 1rem 2rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
     margin-bottom: 1rem;
     background-color: var(--white);
   }
 
   .section-top {
     padding: 0.25rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
     margin-bottom: 0;
   }
 
@@ -341,5 +378,10 @@ input[name="value"]:focus {
 
   .sub-head.option-head {
     font-size: 42px;
+  }
+
+  .custom-span {
+    display: inline-block;
+    padding: 0.5rem;
   }
 }
