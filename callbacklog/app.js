@@ -1,9 +1,10 @@
+/* GLOBAL VARIABLES */
+/* Get elements */
 let divLogs = document.querySelector(".logs");
 let divLogsChildren = divLogs.childElementCount;
 const submitBtn = document.querySelector(".btn-save");
 let form = document.querySelector("form");
 const dateText = document.getElementById("date");
-const fromLocal = JSON.parse(localStorage.getItem("Entry"));
 const statusLi = document.querySelectorAll(".li-status");
 const statusLocal = document.getElementById("status-local");
 const statusClear = document.getElementById("status-clear");
@@ -15,24 +16,81 @@ const interactForm = document.querySelector(".interact-form");
 const textArea = document.querySelector("textarea");
 const searchText = document.querySelector(".search-text");
 const searchInput = document.getElementById("search");
-let currScrollPos = 0;
+
+/* Get Local Storage */
+const fromLocal = JSON.parse(localStorage.getItem("Call Logs"));
+const fromLocalHigh = JSON.parse(localStorage.getItem("Priority Array"));
+
+/* Booleans */
 let delState = false;
 let highlightState = false;
-let currState = "";
-let div = "";
-let currentPos = window.scrollY;
-let formArray = [];
-let searchArray = [];
-let ulHeight = 0;
-let callbackCounter = 0;
-let consoleCounter = 0;
 let formEnabled = false;
 let interactState = false;
 let clearState = false;
 
+/* Strings */
+let currState = "";
+let div = "";
+let today = "";
+let formDay = "";
+
+/* Numbers */
+let ulHeight = 0;
+let callbackCounter = 0;
+let consoleCounter = 0;
+let todayCount = 0;
+let currScrollPos = 0;
+let totalHighPriority = 0;
+let currentPos = window.scrollY;
+
+/* Arrays */
+let formArray = [];
+let searchArray = [];
+let highPriority = [];
+
 /* Add DOMContentLoaded to load from Local Storage */
 
 window.addEventListener("DOMContentLoaded", onLoad);
+
+/* Start routine procedure on page fully loaded in browser */
+function onLoad() {
+  consoleCounter++;
+  console.log(
+    `[#${consoleCounter}] -- onLoad DOMContentLoaded event triggered`
+  );
+  if (fromLocal) {
+    clearState = true;
+    console.log(
+      `LocalStorage found. Parsed content of LocalStorage (array) is ${fromLocal}`
+    );
+    formArray = fromLocal;
+    statusLocal.innerHTML += `<i class="fa-solid fa-check" style="color:#019c01";></i>`;
+    statusLocal.title = "Local Storage has been found";
+    if (fromLocalHigh) {
+      console.log(
+        `Priority Array found. Parsed content of highPriority (array) is ${fromLocalHigh}`
+      );
+      for (let i = 0; i < fromLocalHigh.length; i++) {
+        totalHighPriority++;
+        document.querySelector(".cards #high").textContent =
+          fromLocalHigh.length;
+      }
+      highPriority = fromLocalHigh;
+    }
+    formShowCallbacks();
+    renderForm(fromLocal);
+  } else {
+    clearState = false;
+    console.log("Not found. Not calling renderForm");
+    statusLocal.innerHTML += `<i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
+    statusClear.classList.add("disabled");
+    statusLocal.title = "Local Storage has not been found";
+    // checkContents(divLogsChildren);
+  }
+  checkContents();
+  today = new Date().toLocaleDateString("en-GB");
+  console.log(today);
+}
 
 /* Timer Function for checking current number of call backs */
 setInterval(function () {
@@ -122,33 +180,6 @@ function createPop(url) {
     "Call Log Form",
     "height=auto,width=auto,resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no"
   );
-}
-
-/* Start routine procedure on page fully loaded in browser */
-function onLoad() {
-  consoleCounter++;
-  console.log(
-    `[#${consoleCounter}] -- onLoad DOMContentLoaded event triggered`
-  );
-  if (fromLocal) {
-    clearState = true;
-    console.log(
-      `LocalStorage found. Parsed content of LocalStorage (array) is ${fromLocal}`
-    );
-    formArray = fromLocal;
-    statusLocal.innerHTML += `<i class="fa-solid fa-check" style="color:#019c01";></i>`;
-    statusLocal.title = "Local Storage has been found";
-    formShowCallbacks();
-    renderForm(fromLocal);
-  } else {
-    clearState = false;
-    console.log("Not found. Not calling renderForm");
-    statusLocal.innerHTML += `<i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
-    statusClear.classList.add("disabled");
-    statusLocal.title = "Local Storage has not been found";
-    // checkContents(divLogsChildren);
-  }
-  checkContents();
 }
 
 /* Add event listener to search input element */
@@ -317,17 +348,17 @@ function tabHandler(el) {
 function checkPriority() {
   const reasonLi = document.querySelectorAll(".priority");
   reasonLi.forEach(function (e) {
-    const lowerCase = e.childNodes[2];
-    const text = lowerCase.textContent;
-    console.log(lowerCase);
-    if (text == "High") {
-      lowerCase.classList.add("red");
+    const eChildren = e.childNodes[2];
+    const text = eChildren.textContent.toLowerCase();
+    console.log(eChildren);
+    if (text == "high") {
+      eChildren.classList.add("red");
       // lowerCase.style.color = "red";
       // lowerCase.style.fontWeight = "800";
-    } else if (text == "Normal") {
-      lowerCase.classList.add("blue");
+    } else if (text == "normal") {
+      eChildren.classList.add("blue");
     } else {
-      lowerCase.classList.add("green");
+      eChildren.classList.add("green");
     }
   });
 }
@@ -364,8 +395,6 @@ form.addEventListener("submit", function (e) {
 function processForm() {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- processForm function called`);
-  /* Set LocalStorage */
-  localStorage.setItem("Entry", JSON.stringify(fromLocal));
   /* Get values of form elements */
   let formPriority = document.getElementById("logpriority").value;
   let formReason = document.getElementById("reason").value;
@@ -375,6 +404,7 @@ function processForm() {
   let formCC = document.getElementById("ccnumber").value;
   let formRef = document.getElementById("custref").value;
   let formLog = document.getElementById("loginfo").value;
+
   /* Push object to array */
   formArray.push({
     lognumber: countCallbacks(),
@@ -387,7 +417,22 @@ function processForm() {
     custref: formRef,
     log: formLog,
     state: "active",
+    checkday: today,
   });
+
+  if (formPriority.toLowerCase() == "high") {
+    highPriority.push({
+      reason: formReason,
+      datenow: formDateTimeNow,
+      datescheduled: formDateTimeScheduled,
+      custname: formCustName,
+      ccnumber: formCC,
+      custref: formRef,
+      log: formLog,
+    });
+    localStorage.setItem("Priority Array", JSON.stringify(highPriority));
+  }
+
   console.log(formArray);
   /* Clear values of all form items / reset */
   document.getElementById("logpriority").value = "";
@@ -400,7 +445,7 @@ function processForm() {
   document.getElementById("loginfo").value = "";
 
   /* Save to Local Storage */
-  localStorage.setItem("Entry", JSON.stringify(formArray));
+  localStorage.setItem("Call Logs", JSON.stringify(formArray));
 
   /* Call renderForm */
   renderForm(formArray);
@@ -483,6 +528,8 @@ function renderForm(form) {
   }
   divLogs.innerHTML = listItems;
   checkPriority();
+  console.log(formDay);
+  checkToday(today);
   const renderedBtns = document.querySelectorAll(".btn");
   renderedBtns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
@@ -511,6 +558,14 @@ function renderForm(form) {
   currState = divLogs.innerHTML;
 }
 
+function checkToday(day) {
+  const isToday = new Date().toLocaleDateString("en-GB");
+  if (isToday === day) {
+    todayCount++;
+    document.querySelector(".cards #today").textContent = todayCount;
+  }
+}
+
 /* Time function */
 // setInterval(function () {
 //   let current = new Date();
@@ -531,6 +586,7 @@ function formShowCallbacks() {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- formShowCallbacks function called`);
   callbackText.textContent = formArray.length;
+  document.querySelector(".cards #high").textContent = highPriority.length;
 }
 
 /* Scroll Position Function & Timer */
