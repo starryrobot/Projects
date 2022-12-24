@@ -129,6 +129,10 @@ main .options .options-area {
   transition: all 250ms ease-out;
 }
 
+.option i {
+  display: inline !important;
+}
+
 .custom-area .option {
   display: flex;
   justify-content: space-between;
@@ -285,9 +289,6 @@ input[name="value"]:focus {
     margin-bottom: 1rem;
   }
 
-  main .options {
-  }
-
   main .options .options-area {
     display: grid;
     grid-template-columns: 1fr;
@@ -302,8 +303,9 @@ input[name="value"]:focus {
     justify-content: unset;
     align-items: center;
     flex-direction: column;
-    margin: 1rem !important;
-    padding: 0.5rem;
+    padding: 1rem 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
   }
 
   .price-area {
@@ -335,5 +337,9 @@ input[name="value"]:focus {
 
   label {
     margin-bottom: 4rem;
+  }
+
+  .sub-head.option-head {
+    font-size: 42px;
   }
 }
