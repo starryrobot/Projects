@@ -5,10 +5,10 @@ let divLogsChildren = divLogs.childElementCount;
 const submitBtn = document.querySelector(".btn-save");
 let form = document.querySelector("form");
 const dateText = document.getElementById("date");
-const statusLi = document.querySelectorAll(".li-status");
-const statusLocal = document.getElementById("status-local");
-const statusClear = document.getElementById("status-clear");
-const statusHelp = document.getElementById("status-help");
+// const statusLi = document.querySelectorAll(".li-status");
+// const statusLocal = document.getElementById("status-local");
+// const statusClear = document.getElementById("status-clear");
+// const statusHelp = document.getElementById("status-help");
 const callbackText = document.getElementById("callbacks");
 const formInteract = document.querySelectorAll(".form-interact");
 const interactText = document.getElementById("interact-text");
@@ -16,6 +16,9 @@ const interactForm = document.querySelector(".interact-form");
 const textArea = document.querySelector("textarea");
 const searchText = document.querySelector(".search-text");
 const searchInput = document.getElementById("search");
+// const hamburger = document.getElementById("hamburger");
+const topBar = document.querySelector(".top-bar");
+const topMenu = document.querySelector(".top-menu");
 
 /* Get Local Storage */
 const fromLocal = JSON.parse(localStorage.getItem("Call Logs"));
@@ -27,6 +30,7 @@ let highlightState = false;
 let formEnabled = false;
 let interactState = false;
 let clearState = false;
+let searchFocus = false;
 
 /* Strings */
 let currState = "";
@@ -47,10 +51,16 @@ let currentPos = window.scrollY;
 let formArray = [];
 let searchArray = [];
 let highPriority = [];
+let navArray = [];
 
 /* Add DOMContentLoaded to load from Local Storage */
 
 window.addEventListener("DOMContentLoaded", onLoad);
+
+// hamburger.addEventListener("click", function () {
+//   topBar.classList.toggle("hide");
+//   topMenu.classList.toggle("hide");
+// });
 
 /* Start routine procedure on page fully loaded in browser */
 function onLoad() {
@@ -60,12 +70,6 @@ function onLoad() {
   );
   if (fromLocal) {
     clearState = true;
-    console.log(
-      `LocalStorage found. Parsed content of LocalStorage (array) is ${fromLocal}`
-    );
-    formArray = fromLocal;
-    statusLocal.innerHTML += `<i class="fa-solid fa-check" style="color:#019c01";></i>`;
-    statusLocal.title = "Local Storage has been found";
     if (fromLocalHigh) {
       console.log(
         `Priority Array found. Parsed content of highPriority (array) is ${fromLocalHigh}`
@@ -81,10 +85,10 @@ function onLoad() {
     renderForm(fromLocal);
   } else {
     clearState = false;
-    console.log("Not found. Not calling renderForm");
-    statusLocal.innerHTML += `<i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
-    statusClear.classList.add("disabled");
-    statusLocal.title = "Local Storage has not been found";
+    // console.log("Not found. Not calling renderForm");
+    // statusLocal.innerHTML += `<i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
+    // statusClear.classList.add("disabled");
+    // statusLocal.title = "Local Storage has not been found";
     // checkContents(divLogsChildren);
   }
   checkContents();
@@ -136,45 +140,45 @@ function checkContents() {
 // }, 1000);
 
 /* Top Menu function */
-statusLi.forEach(function (liEl) {
-  consoleCounter++;
-  console.log(`[#${consoleCounter}] -- Top Menu (statusLi) function called`);
-  liEl.addEventListener("click", function (e) {
-    const liElClassList = e.currentTarget.classList;
-    console.log(liElClassList);
-    /* Refresh Page */
-    if (liElClassList.contains("status-refresh")) {
-      document.location.reload();
-      /* Help Section */
-    } else if (liElClassList.contains("status-help")) {
-      const helpWindow =
-        statusHelp.parentElement.parentElement.lastElementChild;
-      helpWindow.childNodes[1].classList.toggle("visible");
-      helpWindow.childNodes[1].scrollTop = helpWindow.scrollHeight;
-      /* Clear Local Storage */
-    } else if (liElClassList.contains("status-pop")) {
-      currScrollPos = 0;
-      // form.classList.toggle("bottom-fixed");
-    } else {
-      clearState = true;
-      if (clearState === true) {
-        let alert = confirm(
-          "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
-        );
-        if (alert) {
-          let alert2 = confirm("Are you sure?");
-          if (alert2) {
-            localStorage.removeItem("Entry");
-            location.reload();
-            onLoad();
-          }
-        }
-      }
-    }
-  });
-});
+// statusLi.forEach(function (liEl) {
+//   consoleCounter++;
+//   console.log(`[#${consoleCounter}] -- Top Menu (statusLi) function called`);
+//   liEl.addEventListener("click", function (e) {
+//     const liElClassList = e.currentTarget.classList;
+//     console.log(liElClassList);
+//     /* Refresh Page */
+//     if (liElClassList.contains("status-refresh")) {
+//       document.location.reload();
+//       /* Help Section */
+//     } else if (liElClassList.contains("status-help")) {
+//       const helpWindow =
+//         statusHelp.parentElement.parentElement.lastElementChild;
+//       helpWindow.childNodes[1].classList.toggle("visible");
+//       helpWindow.childNodes[1].scrollTop = helpWindow.scrollHeight;
+//       /* Clear Local Storage */
+//     } else if (liElClassList.contains("status-pop")) {
+//       currScrollPos = 0;
+//       // form.classList.toggle("bottom-fixed");
+//     } else {
+//       clearState = true;
+//       if (clearState === true) {
+//         let alert = confirm(
+//           "Continuing will delete all callbacks and refresh the page!\r\n\r\nThis might not be able to be undone!\r\n\r\nContinue?"
+//         );
+//         if (alert) {
+//           let alert2 = confirm("Are you sure?");
+//           if (alert2) {
+//             localStorage.removeItem("Entry");
+//             location.reload();
+//             onLoad();
+//           }
+//         }
+//       }
+//     }
+//   });
+// });
 
-function createPop(url) {
+function createPop() {
   window.open(
     url,
     "Call Log Form",
@@ -187,28 +191,28 @@ searchInput.addEventListener("input", (e) => createSearch(e.target.value));
 
 /* Search Function */
 function createSearch(searchTerm) {
+  let term = searchTerm;
+  searchFocus = true;
   searchText.classList.add("enabled");
   const entries = document.querySelectorAll(".renderedEntry");
   searchArray.push(Array.from(entries));
   for (let i = 0; i < searchArray[0].length; i++) {
     // console.log(`Search array: ${searchArray[0][i].innerText}`);
     if (
-      searchArray[0][i].innerText
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+      searchArray[0][i].innerText.toLowerCase().includes(term.toLowerCase())
     ) {
       console.log(`Search match found: ${searchArray[0][i].innerText}`);
       console.log(currState);
       setTimeout(function () {
         searchArray[0][i].classList.remove("hide");
-      }, 1000);
+      }, 250);
       // divLogs.innerHTML = currState;
     } else {
       searchArray[0][i].classList.add("hide");
     }
     setTimeout(function () {
       searchText.classList.remove("enabled");
-    }, 2000);
+    }, 500);
   }
 }
 
@@ -237,55 +241,69 @@ function createSearch(searchTerm) {
 
 /* Form interaction */
 
-// formInteract.forEach(function (element) {
-//   const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
-//   const faChevronUp = `<i class="fa-solid fa-chevron-up fa-2xl"></i>`;
-//   const showForm = `<span class="normal" id="interact-text">Show Form</span>`;
-//   const hideForm = `<span class="normal" id="interact-text">Hide Form</span>`;
-//   const children = document.querySelector(".form-interact").childNodes;
-//   console.log(children);
-//   element.addEventListener("click", function (e) {
-//     const styles = e.currentTarget.classList;
-//     if (styles.contains("interact-form")) {
-//       form.classList.toggle("hidden");
-//       if (form.classList.contains("hidden")) {
-//         console.log(this.innerHTML);
-//         e.currentTarget.innerHTML = faChevronUp + showForm;
-//         setTimeout(function () {
-//           form.style.display = "none";
-//         }, 1000);
-//       } else {
-//         console.log(this.innerHTML);
-//         e.currentTarget.innerHTML = faChevronDown + hideForm;
-//         setTimeout(function () {
-//           form.style.display = "initial";
-//         }, 1000);
-//       }
-//     }
-//   });
-// });
+formInteract.forEach(function (element) {
+  const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
+  const faChevronUp = `<i class="fa-solid fa-chevron-up fa-2xl"></i>`;
+  const showForm = `<span class="normal" id="interact-text">Show Form</span>`;
+  const hideForm = `<span class="normal" id="interact-text">Hide Form</span>`;
+  const children = document.querySelector(".form-interact").childNodes;
+  console.log(children);
+  element.addEventListener("click", function (e) {
+    const styles = e.currentTarget.classList;
+    if (styles.contains("interact-form")) {
+      form.classList.toggle("hidden");
+      if (form.classList.contains("hidden")) {
+        console.log(this.innerHTML);
+        e.currentTarget.innerHTML = faChevronUp + showForm;
+        setTimeout(function () {
+          form.style.display = "none";
+        }, 1000);
+      } else {
+        console.log(this.innerHTML);
+        e.currentTarget.innerHTML = faChevronDown + hideForm;
+        setTimeout(function () {
+          form.style.display = "initial";
+        }, 1000);
+      }
+    }
+  });
+});
 
 /* Entry Handler */
 function liHandler(liEl) {
-  consoleCounter++;
-  console.log(`[#${consoleCounter}] -- liHandler function called`);
-  console.log(this);
-  divLogsChildren = divLogs.childElementCount;
-  if (delState === true && highlightState === false) {
-    liEl.classList.add("puff-out-center");
-    setTimeout(function () {
-      liEl.remove();
-    }, 500);
+  const li = liEl.classList;
+  if (li.contains("view")) {
+    const lihtml = liEl.parentElement.parentElement.innerHTML;
+    const box = document.createElement("div");
+    const bg = document.createElement("div");
+    box.className = "window";
+    bg.className = "bg";
+    box.innerHTML = lihtml;
+    document.body.appendChild(bg);
+    bg.appendChild(box);
+    document.body.classList.add("oflow");
+    window.scrollTo(0, 0);
+  } else {
+    consoleCounter++;
+    console.log(`[#${consoleCounter}] -- liHandler function called`);
+    console.log(this);
     divLogsChildren = divLogs.childElementCount;
-    callbackText.textContent = divLogsChildren;
-    delState = false;
-    checkContents();
-  } else if (delState === false && highlightState === true) {
-    callbackText.textContent = divLogsChildren;
-    liEl.classList.toggle("highlighted");
-    highlightState = false;
-    delState = false;
-    checkContents();
+    if (delState === true && highlightState === false) {
+      liEl.classList.add("puff-out-center");
+      setTimeout(function () {
+        liEl.remove();
+      }, 500);
+      divLogsChildren = divLogs.childElementCount;
+      callbackText.textContent = divLogsChildren;
+      delState = false;
+      checkContents();
+    } else if (delState === false && highlightState === true) {
+      callbackText.textContent = divLogsChildren;
+      liEl.classList.toggle("highlighted");
+      highlightState = false;
+      delState = false;
+      checkContents();
+    }
   }
 }
 
@@ -456,13 +474,13 @@ textArea.addEventListener("click", function () {
   textArea.classList.toggle("active");
 });
 
-window.addEventListener("keypress", function (e) {
-  consoleCounter++;
-  console.log(`[#${consoleCounter}] -- form onKeyPress event triggered`);
-  if (e.key == "Enter" && !textArea.classList.contains("active")) {
-    processForm();
-  }
-});
+// window.addEventListener("keypress", function (e) {
+//   consoleCounter++;
+//   console.log(`[#${consoleCounter}] -- form onKeyPress event triggered`);
+//   if (e.key == "Enter" && searchFocus === false) {
+//     processForm();
+//   }
+// });
 
 /* Render Form function */
 function renderForm(form) {
@@ -521,8 +539,9 @@ function renderForm(form) {
                        }</span>
                        </div>
                        <div class="render-btn-space">
-                       <button class="btn btn-primary delete" onclick="liHandler(this)">Delete</button>
-                       <button class="btn btn-secondary highlight" onclick="liHandler(this)">Highlight</button>
+                       <button class="btn btn-li btn-primary delete" onclick="liHandler(this)">Delete</button>
+                       <button class="btn btn-li btn-outline view" onclick="liHandler(this)">View</button>
+                       <button class="btn btn-li btn-outline highlight" onclick="liHandler(this)">Highlight</button>
                        </div>
                        </div>`;
   }
