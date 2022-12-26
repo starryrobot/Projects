@@ -31,12 +31,14 @@ let formEnabled = false;
 let interactState = false;
 let clearState = false;
 let searchFocus = false;
+let windowDisplay = false;
 
 /* Strings */
 let currState = "";
 let div = "";
 let today = "";
 let formDay = "";
+let windowEl = "";
 
 /* Numbers */
 let ulHeight = 0;
@@ -240,7 +242,6 @@ function createSearch(searchTerm) {
 // });
 
 /* Form interaction */
-
 formInteract.forEach(function (element) {
   const faChevronDown = `<i class="fa-solid fa-chevron-down fa-2xl"></i>`;
   const faChevronUp = `<i class="fa-solid fa-chevron-up fa-2xl"></i>`;
@@ -283,6 +284,9 @@ function liHandler(liEl) {
     bg.appendChild(box);
     document.body.classList.add("oflow");
     window.scrollTo(0, 0);
+    windowEl = document.querySelector(".window");
+    windowDisplay = true;
+    getViewWindow(windowEl);
   } else {
     consoleCounter++;
     console.log(`[#${consoleCounter}] -- liHandler function called`);
@@ -419,6 +423,7 @@ function processForm() {
   let formDateTimeNow = document.getElementById("datetime").value;
   let formDateTimeScheduled = document.getElementById("datescheduled").value;
   let formCustName = document.getElementById("custname").value;
+  let formCustNum = document.getElementById("custnum").value;
   let formCC = document.getElementById("ccnumber").value;
   let formRef = document.getElementById("custref").value;
   let formLog = document.getElementById("loginfo").value;
@@ -431,6 +436,7 @@ function processForm() {
     datenow: formDateTimeNow,
     datescheduled: formDateTimeScheduled,
     custname: formCustName,
+    custnum: formCustNum,
     ccnumber: formCC,
     custref: formRef,
     log: formLog,
@@ -438,12 +444,14 @@ function processForm() {
     checkday: today,
   });
 
+  /* Check if entry is high priority */
   if (formPriority.toLowerCase() == "high") {
     highPriority.push({
       reason: formReason,
       datenow: formDateTimeNow,
       datescheduled: formDateTimeScheduled,
       custname: formCustName,
+      custnum: formCustNum,
       ccnumber: formCC,
       custref: formRef,
       log: formLog,
@@ -484,6 +492,7 @@ textArea.addEventListener("click", function () {
 
 /* Render Form function */
 function renderForm(form) {
+  const callImg = `<i class="fa-solid fa-phone fa-3x" id="entry-img"></i>`;
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- renderForm function called`);
   let listItems = "";
@@ -494,47 +503,46 @@ function renderForm(form) {
                          form[i]
                        )}" >
                        <div class="entry-top">
-                       <h4 class="li-head">Call back Log # ${
-                         form[i].lognumber
-                       }</h4>
+                       ${callImg}
+                       <h4 class="li-head">Call ${form[i].lognumber}</h4>
                        </div>
                        <div class="entry-item priority">
-                       <span class="li-text"><b>Priority:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Priority:</span><span class="li-text text-main">${
                          form[i].priority
                        }</span>
                        </div>
                        <div class="entry-item reason">
-                       <span class="li-text"><b>Reason:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Reason:</span><span class="li-text text-main">${
                          form[i].reason
                        }</span>
                        </div>
                        <div class="entry-item datenow">
-                       <span class="li-text"><b>Date & Time Now:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Date & Time Now:</span><span class="li-text text-main">${
                          form[i].datenow
                        }</span>
                        </div>
                        <div class="entry-item datethen">
-                       <span class="li-text"><b>Date Scheduled:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Date Scheduled:</span><span class="li-text text-main">${
                          form[i].datescheduled
                        }</span>
                        </div>
                        <div class="entry-item custname">
-                       <span class="li-text"><b>Customer Name:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Customer Name:</span><span class="li-text text-main">${
                          form[i].custname
                        }</span>
                        </div>
                        <div class="entry-item ccnum">
-                       <span class="li-text"><b>CRM Number:</b></span><span class="li-text text-main">${
+                       <span class="li-text">CRM Number:</span><span class="li-text text-main">${
                          form[i].ccnumber
                        }</span>
                        </div>
                        <div class="entry-item orderef">
-                       <span class="li-text"><b>Order Ref:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Order Ref:</span><span class="li-text text-main">${
                          form[i].custref
                        }</span>
                        </div>
                        <div class="entry-item notes">
-                       <span class="li-text"><b>Notes:</b></span><span class="li-text text-main">${
+                       <span class="li-text">Notes:</span><span class="li-text text-main">${
                          form[i].log
                        }</span>
                        </div>
@@ -549,8 +557,13 @@ function renderForm(form) {
   checkPriority();
   console.log(formDay);
   checkToday(today);
+  let entryToast = new toast("Notification", "Entry added");
+  entryToast.createToast();
+
+  /* Get all buttons after rendering of entry */
   const renderedBtns = document.querySelectorAll(".btn");
   renderedBtns.forEach(function (btn) {
+    /* After forEach loop, addEventListner to every button */
     btn.addEventListener("click", function (e) {
       const targetClassList = e.currentTarget.classList;
       if (targetClassList.contains("delete")) {
@@ -558,7 +571,7 @@ function renderForm(form) {
         delState = true;
         highlightState = false;
         checkContents();
-      } else {
+      } else if (targetClassList.contains("highlight")) {
         console.log(this);
         delState = false;
         highlightState = true;
@@ -615,4 +628,42 @@ function getScroll() {
   currentPos = window.scrollY;
   console.log(currentPos);
   return currentPos;
+}
+
+function getViewWindow(win) {
+  win.querySelector(".render-btn-space").remove();
+  document.body.querySelector(".wrapper").classList.add("blur");
+  console.log(win.parentElement);
+  win.parentElement.addEventListener("click", function () {
+    console.log(win);
+    if (windowDisplay === true) {
+      win.parentElement.remove();
+      document.body.classList.remove("oflow");
+      windowDisplay = false;
+      document.body.querySelector(".wrapper").classList.remove("blur");
+    }
+  });
+}
+
+function toast(title, content) {
+  this.title = title;
+  this.content = content;
+
+  this.createToast = function () {
+    const toastEl = document.createElement("div");
+    const toastText = `<span class="toast-head">${this.title}</span>
+                       <span class="toast-text">${this.content}</span>
+    `;
+    toastEl.className = "toast";
+    toastEl.innerHTML += toastText;
+    document.querySelector("footer").appendChild(toastEl);
+    const liveToast = document.querySelector("footer .toast");
+    liveToast.classList.add("pop");
+    liveToast.addEventListener("click", function () {
+      liveToast.classList.remove("pop");
+      setTimeout(function () {
+        liveToast.remove();
+      }, 5000);
+    });
+  };
 }
