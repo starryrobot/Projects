@@ -602,36 +602,44 @@ main .log-area .logs .renderedEntry:last-child {
   opacity: 0.3;
 }
 
+.toast-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .toast {
-  display: none;
-  /* position: fixed;
-  left: 5px;
-  bottom: 30px; */
   width: 100px;
   padding: 2rem 4rem;
   background-color: var(--primary-white);
   border-radius: 30px;
   box-shadow: var(--boxshadow-1);
-  opacity: 0;
+  opacity: 1;
   transition: opacity 2s ease-out;
+  z-index: 9999;
+  animation: yaypop 2s 1 both;
 }
 
 .toast.pop {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  animation: yapop 500ms 1 both;
-  z-index: 9999;
-  opacity: 1;
+  opacity: 0;
+}
+
+.toast.fixed {
+  position: fixed;
+  bottom: 0;
 }
 
 @keyframes yaypop {
   0% {
-    transform: translateX(0);
+    transform: translateY(0);
+    scale: 1.3;
+  }
+  50% {
+    scale: 1.6;
   }
   100% {
-    transform: translateX(50px);
+    transform: translateY(-100px);
   }
 }
 

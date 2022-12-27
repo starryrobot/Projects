@@ -54,6 +54,7 @@ let formArray = [];
 let searchArray = [];
 let highPriority = [];
 let navArray = [];
+let notifArray = [];
 
 /* Add DOMContentLoaded to load from Local Storage */
 
@@ -649,6 +650,7 @@ function toast(title, content) {
   this.title = title;
   this.content = content;
 
+  /* Create new toast */
   this.createToast = function () {
     const toastEl = document.createElement("div");
     const toastText = `<span class="toast-head">${this.title}</span>
@@ -656,14 +658,17 @@ function toast(title, content) {
     `;
     toastEl.className = "toast";
     toastEl.innerHTML += toastText;
-    document.querySelector("footer").appendChild(toastEl);
-    const liveToast = document.querySelector("footer .toast");
-    liveToast.classList.add("pop");
-    liveToast.addEventListener("click", function () {
-      liveToast.classList.remove("pop");
-      setTimeout(function () {
-        liveToast.remove();
-      }, 5000);
+    document.querySelector("footer .toast-area").appendChild(toastEl);
+    const allToasts = document.querySelectorAll(".toast");
+    allToasts.forEach(function (toast) {
+      toast.classList.add("fixed");
+      toast.addEventListener("click", function (e) {
+        const currClass = e.currentTarget.classList;
+        currClass.add("pop");
+        setTimeout(function () {
+          currClass.remove();
+        }, 5000);
+      });
     });
   };
 }
