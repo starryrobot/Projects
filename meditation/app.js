@@ -31,6 +31,9 @@ let appArray = [
     <div class="feature">
     <div class="bells">
       <h1 class="heading">Bells</h1>
+      <p class="para feature-para">
+      Choose a bell
+      </p>
       <button
         class="btn btn-primary btn-rounded bell-1"
         onclick="bells(this)"
@@ -51,13 +54,22 @@ let appArray = [
       </button>
     </div>
     <div class="duration">
+    <p class="para feature-para">
+    How long?
+    </p>
       <input type="number" class="time" id="dur" placeholder="Duration (in minutes)" />
+      <p class="para feature-para">
+      Time between interval bells?
+      </p>
       <input
         type="number"
         class="time"
         id="int"
         placeholder="Intervals (in minutes)"
       />
+      <p class="para feature-para">
+      Delay before start?
+      </p>
       <input type="number" class="time" id="del" placeholder="Delay (in minutes)" />
     </div>
     <button class="btn btn-outline" id="begin">Begin</button>
