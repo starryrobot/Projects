@@ -234,6 +234,9 @@ picture img {
   min-width: 100vw;
   min-height: 100vh;
   overflow: hidden;
+}
+
+.app.bg.anim {
   animation: bganim 10s 1 both;
 }
 

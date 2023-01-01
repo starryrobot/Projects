@@ -137,13 +137,23 @@ function load() {
   /* Add nice background image to body element on startup */
   setTimeout(function () {
     const app = document.querySelector(".app");
-    app.classList.add("bg");
+    app.classList.add("bg", "anim");
     btnGo.classList.remove("btn-hide");
     btnGo.classList.add("appear");
   }, 3000);
   /* Add an event listener to go button and invoke startApp when click event is triggered */
   btnGo.addEventListener("click", function () {
     startApp();
+  });
+  /* Add an event listener to body element with click event to remove entrance animation */
+  document.body.addEventListener("click", function () {
+    const el = document.querySelector(".app");
+    if (el.classList.contains("anim")) {
+      /* Remove class with animation if user doesn't want to wait around */
+      el.classList.remove("anim");
+      /* Remove animation from button so it is available straight away */
+      btnGo.style.animation = "none";
+    }
   });
 }
 
@@ -166,6 +176,7 @@ function navigate(ind, bool) {
     /* Replace main.app HTML with page/component HTML in starting object (intro - this brings user back to start) */
     appEl.innerHTML = appArray[0].content;
   }
+  /* If no bell chosen, take user back to options/choices page/component */
   if (ind === 99 && bool === true) {
     appEl.innerHTML = appArray[1].content;
   }
