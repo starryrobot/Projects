@@ -1,0 +1,234 @@
+/* GLOBALS */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --cs-1: #4ba3c3;
+  --cs-2: #f8f4e3;
+  --ff-1: "Manrope Variable";
+  --ff-2: "Rock Salt";
+  --cs-text: #1a1a1a;
+  --white: #fff;
+  --black: #000;
+}
+
+/* FONTS */
+
+@font-face {
+  font-family: "Rock Salt";
+  src: url(RockSalt-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Manrope Variable";
+  src: url(Manrope-VariableFont_wght.ttf);
+}
+
+/* ANIMATIONS */
+
+@keyframes bganim {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+  }
+  100% {
+    clip-path: circle(100% at 50% 50%);
+  }
+}
+
+@keyframes circles {
+  0% {
+    clip-path: circle(10% at 50% 50%);
+  }
+  100% {
+    clip-path: circle(100% at 50% 50%);
+  }
+}
+
+/* RESETS */
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* UTILITIES */
+
+.heading {
+  font-family: var(--ff-2);
+  font-size: 50px;
+  border-radius: 30px;
+  color: var(--cs-2);
+  margin-bottom: 4rem;
+}
+
+.heading-bells {
+  text-align: center;
+  font-family: var(--ff-2);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+  transition: all 300ms ease-out;
+}
+
+.btn.btn-primary {
+  background-color: var(--cs-2);
+  padding: 1rem 2rem;
+  color: var(--cs-text);
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.btn.btn-primary:hover {
+  scale: 0.9;
+}
+
+.btn.btn-outline {
+  outline: 2px solid var(--cs-2);
+  border-radius: 30px;
+  padding: 1rem 2rem;
+  font-size: 20px;
+  color: var(--cs-2);
+  font-weight: 600;
+}
+
+.btn.btn-rounded {
+  padding: 1rem;
+  border-radius: 50%;
+  width: 50px;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: geometricPrecision;
+}
+
+body {
+  font-family: "Manrope Variable";
+  background-color: var(--cs-1);
+  height: 100vh;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+body.bg {
+  background-image: url("pic1mobile.jpg");
+  background-repeat: no-repeat;
+  animation: bganim 10s 1 both;
+}
+
+.entry-ts {
+  color: var(--cs-1);
+}
+
+.timer-dull {
+  background-color: #1a1a1a;
+}
+
+.app {
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.app,
+.meditate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.circles {
+  animation: circles 10s 1 both;
+}
+
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.nav-bar {
+  list-style-type: none;
+  text-align: center;
+}
+
+.nav-bar li {
+  display: inline;
+  padding: 0.5rem 1rem;
+  background-color: var(--cs-2);
+  filter: brightness(75%);
+  margin-right: 1rem;
+  border-radius: 30px;
+}
+
+.nav-bar li.selected {
+  background-color: var(--cs-2);
+  filter: brightness(100%);
+}
+
+.nav-bar li:last-child {
+  margin-right: 0;
+}
+
+.timer-text {
+  display: block;
+  width: 100%;
+  color: var(--cs-2);
+  font-family: var(--ff-2);
+  font-size: 55px;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature .bells,
+.feature .duration {
+  margin-bottom: 1rem;
+}
+
+.feature .duration input[class="time"] {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 30px;
+  margin-bottom: 1rem;
+  background-color: var(--cs-2);
+}
+
+.ns-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.para {
+  font-size: 20px;
+  color: var(--cs-2);
+}

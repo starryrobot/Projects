@@ -1,0 +1,82 @@
+@font-face {
+  font-family: "Currys Sans";
+  src: url("Currys\ Sans.otf") format("opentype");
+}
+@font-face {
+  font-family: "Currys Sans Headline";
+  src: url("Currys\ Sans\ Headline.otf") format("opentype");
+}
+
+:root {
+  --primary-purple: #4c12a1;
+  --added-cs-1: #e5006d;
+  --primary-white: #fff;
+  --accent: #c0c0c0;
+  --gray: #858892;
+  --gray-2: #7b7e86;
+  --l-gray: #f3f3f3;
+  --green: #cae6e7;
+  --yellow: #fdecb7;
+  --purple: #cfc8f6;
+  --def-text: #213038;
+  --boxshadow-1: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+    rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  --font-c1: "Currys Sans";
+  --font-c2: "Currys Sans Headline";
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-c1);
+  text-rendering: geometricPrecision;
+  height: 100vh;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  color: var(--primary-purple);
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+.box-heading {
+  background: url("bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 2rem 4rem;
+  font-size: 38px;
+}
+
+.box-content {
+  padding: 2rem 4rem;
+  color: var(--def-text);
+}
+
+.box-content .bc-top {
+  display: flex;
+  align-items: center;
+}
+
+.box-content .bc-top i {
+  margin-right: 1rem;
+}
+
+.box-content .box-para {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.box-content .box-para.para-big {
+  font-size: 32px;
+  font-weight: 400;
+}

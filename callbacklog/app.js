@@ -1,10 +1,11 @@
 /* GLOBAL VARIABLES */
 /* Get elements */
-let divLogs = document.querySelector(".logs");
-let divLogsChildren = divLogs.childElementCount;
+// let divLogs = document.querySelector(".logs");
+// let divLogsChildren = divLogs.childElementCount;
 const submitBtn = document.querySelector(".btn-save");
 let form = document.querySelector("form");
 const dateText = document.getElementById("date");
+console.log(dateText);
 // const statusLi = document.querySelectorAll(".li-status");
 // const statusLocal = document.getElementById("status-local");
 // const statusClear = document.getElementById("status-clear");
@@ -55,6 +56,7 @@ let searchArray = [];
 let highPriority = [];
 let navArray = [];
 let notifArray = [];
+let userHistory = [];
 
 /* Add DOMContentLoaded to load from Local Storage */
 
@@ -71,8 +73,14 @@ function onLoad() {
   console.log(
     `[#${consoleCounter}] -- onLoad DOMContentLoaded event triggered`
   );
+  const toast = document.querySelectorAll(".toast");
+  toast.forEach(function (t) {
+    t.remove();
+  });
+
   if (fromLocal) {
     clearState = true;
+    formArray = fromLocal;
     if (fromLocalHigh) {
       console.log(
         `Priority Array found. Parsed content of highPriority (array) is ${fromLocalHigh}`
@@ -88,15 +96,238 @@ function onLoad() {
     renderForm(fromLocal);
   } else {
     clearState = false;
+    console.warn("Local storage is " + fromLocal);
     // console.log("Not found. Not calling renderForm");
     // statusLocal.innerHTML += `<i class="fa-solid fa-xmark" style="color:#a70505";></i></i>`;
     // statusClear.classList.add("disabled");
     // statusLocal.title = "Local Storage has not been found";
     // checkContents(divLogsChildren);
   }
+  /* Populate navArray */
+  const allNav = document.getElementsByClassName("navi");
+  for (let i = 0; i < allNav.length; i++) {
+    if (allNav[i].classList[1] === "nav-home") {
+      navArray.push({
+        name: allNav[i].classList[1],
+        content: `<div class="top">
+        <h1 class="main-header">Call back Dashboard</h1>
+        <span class="call-counter home">0</span>
+      </div>
+      <!-- <p class="main-para">Keep a useful log of all your call backs</p> -->
+      <div class="search-bar">
+        <div class="search-input">
+          <input
+            class="search"
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Search logs..."
+          />
+          <span class="search-text"
+            ><i class="fa-solid fa-info-circle"></i>Searching...</span
+          >
+        </div>
+        <div class="search-nav">
+          <div class="search-ul">
+            <li>
+              <a href="#"><i class="fa-solid fa-history"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa-solid fa-hard-drive"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fa-solid fa-trash"></i></a>
+            </li>
+          </div>
+        </div>
+      </div>
+      <section
+        class="form-interact interact-logs"
+        id="logs"
+        onclick="tabHandler(this)"
+      >
+        <i class="fa-solid fa-chevron-down fa-2xl"></i
+        ><span class="normal" id="interact-text">Hide Logs</span>
+      </section>
+      <section class="log-area">
+        <div class="logs"></div>
+      </section>
+      <section
+        class="form-interact interact-stats"
+        id="stats"
+        onclick="tabHandler(this)"
+      >
+        <i class="fa-solid fa-chevron-down fa-2xl"></i
+        ><span class="normal" id="interact-text">Hide Stats</span>
+      </section>
+      <section class="cards">
+        <article class="card-item">
+          <h3 class="card-title">Callbacks</h3>
+          <p class="card-text" id="callbacks">Loading...</p>
+        </article>
+        <article class="card-item">
+          <h3 class="card-title">Today</h3>
+          <p class="card-text" id="today">Loading...</p>
+        </article>
+        <article class="card-item">
+          <h3 class="card-title">High Priority</h3>
+          <p class="card-text" id="high">Loading...</p>
+        </article>
+      </section>
+      <section
+        class="form-interact interact-form"
+        id="form"
+        onclick="tabHandler(this)"
+      >
+        <i class="fa-solid fa-chevron-down fa-2xl"></i
+        ><span class="normal" id="interact-text">Hide Form</span>
+      </section>
+      <section class="log-menu">
+        <form action="">
+          <div class="form-item">
+            <label for="priority">What is the priority?</label>
+            <select name="priority" id="logpriority" required>
+              <option value="Low">Low</option>
+              <option value="Normal" selected>Normal</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label for="category">What is the reason?</label>
+            <input
+              type="text"
+              name="reason"
+              id="reason"
+              placeholder="Reason for call back"
+              minlength="4"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="datetime">When should this entry be saved?</label>
+            <input
+              type="datetime-local"
+              name="datetime"
+              id="datetime"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="datescheduled"
+              >When is the callback scheduled?</label
+            >
+            <input
+              type="datetime-local"
+              name="datescheduled"
+              id="datescheduled"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="custname">What is the name of the customer?</label>
+            <input
+              type="text"
+              name="custname"
+              id="custname"
+              placeholder="Customer Name"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="custname">What is the contact number?</label>
+            <input
+              type="tel"
+              name="custnum"
+              id="custnum"
+              placeholder="Contact Number"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="ccnumber">What is the CRM reference number?</label>
+            <input
+              type="text"
+              name="ccnumber"
+              id="ccnumber"
+              placeholder="CRM Reference"
+              minlength="6"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="custref">What is the order reference?</label>
+            <input
+              type="text"
+              name="custref"
+              id="custref"
+              placeholder="Order Reference"
+              required
+            />
+          </div>
+          <div class="form-item">
+            <label for="loginfo">What is the callback about?</label>
+            <textarea
+              name="loginfo"
+              id="loginfo"
+              cols="30"
+              rows="10"
+              placeholder="Enter description here"
+              required
+            ></textarea>
+          </div>
+          <div class="form-btns">
+            <button
+              class="btn btn-secondary btn-reset"
+              type="reset"
+              title="Reset form"
+            >
+              Reset
+            </button>
+            <button class="btn btn-primary btn-save" title="Save form">
+              Save
+            </button>
+          </div>
+        </form>
+      </section>`,
+      });
+    } else if (allNav[i].classList[1] === "nav-calls") {
+      navArray.push({
+        name: allNav[i].classList[1],
+        content: `<h1>Calls</h1>`,
+      });
+    } else if (allNav[i].classList[1] === "nav-stats") {
+      navArray.push({
+        name: allNav[i].classList[1],
+        content: `<h1>Stats</h1>`,
+      });
+    } else {
+      navArray.push({
+        name: allNav[i].classList[1],
+        content: `<h1>Info</h1>`,
+      });
+    }
+  }
+
+  /* Check User History */
+  for (let i = 0; i < userHistory.length; i++) {}
+
   checkContents();
-  today = new Date().toLocaleDateString("en-GB");
-  console.log(today);
+}
+
+/* Page navigation function */
+function navigate(p) {
+  consoleCounter++;
+  console.log(`[#${consoleCounter}] -- navigate function called`);
+  const main = document.querySelector("main");
+  const navTo = p.classList[1];
+  console.log(navTo);
+  if (navArray.find((navArray) => navArray.name === navTo)) {
+    console.log(`[#${consoleCounter}] -- Switching to ${navTo}`);
+    const index = navArray.findIndex((navArray) => navArray.name === navTo);
+    main.innerHTML = navArray[index].content;
+  } else {
+    console.log("Nope");
+  }
 }
 
 /* Timer Function for checking current number of call backs */
@@ -111,9 +342,8 @@ function checkContents() {
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- checkContents function called`);
   divLogsChildren = divLogs.childElementCount;
-  console.log(`Children in Logs: ${divLogsChildren}`);
+  /* If element count is 0, no contents in divLogs */
   if (divLogsChildren === 0) {
-    console.log("No children found");
     divLogs.innerHTML = `<span class="log-status">Nothing here, yet</span>`;
     callbackText.textContent = `${divLogsChildren}`;
     callbackText.title = "Entry still exists. Available again by refreshing";
@@ -274,6 +504,7 @@ formInteract.forEach(function (element) {
 /* Entry Handler */
 function liHandler(liEl) {
   const li = liEl.classList;
+  /* If event target is view */
   if (li.contains("view")) {
     const lihtml = liEl.parentElement.parentElement.innerHTML;
     const box = document.createElement("div");
@@ -293,6 +524,7 @@ function liHandler(liEl) {
     console.log(`[#${consoleCounter}] -- liHandler function called`);
     console.log(this);
     divLogsChildren = divLogs.childElementCount;
+    /* If event target is delete */
     if (delState === true && highlightState === false) {
       liEl.classList.add("puff-out-center");
       setTimeout(function () {
@@ -302,6 +534,7 @@ function liHandler(liEl) {
       callbackText.textContent = divLogsChildren;
       delState = false;
       checkContents();
+      /* If event target is highlight */
     } else if (delState === false && highlightState === true) {
       callbackText.textContent = divLogsChildren;
       liEl.classList.toggle("highlighted");
@@ -368,6 +601,7 @@ function tabHandler(el) {
   }
 }
 
+/* Check log entry priority function */
 function checkPriority() {
   const reasonLi = document.querySelectorAll(".priority");
   reasonLi.forEach(function (e) {
@@ -494,10 +728,14 @@ textArea.addEventListener("click", function () {
 /* Render Form function */
 function renderForm(form) {
   const callImg = `<i class="fa-solid fa-phone fa-3x" id="entry-img"></i>`;
+  let toastName = "";
+  let toastReason = "";
   consoleCounter++;
   console.log(`[#${consoleCounter}] -- renderForm function called`);
   let listItems = "";
   for (let i = 0; i < form.length; i++) {
+    toastName = form[i].custname;
+    toastReason = form[i].reason;
     console.log(form[i]);
     listItems += `
                        <div class="renderedEntry" onclick="liHandler(this)" data-attribute="${formArray.indexOf(
@@ -558,8 +796,16 @@ function renderForm(form) {
   checkPriority();
   console.log(formDay);
   checkToday(today);
-  let entryToast = new toast("Notification", "Entry added");
+
+  /* Create new Toast array */
+  let entryToast = new Toast(toastName, toastReason);
+
+  /* Invoke Toast create function */
   entryToast.createToast();
+
+  /* Invoke reminder function */
+
+  console.log(reminder(today));
 
   /* Get all buttons after rendering of entry */
   const renderedBtns = document.querySelectorAll(".btn");
@@ -600,12 +846,12 @@ function checkToday(day) {
 }
 
 /* Time function */
-// setInterval(function () {
-//   let current = new Date();
-//   const options = { hour: "numeric", minute: "numeric", hour12: true };
-//   let date = current.toLocaleDateString("en-GB", options);
-//   dateText.textContent = date;
-// }, 1000);
+setInterval(function () {
+  let current = new Date();
+  const options = { hour: "numeric", minute: "numeric", hour12: true };
+  let date = current.toLocaleDateString("en-GB", options);
+  dateText.textContent = date;
+}, 1000);
 
 /* Counter function */
 function countCallbacks() {
@@ -631,11 +877,14 @@ function getScroll() {
   return currentPos;
 }
 
+/* View log in window */
+
 function getViewWindow(win) {
+  /* Strip button area from entry html */
   win.querySelector(".render-btn-space").remove();
   document.body.querySelector(".wrapper").classList.add("blur");
   console.log(win.parentElement);
-  win.parentElement.addEventListener("click", function () {
+  win.parentElement.addEventListener("click", function (e) {
     console.log(win);
     if (windowDisplay === true) {
       win.parentElement.remove();
@@ -646,14 +895,18 @@ function getViewWindow(win) {
   });
 }
 
-function toast(title, content) {
+/* Toast Notifications */
+
+function Toast(title, content) {
   this.title = title;
   this.content = content;
 
   /* Create new toast */
   this.createToast = function () {
+    let count = 0;
     const toastEl = document.createElement("div");
-    const toastText = `<span class="toast-head">${this.title}</span>
+    const toastText = `<h1 class="toast-big">Call back added!</h1>
+                       <span class="toast-head">${this.title}</span>
                        <span class="toast-text">${this.content}</span>
     `;
     toastEl.className = "toast";
@@ -671,4 +924,9 @@ function toast(title, content) {
       });
     });
   };
+}
+
+function reminder(s) {
+  const now = new Date();
+  return s < now;
 }
