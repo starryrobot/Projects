@@ -91,6 +91,7 @@ let end = false;
 window.addEventListener("DOMContentLoaded", load);
 
 function load() {
+  console.log("load");
   document.body.classList.add("bg");
   let index = 0;
   let start = "";
@@ -115,6 +116,7 @@ function load() {
 }
 
 function navigate(ind) {
+  console.log("navigation");
   const appEl = document.querySelector(".app");
   nIndex = ind;
   console.log(nIndex);
@@ -132,6 +134,7 @@ function navigate(ind) {
 }
 
 function startApp() {
+  console.info("start");
   nIndex++;
   document
     .querySelector(".app")
@@ -178,8 +181,8 @@ function choices() {
 }
 
 function timerComponent() {
-  // document.body.classList.remove("bg");
-  // document.body.classList.add("timer-dull");
+  document.body.classList.remove("bg");
+  document.body.classList.add("timer-dull");
   timerText = document.querySelector(".timer-text");
   nIndex++;
   document
