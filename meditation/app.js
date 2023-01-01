@@ -246,6 +246,8 @@ function timerState(state, element) {
 }
 
 function bells(bell) {
+  bell.classList.add("selected");
+  const bellList = bell.parentElement;
   /* Assign classList with index of 3 (the class we want to use) to BellClass variable */
   const bellClass = bell.classList[3];
   /* If classList matches an object in bellArray with property of bell... */
