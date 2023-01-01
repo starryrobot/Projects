@@ -1,6 +1,5 @@
 let btnGo = document.getElementById("go");
 let app = document.querySelector("main .app");
-let bellBtn = document.querySelectorAll(".bells .btn");
 let beginBtn = document.getElementById("begin");
 let timerText = document.querySelector(".timer-text");
 let startingTitle = "";
@@ -11,7 +10,7 @@ let appArray = [
     content: `<main class="app">
     <section class="timer">
     <header class="header">
-    <h1 class="heading entry-ts">Meditation</h1>
+    <h1 class="heading">Meditation</h1>
     <article class="meditate">
     <button class="btn btn-primary btn-go" id="go">I'm here now</button>
     </article>
@@ -138,15 +137,19 @@ function startApp() {
     .querySelector(".app")
     .setAttribute("component", appArray[nIndex].name);
   navigate(nIndex);
+  const bellBtn = document.querySelectorAll(".bells .btn");
+  console.log(bellBtn);
   console.log("start called");
-  btnGo.textContent = "Take a few breaths";
+  // btnGo.textContent = "Take a few breaths";
   // document.querySelector(".app").classList.add("circles");
   // setInterval(function () {
   //   document.querySelector(".feature").classList.add("here");
   //   document.querySelector(".meditate").classList.add("gone");
   //   document.querySelector(".heading").classList.add("tr-y-up");
   // }, 10000);
+  console.log("for loop");
   for (let i = 0; i < bellBtn.length; i++) {
+    console.log("for loop");
     bellArray.push({
       bell: bellBtn[i].classList[3],
       mp3: bellBtn[i].classList[3] + ".mp3",
@@ -175,8 +178,8 @@ function choices() {
 }
 
 function timerComponent() {
-  document.body.classList.remove("bg");
-  document.body.classList.add("timer-dull");
+  // document.body.classList.remove("bg");
+  // document.body.classList.add("timer-dull");
   timerText = document.querySelector(".timer-text");
   nIndex++;
   document
@@ -192,6 +195,7 @@ function timerComponent() {
 }
 
 function bells(bell) {
+  console.log("bells");
   const bellClass = bell.classList[3];
   if (bellArray.find((bellArray) => bellArray.bell === bellClass)) {
     /* Set state */
