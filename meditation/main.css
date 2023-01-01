@@ -103,7 +103,7 @@ ul {
 }
 
 .btn.btn-outline {
-  outline: 2px solid var(--cs-2);
+  background-color: var(--cs-1);
   border-radius: 30px;
   padding: 1rem 2rem;
   font-size: 20px;
@@ -195,6 +195,7 @@ footer {
 
 .timer-text {
   display: block;
+  text-align: center;
   width: 100%;
   color: var(--cs-2);
   font-family: var(--ff-2);

@@ -68,7 +68,7 @@ let appArray = [
     name: "timer",
     content: `<main class="app">
     <section class="timer">
-    <span class="timer-text timer-hidden"></span>
+    <span class="timer-text"></span>
   </section>
   </main>`,
   },
@@ -102,7 +102,6 @@ let end = false;
 window.addEventListener("DOMContentLoaded", load);
 
 function load() {
-  console.log("load");
   /* Add nice background image to body element on startup */
   document.body.classList.add("bg");
   /* Assign string value to start variable for determining existence of first page/component to load in */
@@ -136,22 +135,17 @@ function load() {
   });
 }
 
-function navigate(ind) {
-  console.log("navigation");
+function navigate(ind, bool) {
   /* Assign main.app element to variable appEl */
   const appEl = document.querySelector(".app");
   /* Assign function parameter to nIndex */
   nIndex = ind;
-  console.log(nIndex);
   /* Get current data attribute of main.app element */
   const currComp = appEl.getAttribute("component");
-  console.log(currComp);
   /* Match current data attribute to position in corresponding appArray and return index */
   const findIndex = appArray.find((appArray) => appArray.name == currComp);
-  console.log(findIndex);
   /* Make sure nIndex remains within length of appArray */
-  if (nIndex < appArray.length) {
-    console.log(nIndex);
+  if (nIndex < appArray.length && findIndex) {
     /* Replace main.app HTML with page/component HTML in matched object */
     appEl.innerHTML = appArray[nIndex].content;
   } else {
@@ -160,10 +154,12 @@ function navigate(ind) {
     /* Replace main.app HTML with page/component HTML in starting object (intro - this brings user back to start) */
     appEl.innerHTML = appArray[0].content;
   }
+  if (ind === 99 && bool === true) {
+    appEl.innerHTML = appArray[1].content;
+  }
 }
 
 function startApp() {
-  console.info("start");
   /* Increment nIndex */
   nIndex++;
   /* Set data attribute of main.app to current page/component name */
@@ -174,8 +170,6 @@ function startApp() {
   navigate(nIndex);
   /* Get NodeList of all bells ready for looping */
   const bellBtn = document.querySelectorAll(".bells .btn");
-  console.log(bellBtn);
-  console.log("start called");
   // btnGo.textContent = "Take a few breaths";
   // document.querySelector(".app").classList.add("circles");
   // setInterval(function () {
@@ -191,19 +185,16 @@ function startApp() {
       /* File name of bell */
       mp3: bellBtn[i].classList[3] + ".mp3",
     });
-    console.log(bellArray[i].bell);
   }
   /* Invoke choices function */
   choices();
 }
 
 function choices() {
-  console.log("choices function called");
   /* Get begin button and store in variable beginBtn */
   beginBtn = document.getElementById("begin");
   /* Add event listener to begin button and invoke function on click event */
   beginBtn.addEventListener("click", function (e) {
-    console.log(e);
     /* Get minutes and intervals */
     const startingMinutes = document.getElementById("dur").value;
     const startingInterval = document.getElementById("int").value;
@@ -219,12 +210,6 @@ function choices() {
 }
 
 function timerComponent() {
-  /* Remove fancy background to minimize user distractions */
-  document.body.classList.remove("bg");
-  /* Add class for 'dulling/darkening' the screen */
-  document.body.classList.add("timer-dull");
-  /* Get span element of timer-text and store in variable timerText */
-  const timerText = document.querySelector(".timer-text");
   /* Increment nIndex */
   nIndex++;
   /* Set data attribute of main.app to current page/component name */
@@ -233,18 +218,34 @@ function timerComponent() {
     .setAttribute("component", appArray[nIndex].name);
   /* Invoke navigate function with nIndex as parameter */
   navigate(nIndex);
+  /* Remove fancy background to minimize user distractions */
+  document.body.classList.remove("bg");
+  /* Add class for 'dulling/darkening' the screen */
+  document.body.classList.add("timer-dull");
   /* If no bell has been chosen, let the user know */
+  const timerText = document.querySelector(".timer-text");
   if (!state) {
-    timerText.textContent = "No bell chosen";
+    timerState(0, timerText);
   } else {
+    timerState(1, timerText);
     /* Otherwise, begin meditation! */
+  }
+}
+
+function timerState(state, element) {
+  if (state === 0) {
+    element.innerHTML = "No bell chosen";
+    return setTimeout(function () {
+      document.body.classList.add("bg");
+      navigate(99, true);
+    }, 5000);
+  } else {
     setInterval(updateTimer, 1000);
     setInterval(intervals, ready);
   }
 }
 
 function bells(bell) {
-  console.log("bells");
   /* Assign classList with index of 3 (the class we want to use) to BellClass variable */
   const bellClass = bell.classList[3];
   /* If classList matches an object in bellArray with property of bell... */
