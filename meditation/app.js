@@ -35,7 +35,7 @@ let appArray = [
         class="btn btn-primary btn-rounded bell-1"
         onclick="bells(this)"
       >
-        1
+       1
       </button>
       <button
         class="btn btn-primary btn-rounded bell-2"
@@ -140,7 +140,7 @@ function load() {
     app.classList.add("bg", "anim");
     btnGo.classList.remove("btn-hide");
     btnGo.classList.add("appear");
-  }, 3000);
+  }, 1500);
   /* Add an event listener to go button and invoke startApp when click event is triggered */
   btnGo.addEventListener("click", function () {
     startApp();
@@ -274,7 +274,9 @@ function timerState(state, element) {
       setInterval(updateTimer, 1000);
       setInterval(intervals, ready);
     } else {
+      /* Timer for delay */
       setInterval(delayTime, 1000);
+      /* Timeout to run after delay */
       setTimeout(delayTimer, timerDelay);
     }
   }
@@ -336,6 +338,11 @@ function updateTimer() {
     if (time <= 0) {
       endBell();
     }
+    // timerText.addEventListener("click", function () {
+    //   paused = true;
+    //   console.log("timer clicked");
+    //   pauseTimer(minutes, seconds, time);
+    // });
   }
 }
 
@@ -354,7 +361,8 @@ function endBell() {
       /* Navigate to object with index 0 of appArray (the start) */
       navigate(0);
       /* Add fancy background again now meditation is over */
-      document.body.classList.add("bg");
+      document.querySelector(".app").classList.add("bg");
+      document.getElementById("go").classList.remove("btn-hide");
     }, 10000);
   }
 }
@@ -392,8 +400,15 @@ function delayTime() {
     newDelay--;
   } else {
     delay = false;
+    if (!delay) {
+      if (timerText.classList.contains("delay-text")) {
+        timerText.classList.remove("delay-text");
+      }
+    }
   }
-  if (!delay) {
-    timerText.classList.remove("delay-text");
-  }
+}
+
+function pauseTimer() {
+  const timerText = document.querySelector(".timer-text");
+  timerText.classList.add("pause");
 }

@@ -99,6 +99,15 @@
   animation: appear 2s 6s 3 both;
 }
 
+@keyframes tpause {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* RESETS */
 
 a {
@@ -223,9 +232,23 @@ picture img {
   background-color: #1a1a1a;
 }
 
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top .lotus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
 .app {
   margin-left: 3rem;
   margin-right: 3rem;
+  z-index: 9999;
 }
 
 .app.bg {
@@ -291,6 +314,11 @@ footer {
 
 .timer-text.delay-text {
   color: var(--cs-1);
+}
+
+.timer-text.pause {
+  color: var(--cs-1);
+  animation: tpause 500ms infinite both;
 }
 
 .feature {
