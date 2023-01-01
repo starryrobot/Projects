@@ -58,6 +58,7 @@ let appArray = [
         id="int"
         placeholder="Intervals (in minutes)"
       />
+      <input type="number" class="time" id="del" placeholder="Delay (in minutes)" />
     </div>
     <button class="btn btn-outline" id="begin">Begin</button>
   </div>
@@ -88,6 +89,11 @@ let time = 0;
 let ready = 0;
 /* Index of current page/component */
 let nIndex = 0;
+/* Minutes into milliseconds variable for bell delay function */
+let timerDelay = 0;
+/* Intitial value for conversion for bell delay */
+let initialDelay = 0;
+let newDelay = 0;
 /* Index of current chosen bell */
 let bellIndex = 0;
 /* Array for storing bells */
@@ -205,8 +211,14 @@ function choices() {
     /* Get minutes and intervals */
     const startingMinutes = document.getElementById("dur").value;
     const startingInterval = document.getElementById("int").value;
-    /* Minutes into seconds */
+    const startingDelay = document.getElementById("del").value;
+    /* Minutes into seconds for timer */
     time = startingMinutes * 60;
+    newDelay = startingDelay * 60;
+    /* Minutes into milliseconds for delay */
+    timerDelay = Math.floor(startingDelay * 60 * 1000);
+    /* Initial value assigned to initialDelay variable */
+    initialDelay = parseInt(startingDelay);
     /* Minutes into milliseconds for setInterval timeout */
     ready = Math.floor(startingInterval * 60 * 1000);
     /* Make sure chosen interval time cannot go lower than 1 minute */
@@ -226,7 +238,7 @@ function timerComponent() {
   /* Invoke navigate function with nIndex as parameter */
   navigate(nIndex);
   /* Remove fancy background to minimize user distractions */
-  document.body.classList.remove("bg");
+  document.querySelector(".app").classList.remove("bg");
   /* Add class for 'dulling/darkening' the screen */
   document.body.classList.add("timer-dull");
   /* If no bell has been chosen, let the user know */
@@ -243,12 +255,17 @@ function timerState(state, element) {
   if (state === 0) {
     element.innerHTML = "No bell chosen";
     return setTimeout(function () {
-      document.body.classList.add("bg");
+      document.querySelector(".app").classList.add("bg");
       navigate(99, true);
     }, 5000);
   } else {
-    setInterval(updateTimer, 1000);
-    setInterval(intervals, ready);
+    if (timerDelay <= 0) {
+      setInterval(updateTimer, 1000);
+      setInterval(intervals, ready);
+    } else {
+      setInterval(delayTime, 1000);
+      setTimeout(delayTimer, timerDelay);
+    }
   }
 }
 
@@ -339,4 +356,33 @@ function intervals() {
   }
 }
 
-function delay() {}
+function delayTimer() {
+  delay = true;
+  bellObj.play();
+  setInterval(updateTimer, 1000);
+  setInterval(intervals, ready);
+}
+
+function delayTime() {
+  const timerText = document.querySelector(".timer-text");
+  /* If delay time is not less than or equal to 0... */
+  if (!newDelay <= 0) {
+    /* Assign timer-text element to timerText variable */
+    /* Add class to timer text to distinguish delay time from meditation time */
+    timerText.classList.add("delay-text");
+    /* Floor minutes */
+    const minutes = Math.floor(newDelay / 60);
+    let seconds = newDelay % 60;
+    /* If seconds are less than 10, remove 0 */
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    /* Add text to timerText with current minutes/seconds */
+    timerText.textContent = `${minutes}: ${seconds}`;
+    /* Decrement timer */
+    newDelay--;
+  } else {
+    delay = false;
+  }
+  if (!delay) {
+    timerText.classList.remove("delay-text");
+  }
+}
