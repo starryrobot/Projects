@@ -15,3 +15,4 @@ I made this meditation timer app as a project to practice my Javascript knowledg
 - Interval timer
 - Delay timer
 - Mobile first design
+- Dynamic page/components
