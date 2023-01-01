@@ -8,12 +8,13 @@ let appArray = [
   {
     name: "intro",
     title: "Meditation",
-    content: `<main class="app">
+    content: `
+    <main class="app">
     <section class="timer">
     <header class="header">
     <h1 class="heading entry-ts">Meditation</h1>
     <article class="meditate">
-    <button class="btn btn-primary btn-go" id="go">I'm here now</button>
+    <button class="btn btn-primary btn-go btn-hide" id="go">I'm here now</button>
     </article>
     </header>
     </section>
@@ -102,8 +103,6 @@ let end = false;
 window.addEventListener("DOMContentLoaded", load);
 
 function load() {
-  /* Add nice background image to body element on startup */
-  document.body.classList.add("bg");
   /* Assign string value to start variable for determining existence of first page/component to load in */
   let start = "";
   /* Assign number value to index variable for determining position of first page/component to load in */
@@ -129,6 +128,13 @@ function load() {
     .setAttribute("component", appArray[index].name);
   /* Assign go button element to variable btnGo */
   btnGo = document.getElementById("go");
+  /* Add nice background image to body element on startup */
+  setTimeout(function () {
+    const app = document.querySelector(".app");
+    app.classList.add("bg");
+    btnGo.classList.remove("btn-hide");
+    btnGo.classList.add("appear");
+  }, 3000);
   /* Add an event listener to go button and invoke startApp when click event is triggered */
   btnGo.addEventListener("click", function () {
     startApp();
@@ -166,6 +172,7 @@ function startApp() {
   document
     .querySelector(".app")
     .setAttribute("component", appArray[nIndex].name);
+
   /* Invoke navigate function */
   navigate(nIndex);
   /* Get NodeList of all bells ready for looping */
@@ -246,8 +253,18 @@ function timerState(state, element) {
 }
 
 function bells(bell) {
-  bell.classList.add("selected");
-  const bellList = bell.parentElement;
+  /* Get all bells */
+  const bellList = document.querySelectorAll(".btn-rounded");
+  /* Loop through all bells in NodeList stored in bellList variable */
+  bellList.forEach((b) => {
+    /* Remove selected class from all bells */
+    b.classList.remove("selected");
+    /* If the chosen bell does not have selected class, add to chosen bell */
+    if (!bell.classList.contains("selected")) {
+      bell.classList.add("selected");
+    }
+  });
+
   /* Assign classList with index of 3 (the class we want to use) to BellClass variable */
   const bellClass = bell.classList[3];
   /* If classList matches an object in bellArray with property of bell... */
@@ -262,9 +279,14 @@ function bells(bell) {
     );
     /* Create new Audio object with chosen bell */
     bellObj = new Audio(bellArray[bellIndex].mp3);
+    bell.classList.toggle("b-anim");
     console.log(bellObj);
     /* Play chosen bell */
     bellObj.play();
+    /* Add event listener to audio object and wait for ended event trigger */
+    bellObj.addEventListener("ended", function () {
+      bell.classList.toggle("b-anim");
+    });
   }
 }
 
@@ -316,3 +338,5 @@ function intervals() {
     bellObj.play();
   }
 }
+
+function delay() {}

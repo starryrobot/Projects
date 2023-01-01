@@ -11,6 +11,7 @@
 :root {
   --cs-1: #4ba3c3;
   --cs-2: #f8f4e3;
+  --cs-accent: #9067c6;
   --ff-1: "Manrope Variable";
   --ff-2: "Rock Salt";
   --cs-text: #1a1a1a;
@@ -36,18 +37,66 @@
   0% {
     clip-path: circle(0% at 50% 50%);
   }
+  25% {
+    clip-path: circle(50% at 50% 50%);
+  }
+  50% {
+    clip-path: circle(0% at 50% 50%);
+  }
   100% {
     clip-path: circle(100% at 50% 50%);
   }
 }
 
+.b-anim {
+  animation: bell 1s infinite both;
+}
+
 @keyframes circles {
   0% {
+    clip-path: circle(0% at 50% 50%);
+  }
+  25% {
     clip-path: circle(10% at 50% 50%);
+  }
+  50% {
+    clip-path: circle(0% at 50% 50%);
   }
   100% {
     clip-path: circle(100% at 50% 50%);
   }
+}
+
+.circles {
+  animation: circles 10s 1 both;
+}
+
+@keyframes bell {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.appear {
+  animation: appear 2s 6s 3 both;
 }
 
 /* RESETS */
@@ -132,6 +181,10 @@ ul {
   color: var(--white);
 }
 
+.btn-hide {
+  opacity: 0;
+}
+
 html {
   scroll-behavior: smooth;
   text-rendering: geometricPrecision;
@@ -145,15 +198,22 @@ body {
   width: 100vw;
   display: grid;
   place-content: center;
+  position: relative;
 }
 
-body.bg {
-  background-image: url("pic1mobile.jpg");
-  background-repeat: no-repeat;
-  animation: bganim 10s 1 both;
-  min-width: 100vw;
-  min-height: 100vh;
+/* picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
+
+picture img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+} */
 
 .entry-ts {
   color: var(--cs-1);
@@ -168,16 +228,21 @@ body.bg {
   margin-right: 3rem;
 }
 
+.app.bg {
+  background-image: url("pic1mobile.jpg");
+  background-repeat: no-repeat;
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  animation: bganim 10s 1 both;
+}
+
 .app,
 .meditate {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.circles {
-  animation: circles 10s 1 both;
 }
 
 footer {
