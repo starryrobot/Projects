@@ -375,6 +375,9 @@ function endBell() {
       /* Add fancy background again now meditation is over */
       document.querySelector(".app").classList.add("bg");
       document.getElementById("go").classList.remove("btn-hide");
+      setTimeout(function () {
+        window.location.reload();
+      }, 2000);
     }, 10000);
   }
 }

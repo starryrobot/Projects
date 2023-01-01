@@ -393,4 +393,8 @@ footer {
     width: 100px;
     height: 100px;
   }
+
+  .timer-text {
+    font-size: 72px;
+  }
 }
