@@ -108,6 +108,10 @@
   }
 }
 
+.pause-flash {
+  animation: tpause 1.5s infinite both;
+}
+
 /* RESETS */
 
 a {
