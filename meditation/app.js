@@ -120,6 +120,8 @@ let end = false;
 /* Boolean for paused state */
 let paused = false;
 
+let indTime = 0;
+
 window.addEventListener("DOMContentLoaded", load);
 
 function load() {
@@ -193,6 +195,7 @@ function navigate(ind, bool) {
   /* If no bell chosen, take user back to options/choices page/component */
   if (ind === 99 && bool === true) {
     appEl.innerHTML = appArray[1].content;
+    startApp();
   }
 }
 
@@ -308,6 +311,10 @@ function timerState(state, element) {
   }
 }
 
+function indTimer() {
+  indTime--;
+}
+
 function bells(bell) {
   /* Get all bells */
   const bellList = document.querySelectorAll(".btn-rounded");
@@ -351,6 +358,7 @@ function updateTimer() {
   const timerText = document.querySelector(".timer-text");
   /* If meditation has not been paused... */
   if (!paused) {
+    setInterval(intervals);
     timerText.classList.remove("pause-flash");
     /* ... and has not ended... */
     if (!end) {
@@ -374,6 +382,9 @@ function updateTimer() {
       // });
     }
   } else {
+    /* Begin secondary timer to count time paused */
+    indTime = ready;
+    setInterval(indTimer, 1000);
     timerText.classList.add("pause-flash");
     timerText.textContent = `${minutes}: ${seconds}`;
   }
@@ -398,7 +409,7 @@ function endBell() {
         document.querySelector(".app").classList.add("bg");
         document.getElementById("go").classList.remove("btn-hide");
         setTimeout(function () {
-          startApp();
+          load();
         }, 2000);
       }, 10000);
     }
@@ -412,6 +423,8 @@ function intervals() {
       /* ...keep the interval bells going! */
       bellObj.play();
     }
+  } else {
+    setInterval(intervals, ready);
   }
 }
 
@@ -425,6 +438,7 @@ function delayTimer() {
 function delayTime() {
   const timerText = document.querySelector(".timer-text");
   if (!paused) {
+    setInterval(intervals, indTime);
     /* If delay time is not less than or equal to 0... */
     if (!newDelay <= 0) {
       /* Assign timer-text element to timerText variable */

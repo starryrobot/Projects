@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --cs-1: #44dabe;
+  --cs-2: #2f2e2e;
+  --white: #fff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.component {
+  background-color: var(--cs-2);
+  border-radius: 20px;
+  width: 75vw;
+}
+
+.component-title {
+  font-size: 60px;
+  color: var(--white);
+  font-weight: 400;
+}
+
+.component-span {
+  display: block;
+  color: var(--cs-1);
+  font-size: 58px;
+  margin-bottom: 2rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--white);
+}
+
+.sub-header {
+  color: var(--cs-1);
+  font-weight: 400;
+}
+
+.header.header-top {
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--white);
+}
+
+main {
+  background-image: url("bg.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  height: 600px;
+  position: relative;
+}
+
+.samples-area {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 1rem 2rem;
+}
+
+.sample {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  z-index: 9999;
+}
+
+.s-grad {
+  background: linear-gradient(
+    137deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(68, 218, 190, 0.4713235636051295) 83%
+  );
+}
+
+.s-bg-darken {
+  background-color: #1e1e1e40;
+}
+
+.sample .sample-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-weight: 400;
+  background-color: #1e1e1e54;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 10px 0 10px;
+}
+
+.sample-play {
+  background-color: #1e1e1e;
+  padding: 0.5rem;
+  height: 100%;
+  display: flex;
+}
+
+.sample .sample-title {
+  background-color: #505050;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.sample .sample-para {
+  padding: 0.85rem;
+  padding-left: 1rem;
+}
+
+.branding-bottom {
+  position: absolute;
+  width: 300px;
+  filter: opacity(35%);
+  bottom: 0;
+  right: 0;
+}

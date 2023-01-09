@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="normalize.css" />
+    <title>Work Extension</title>
+  </head>
+  <body>
+    <div class="modal"></div>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="title">
+            <h1 class="header header-top">Work Notes</h1>
+          </div>
+          <div class="links">
+            <ul>
+              <li class="link main" id="selected">
+                <a href="#">New</a>
+              </li>
+              <li class="link notes">
+                <a href="#">Notes</a>
+              </li>
+            </ul>
+          </div>
+          <div class="notifs">
+            <ul class="notif-ul">
+              <li class="link link-n search">
+                <div class="n-search">
+                  <a href="#"
+                    ><img class="notif search" src="search-line.svg"
+                  /></a>
+                </div>
+              </li>
+              <li class="link link-n note">
+                <a href="#">
+                  <img
+                    class="notif no-notif"
+                    src="notification-line.svg"
+                    alt="notif"
+                /></a>
+              </li>
+              <li class="link link-n options">
+                <a href="#">
+                  <img
+                    class="notif vert"
+                    src="clarity_ellipsis-vertical-line.svg"
+                    alt="notif"
+                /></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <!-- <h2 class="sub-header main-sub" id="main-sub">New</h2>
+        <section class="new">
+          <div class="section-area">
+            <div class="sa-item">
+              <img
+                class="sa-img"
+                src="clarity_edit-line.svg"
+                alt="clarity_edit-line"
+              />
+              <h3 class="item-header" id="item-head">Note</h3>
+              <span class="item-desc" id="item-desc">Make a note</span>
+            </div>
+          </div>
+        </section> -->
+      </main>
+      <div class="menu-bg hidden">
+        <article class="note-menu" id="makenote">
+          <h2 class="sub-header">New Note</h2>
+          <div class="note-form">
+            <input type="text" name="notetitle" id="notetitle" />
+            <textarea
+              name="notetext"
+              id="notetext"
+              cols="30"
+              rows="10"
+            ></textarea>
+            <button class="btn btn-submit" id="submit">Add Note</button>
+          </div>
+        </article>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

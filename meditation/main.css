@@ -377,6 +377,22 @@ footer {
   border-radius: 30px;
 }
 
+.credits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 10px;
+  width: 90vw;
+  background-color: var(--white);
+  border-radius: 10px;
+}
+
+.credits .c-img {
+  margin-right: 10px;
+}
+
 @media screen and (min-width: 1024px) {
   .app.bg {
     background-image: url("pic1.jpeg");

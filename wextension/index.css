@@ -1,0 +1,259 @@
+@font-face {
+  font-family: "Manrope";
+  src: url(Manrope-VariableFont_wght.ttf);
+}
+
+:root {
+  --cs-1: #d7dae2;
+  --accent: #76a9de;
+  --white: #fff;
+  --text: #676767;
+  --text2: #1d1d1d;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  background-color: var(--cs-1);
+}
+
+.container {
+  /* margin: 2rem; */
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+  padding: 1rem 4rem;
+}
+
+nav .links li {
+  display: inline;
+  margin-right: 3rem;
+  padding: 1rem 2rem;
+  color: var(--text2);
+  transition: all 250ms ease-out;
+}
+
+nav .links li#selected {
+  padding-bottom: 1rem;
+  border-bottom: 4px solid var(--accent);
+}
+
+nav .links li#selected:hover {
+  background-color: var(--white);
+  border-bottom: 4px solid var(--accent);
+}
+
+nav .links li:last-child {
+  display: inline;
+  margin-right: 0;
+}
+
+nav .notifs .notif-ul li {
+  display: inline;
+}
+
+nav .notifs .notif-ul li:not(:last-child) {
+  margin-right: 20px;
+}
+
+nav .notifs .notif-ul .n-search {
+  display: inline;
+}
+
+nav .notifs .notif-ul li img {
+  display: inline;
+}
+
+.header {
+  font-size: 24px;
+  margin: 0;
+}
+
+.sub-header {
+  font-weight: 600;
+  font-size: 36px;
+  padding: 1rem 4rem;
+}
+
+.sub-header.secondary-sub {
+  font-size: 30px;
+}
+
+.notif {
+  width: 30px;
+}
+
+section {
+  padding: 1rem 4rem;
+}
+
+section .section-area {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.section-area.section-done {
+  flex-direction: column;
+  gap: 20px;
+}
+
+section .sa-item {
+  background-color: var(--white);
+  border-radius: 10px;
+  flex-direction: column;
+  width: 200px;
+  max-width: 225px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  padding: 2rem 2rem;
+  transition: all 100ms ease-out;
+}
+
+.note-item {
+  position: relative;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  padding: 2rem 2rem;
+  transition: all 100ms ease-out;
+}
+
+.note-item.note-done {
+  background-color: #ffffff93;
+}
+
+section .sa-item:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.15) 0px 4px 6px -2px;
+}
+
+.sa-img {
+  width: 50px;
+}
+
+.note-bg {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  display: inline-block;
+  font-size: 92px;
+  font-weight: 700;
+  color: #9b9b9b3d;
+}
+
+.btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.note-btns {
+  margin-top: 2rem;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn.note-btn img {
+  width: 45px;
+  filter: grayscale(95%);
+  transition: all 0.15s linear;
+}
+
+.btn.note-btn:hover img {
+  filter: grayscale(0%);
+}
+
+.btn.btn-submit {
+  background-color: var(--accent);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.note-number {
+  position: absolute;
+  display: inline-block;
+  font-size: 24px;
+  margin-left: 10px;
+  color: var(--accent);
+}
+
+.menu-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #1d1d1d56;
+}
+
+.menu-bg.hidden {
+  display: none;
+}
+
+article.note-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, 50%);
+  top: 0;
+  left: 50%;
+  width: 50vw;
+  height: 50vh;
+  border-radius: 30px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+article.note-menu > .note-form {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 1rem;
+}
+
+.note-form > #notetext {
+  border-radius: 10px;
+  border: 1px solid var(--text);
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  transition: all 0.5 ease-out;
+  resize: none;
+}
+
+.note-form > #notetext:focus {
+  outline: none;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+.note-head {
+  font-size: 36px;
+}
+
+.note-para {
+  font-size: 24px;
+}
