@@ -135,6 +135,7 @@ section .sa-item {
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   padding: 2rem 2rem;
   transition: all 100ms ease-out;
+  margin-bottom: 2rem;
 }
 
 .note-item.note-done {
@@ -155,7 +156,7 @@ section .sa-item:hover {
   right: 10px;
   top: 0;
   display: inline-block;
-  font-size: 92px;
+  font-size: 120px;
   font-weight: 700;
   color: #9b9b9b3d;
 }
@@ -184,7 +185,8 @@ section .sa-item:hover {
   filter: grayscale(0%);
 }
 
-.btn.btn-submit {
+.btn.btn-submit,
+.btn.btn-cancel {
   background-color: var(--accent);
   padding: 1rem;
   border-radius: 10px;
@@ -217,11 +219,11 @@ article.note-menu {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform: translate(-50%, 50%);
-  top: 0;
+  transform: translate(-50%, -50%);
+  top: 50%;
   left: 50%;
   width: 50vw;
-  height: 50vh;
+  height: 75%;
   border-radius: 30px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
@@ -230,21 +232,31 @@ article.note-menu {
 
 article.note-menu > .note-form {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 1rem;
 }
 
 .note-form > #notetext {
-  border-radius: 10px;
-  border: 1px solid var(--text);
-  padding: 1rem 2rem;
   margin-bottom: 1rem;
   transition: all 0.5 ease-out;
   resize: none;
+  width: 100%;
 }
 
-.note-form > #notetext:focus {
+.note-form > *:not(.btn) {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+}
+
+.note-form > input {
+  width: 100%;
+}
+
+.note-form > #notetext:focus,
+.note-form > input:focus {
   outline: none;
   box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
@@ -256,4 +268,17 @@ article.note-menu > .note-form {
 
 .note-para {
   font-size: 24px;
+}
+
+.note-edit-input {
+  display: block;
+  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  border: 1px solid var(--text);
+}
+
+.note-hidden,
+.input-none {
+  display: none;
 }
