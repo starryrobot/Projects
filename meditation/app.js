@@ -311,10 +311,6 @@ function timerState(state, element) {
   }
 }
 
-function indTimer() {
-  indTime--;
-}
-
 function bells(bell) {
   /* Get all bells */
   const bellList = document.querySelectorAll(".btn-rounded");
@@ -357,74 +353,64 @@ function updateTimer() {
   /* Assign timer-text element to timerText variable */
   const timerText = document.querySelector(".timer-text");
   /* If meditation has not been paused... */
-  if (!paused) {
-    setInterval(intervals);
-    timerText.classList.remove("pause-flash");
-    /* ... and has not ended... */
-    if (!end) {
-      /* Floor minutes */
-      minutes = Math.floor(time / 60);
-      seconds = time % 60;
-      /* If seconds are less than 10, remove 0 */
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      /* Add text to timerText with current minutes/seconds */
-      timerText.textContent = `${minutes}: ${seconds}`;
-      /* Decrement timer */
-      time--;
-      /* If timer is equal or less than 0, ring ending bell */
-      if (time <= 0) {
-        endBell();
-      }
-      // timerText.addEventListener("click", function () {
-      //   paused = true;
-      //   console.log("timer clicked");
-      //   pauseTimer(minutes, seconds, time);
-      // });
-    }
-  } else {
-    /* Begin secondary timer to count time paused */
-    indTime = ready;
-    setInterval(indTimer, 1000);
-    timerText.classList.add("pause-flash");
+  // if (!paused) {
+  //   setInterval(intervals);
+  //   timerText.classList.remove("pause-flash");
+  //   /* ... and has not ended... */
+  if (!end) {
+    /* Floor minutes */
+    minutes = Math.floor(time / 60);
+    seconds = time % 60;
+    /* If seconds are less than 10, remove 0 */
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    /* Add text to timerText with current minutes/seconds */
     timerText.textContent = `${minutes}: ${seconds}`;
+    /* Decrement timer */
+    time--;
+    /* If timer is equal or less than 0, ring ending bell */
+    if (time <= 0) {
+      endBell();
+    }
+    // timerText.addEventListener("click", function () {
+    //   paused = true;
+    //   console.log("timer clicked");
+    //   pauseTimer(minutes, seconds, time);
+    // });
   }
 }
 
 function endBell() {
   /* If meditation has not finished... */
-  if (!paused) {
-    if (!end) {
-      /* ...it has now! */
-      end = true;
-      console.log("end bell");
-      /* Create audio object from chosen bell (using long variation of chosen bell) */
-      ending = new Audio("bell-1-long.mp3");
-      /* Play audio object (long bells) */
-      ending.play();
-      /* Wait 10 seconds before returning user to start */
+  if (!end) {
+    /* ...it has now! */
+    end = true;
+    console.log("end bell");
+    /* Create audio object from chosen bell (using long variation of chosen bell) */
+    ending = new Audio("bell-1-long.mp3");
+    /* Play audio object (long bells) */
+    ending.play();
+    /* Wait 10 seconds before returning user to start */
+    setTimeout(function () {
+      /* Navigate to object with index 0 of appArray (the start) */
+      navigate(0);
+      /* Add fancy background again now meditation is over */
+      document.querySelector(".app").classList.add("bg");
+      document.getElementById("go").classList.remove("btn-hide");
       setTimeout(function () {
-        /* Navigate to object with index 0 of appArray (the start) */
-        navigate(0);
-        /* Add fancy background again now meditation is over */
-        document.querySelector(".app").classList.add("bg");
-        document.getElementById("go").classList.remove("btn-hide");
-        setTimeout(function () {
-          load();
-        }, 2000);
-      }, 10000);
-    }
+        load();
+      }, 2000);
+    }, 10000);
   }
 }
 
 function intervals() {
-  if (!paused) {
-    /* If meditation has not finished... */
-    if (!end) {
-      /* ...keep the interval bells going! */
-      bellObj.play();
-    }
-  } else {
-    setInterval(intervals, ready);
+  /* If meditation has not finished... */
+  if (!end) {
+    /* ...keep the interval bells going! */
+    bellObj.play();
+    // } else {
+    //   setInterval(intervals, ready);
+    // }
   }
 }
 
@@ -437,34 +423,26 @@ function delayTimer() {
 
 function delayTime() {
   const timerText = document.querySelector(".timer-text");
-  if (!paused) {
-    setInterval(intervals, indTime);
-    /* If delay time is not less than or equal to 0... */
-    if (!newDelay <= 0) {
-      /* Assign timer-text element to timerText variable */
-      /* Add class to timer text to distinguish delay time from meditation time */
-      timerText.classList.add("delay-text");
-      /* Floor minutes */
-      const minutes = Math.floor(newDelay / 60);
-      let seconds = newDelay % 60;
-      /* If seconds are less than 10, remove 0 */
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      /* Add text to timerText with current minutes/seconds */
-      timerText.textContent = `${minutes}: ${seconds}`;
-      /* Decrement timer */
-      newDelay--;
-    } else {
-      delay = false;
-      if (!delay) {
-        if (timerText.classList.contains("delay-text")) {
-          timerText.classList.remove("delay-text");
-        }
+  /* If delay time is not less than or equal to 0... */
+  if (!newDelay <= 0) {
+    /* Assign timer-text element to timerText variable */
+    /* Add class to timer text to distinguish delay time from meditation time */
+    timerText.classList.add("delay-text");
+    /* Floor minutes */
+    const minutes = Math.floor(newDelay / 60);
+    let seconds = newDelay % 60;
+    /* If seconds are less than 10, remove 0 */
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    /* Add text to timerText with current minutes/seconds */
+    timerText.textContent = `${minutes}: ${seconds}`;
+    /* Decrement timer */
+    newDelay--;
+  } else {
+    delay = false;
+    if (!delay) {
+      if (timerText.classList.contains("delay-text")) {
+        timerText.classList.remove("delay-text");
       }
     }
   }
-}
-
-function pauseTimer() {
-  const timerText = document.querySelector(".timer-text");
-  timerText.classList.add("pause");
 }
