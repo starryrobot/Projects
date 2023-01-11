@@ -12,7 +12,7 @@ let appArray = [
     <main class="app">
     <section class="timer">
     <header class="header">
-    <h1 class="heading entry-ts">Meditation</h1>
+    <h1 class="heading entry-ts main-head">Meditation</h1>
     <article class="meditate">
     <button class="btn btn-primary btn-go btn-hide" id="go">I'm here now</button>
     </article>
@@ -30,7 +30,7 @@ let appArray = [
     <section class="timer">
     <div class="feature">
     <div class="bells">
-      <h1 class="heading">Bells</h1>
+      <h1 class="heading">Options</h1>
       <p class="para feature-para">
       Choose a bell
       </p>
@@ -84,6 +84,7 @@ let appArray = [
     <section class="timer">
     <span class="timer-text"></span>
   </section>
+  <progress class="timer-progress" value="0" max="100"></progress>
   </main>`,
   },
   {
@@ -110,6 +111,15 @@ let newDelay = 0;
 let bellIndex = 0;
 /* Array for storing bells */
 let bellObj = [];
+/* Variable for chosen bell */
+let bellClass = "";
+
+let progress = 0;
+let progTime = 0;
+
+/* Progress State */
+let progressState = false;
+
 /* Boolean for determining if user has chosen bell (therefore can continue to next step, or not) */
 let state = false;
 let currentContent = "";
@@ -117,10 +127,6 @@ let currentContent = "";
 let navTo = "";
 /* Boolean for determining if meditation has ended (to stop further ringing of bells etc!) */
 let end = false;
-/* Boolean for paused state */
-let paused = false;
-
-let indTime = 0;
 
 window.addEventListener("DOMContentLoaded", load);
 
@@ -241,6 +247,7 @@ function choices() {
     const startingInterval = document.getElementById("int").value;
     const startingDelay = document.getElementById("del").value;
     /* Minutes into seconds for timer */
+    progTime = startingMinutes * 60;
     time = startingMinutes * 60;
     newDelay = startingDelay * 60;
     /* Minutes into milliseconds for delay */
@@ -274,21 +281,9 @@ function timerComponent() {
   if (!state) {
     timerState(0, timerText);
   } else {
-    stateHandler();
     timerState(1, timerText);
     /* Otherwise, begin meditation! */
   }
-}
-
-function stateHandler() {
-  const timerText = document.querySelector(".timer-text");
-  timerText.addEventListener("click", function () {
-    if (!paused) {
-      paused = true;
-    } else {
-      paused = false;
-    }
-  });
 }
 
 function timerState(state, element) {
@@ -302,6 +297,8 @@ function timerState(state, element) {
     if (timerDelay <= 0) {
       setInterval(updateTimer, 1000);
       setInterval(intervals, ready);
+      setInterval(runProgress, 1000);
+      progressState = true;
     } else {
       /* Timer for delay */
       setInterval(delayTime, 1000);
@@ -309,6 +306,20 @@ function timerState(state, element) {
       setTimeout(delayTimer, timerDelay);
     }
   }
+}
+
+function runProgress() {
+  const progressBar = document.querySelector(".timer-progress");
+  // if (progressState) {
+  //   progressState = false;
+  progressBar.max = progTime;
+  // } else {
+  //   if (!progressBar.value >= time) {
+  //     progress++;
+  //   }
+  // }
+  progress++;
+  progressBar.value = progress;
 }
 
 function bells(bell) {
@@ -325,7 +336,7 @@ function bells(bell) {
   });
 
   /* Assign classList with index of 3 (the class we want to use) to BellClass variable */
-  const bellClass = bell.classList[3];
+  bellClass = bell.classList[3];
   /* If classList matches an object in bellArray with property of bell... */
   if (bellArray.find((bellArray) => bellArray.bell === bellClass)) {
     /* Set state */
@@ -386,7 +397,7 @@ function endBell() {
     end = true;
     console.log("end bell");
     /* Create audio object from chosen bell (using long variation of chosen bell) */
-    ending = new Audio("bell-1-long.mp3");
+    const ending = new Audio(bellClass + "-long.mp3");
     /* Play audio object (long bells) */
     ending.play();
     /* Wait 10 seconds before returning user to start */

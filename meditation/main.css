@@ -160,6 +160,14 @@ ul {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
+.btn.btn-primary:hover {
+  animation: prim-hover 500ms infinite both;
+}
+
+.btn.btn-primary:focus {
+  scale: 1.12;
+}
+
 .btn.btn-rounded[class*="bell-"] {
   margin-right: 0.25rem;
 }
@@ -184,7 +192,8 @@ ul {
   padding: 1rem;
   border-radius: 50%;
   width: 50px;
-  font-family: var(--ff-2);
+  font-size: 42px;
+  /* font-family: var(--ff-2); */
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
@@ -253,12 +262,13 @@ picture img {
   margin-left: 3rem;
   margin-right: 3rem;
   z-index: 9999;
+  overflow: hidden;
 }
 
 .app.bg {
-  background-image: url("pic1mobile.jpg");
+  background-image: url("medmobile.jpg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   width: 100vw;
   height: 100vh;
   object-fit: cover;
@@ -316,15 +326,12 @@ footer {
   font-family: var(--ff-2);
   font-size: 55px;
   transition: all 500ms ease-out;
+  margin-bottom: 4rem;
+  z-index: 9999;
 }
 
 .timer-text.delay-text {
   color: var(--cs-1);
-}
-
-.timer-text.pause {
-  color: var(--cs-1);
-  animation: tpause 500ms infinite both;
 }
 
 .feature {
@@ -393,20 +400,41 @@ footer {
   margin-right: 10px;
 }
 
+.timer-progress,
+.timer-progress::-webkit-progress-bar {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 25px;
+  width: 100vw;
+  background-color: transparent !important;
+  z-index: 9998;
+}
+
+.timer-progress[value],
+.timer-progress[value]::-webkit-progress-value {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--cs-2);
+}
+
 @media screen and (min-width: 1024px) {
   .app.bg {
-    background-image: url("pic1.jpeg");
+    background-image: url("med.jpg");
     background-size: cover;
   }
 
-  .heading {
-    font-size: 72px;
+  .heading.main-head {
+    color: var(--cs-1);
+    font-size: 200px;
+    mix-blend-mode: exclusion;
+    z-index: 9000;
   }
 
   .btn-go {
     padding: 2rem 4rem;
     font-size: 24px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px !important;
+    z-index: 9001;
   }
 
   .btn.btn-rounded {
