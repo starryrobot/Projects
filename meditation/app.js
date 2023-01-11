@@ -27,7 +27,7 @@ let appArray = [
     name: "choice",
     title: "Choice",
     content: `<main class="app">
-    <section class="timer">
+    <section class="timer app-options">
     <div class="feature">
     <div class="bells">
       <h1 class="heading">Options</h1>
@@ -73,8 +73,8 @@ let appArray = [
       <input type="number" class="time" id="del" placeholder="Delay (in minutes)" />
     </div>
     <button class="btn btn-outline" id="begin">Begin</button>
-  </div>
-    </section>
+    </div>
+  </section>
     </main>
     `,
   },
