@@ -20,7 +20,7 @@ let pages = [
   {
     pageno: 2,
     title: "notes",
-    content: `<h2 class="sub-header main-sub" id="main-sub">Notes</h2>
+    content: `<h2 class="sub-header main-sub" id="main-sub">Notes <span class="note-number" id="notenum"></span></h2>
   <section class="note-list" id="notelist">
   <div class="section-area">
 
@@ -38,6 +38,7 @@ let pages = [
 ];
 let notes = [];
 let notesDone = [];
+let searchArray = [];
 let lastpage = "";
 let pIndex = 0;
 let state = "";
@@ -46,9 +47,21 @@ let modalEventStatus = false;
 let loaded = false;
 let set = false;
 let formDirection = "";
+let shortTrigger = false;
+const searchInput = document.getElementById("searchbar");
 const hasLocal = JSON.parse(localStorage.getItem("notes"));
 
 window.addEventListener("DOMContentLoaded", onLoad);
+window.addEventListener("keydown", (e) => {
+  if (e.key === "n") {
+    if (!shortTrigger) {
+      {
+        shortTrigger = true;
+        action();
+      }
+    }
+  }
+});
 
 function onLoad() {
   console.log("onLoad called");
@@ -56,6 +69,7 @@ function onLoad() {
   let start = "";
   let index = 0;
   const appEl = document.querySelector("main");
+  const noteSpan = document.querySelector("note-number");
   let eClass = "";
   for (let i = 0; i < pages.length; i++) {
     start = pages.find((pages) => pages[i] === "main");
@@ -98,13 +112,18 @@ function findPage(c) {
 
 function optionHandler(opt) {
   const optionClassList = document.querySelector("." + opt).classList;
+  const currPage = document.querySelector("main").getAttribute("page");
+  console.log(currPage);
   console.log(optionClassList);
   if (optionClassList.contains("search")) {
-    console.log("search");
-  } else if (optionClassList.contains("note")) {
-    console.log("note");
-  } else {
-    console.log("settings");
+    if (currPage === "notes" && notes.length >= 2) {
+      console.log("search");
+      searchInput.classList.toggle("hide");
+    } else if (optionClassList.contains("note")) {
+      console.log("note");
+    } else {
+      console.log("settings");
+    }
   }
 }
 
@@ -144,10 +163,8 @@ function action(event) {
   const cancelBtn = document.getElementById("cancel");
   modal.classList.toggle("hidden");
   if (!modal.classList.contains("hidden")) {
-    console.log("does not contain hidden");
     if (!modalEventStatus) {
       modalEventStatus = true;
-      console.log("no event listener");
       submitBtn.addEventListener("click", gatherForm);
       cancelBtn.addEventListener("click", function (e) {
         modal.classList.toggle("hidden");
@@ -167,6 +184,7 @@ function gatherForm(fd) {
   if (fd == "cancel") {
     resetForm(notetitle, notetext);
   } else {
+    shortTrigger = false;
     submitNote(notetitle, notetext);
     resetForm(notetitle, notetext);
   }
@@ -180,13 +198,12 @@ function resetForm(nt1, nt2) {
 
 function submitNote(nt1, nt2) {
   const modal = document.querySelector(".menu-bg");
-  modalEventStatus = true;
-  modal.classList.toggle("hidden");
-
   notes.push({
     title: nt1.value,
     note: nt2.value,
   });
+  modalEventStatus = true;
+  modal.classList.toggle("hidden");
   localStorage.setItem("notes", JSON.stringify(notes));
   findPage("notes");
   renderNote(notes);
@@ -194,50 +211,94 @@ function submitNote(nt1, nt2) {
 
 function renderNote(notes) {
   const renderArea = document.querySelector(".section-area");
+  const noteSpan = document.getElementById("notenum");
   let newContent = "";
   for (let i = 0; i < notes.length; i++) {
-    newContent += `<div class="note-item">
-    <h3 class="note-head">${notes[i].title}</h3>
-    <input type="text" name="note-edit" class="note-edit-input edit-title input-none" placeholder="Title: ${notes[i].title}">
-    <p class="note-para">
-      ${notes[i].note}
-    </p>
-    <input type="text" name="note-edit" class="note-edit-input edit-note input-none" placeholder="Note: ${notes[i].note}">
-    <span class="edit-notes" onclick="editThis(this)">EDIT</span>
-    <div class="note-btns">
-      <button class="btn note-btn btn-done" title="Done" onclick="itemHandler(this)">
-        <img src="clarity_check-line.svg" alt="clarity_check-line" />
-      </button>
-      <button class="btn note-btn btn-top" title="Send to top" onclick="itemHandler(this)">
-        <img src="clarity_arrow-line.svg" alt="clarity_arrow-line" />
-      </button>
-      <button class="btn note-btn btn-edit" title="Edit" onclick="itemHandler(this)">
-        <img src="clarity_edit-line.svg" alt="clarity_edit-line" />
-      </button>
+    const titleString = notes[i].title;
+    const titleStringArrLength = titleString.length;
+    const firstChars = titleString.substring(0, 14);
+    if (titleStringArrLength > 14) {
+      newContent += `<div class="note-item">
+      <h3 class="note-head">${notes[i].title}</h3>
+      <input type="text" name="note-edit" class="note-edit-input edit-title input-none" placeholder="Title: ${
+        notes[i].title
+      }">
+      <p class="note-para">
+        ${notes[i].note}
+      </p>
+      <input type="text" name="note-edit" class="note-edit-input edit-note input-none" placeholder="Note: ${
+        notes[i].note
+      }">
+      <span class="edit-notes" onclick="editThis(this)">EDIT</span>
+      <div class="note-btns">
+        <button class="btn note-btn btn-done" title="Done" onclick="itemHandler(this)">
+          <img src="clarity_check-line.svg" alt="clarity_check-line" />
+        </button>
+        <button class="btn note-btn btn-top" title="Send to top" onclick="itemHandler(this)">
+          <img src="clarity_arrow-line.svg" alt="clarity_arrow-line" />
+        </button>
+        <button class="btn note-btn btn-edit" title="Edit" onclick="itemHandler(this)">
+          <img src="clarity_edit-line.svg" alt="clarity_edit-line" />
+        </button>
+      </div>
+      <span class="note-bg" id="itembgtext">${firstChars + "..."}</span>
     </div>
-    <span class="note-bg" id="itembgtext">${notes[i].title}</span>
-  </div>
-    `;
+      `;
+    } else {
+      newContent += `<div class="note-item">
+      <h3 class="note-head">${notes[i].title}</h3>
+      <input type="text" name="note-edit" class="note-edit-input edit-title input-none" placeholder="Title: ${notes[i].title}">
+      <p class="note-para">
+        ${notes[i].note}
+      </p>
+      <input type="text" name="note-edit" class="note-edit-input edit-note input-none" placeholder="Note: ${notes[i].note}">
+      <span class="edit-notes" onclick="editThis(this)">EDIT</span>
+      <div class="note-btns">
+        <button class="btn note-btn btn-done" title="Done" onclick="itemHandler(this)">
+          <img src="clarity_check-line.svg" alt="clarity_check-line" />
+        </button>
+        <button class="btn note-btn btn-top" title="Send to top" onclick="itemHandler(this)">
+          <img src="clarity_arrow-line.svg" alt="clarity_arrow-line" />
+        </button>
+        <button class="btn note-btn btn-edit" title="Edit" onclick="itemHandler(this)">
+          <img src="clarity_edit-line.svg" alt="clarity_edit-line" />
+        </button>
+      </div>
+      <span class="note-bg" id="itembgtext">${notes[i].title}</span>
+    </div>
+      `;
+    }
   }
   renderArea.innerHTML = newContent;
   document
     .querySelector(".link.notes")
     .setAttribute("onclick", "loadNotes(notes)");
   set = true;
+  noteSpan.textContent = notes.length;
+  window.scrollTo(0, renderArea.scrollHeight);
 }
 
 function loadNotes(src) {
+  const noteSpan = document.getElementById("notenum");
   const renderArea = document.querySelector(".section-area");
   let newContent = "";
   if (set) {
     for (let i = 0; i < src.length; i++) {
-      newContent += `<div class="note-item">
+      const titleString = notes[i].title;
+      const titleStringArrLength = titleString.length;
+      const firstChars = titleString.substring(0, 14);
+      if (titleStringArrLength > 14) {
+        newContent += `<div class="note-item">
     <h3 class="note-head">${src[i].title}</h3>
-    <input type="text" name="note-edit" class="note-edit-input edit-title input-none" placeholder="Title: ${src[i].title}" oninput="key(this, event.target.value)">
+    <input type="text" name="note-edit" class="note-edit-input edit-title input-none" placeholder="Title: ${
+      src[i].title
+    }" oninput="key(this, event.target.value)">
     <p class="note-para">
       ${src[i].note}
     </p>
-    <input type="text" name="note-edit" class="note-edit-input edit-note input-none" placeholder="Note: ${src[i].note}" oninput="key(this, event.target.value)">
+    <input type="text" name="note-edit" class="note-edit-input edit-note input-none" placeholder="Note: ${
+      src[i].note
+    }" oninput="key(this, event.target.value)">
     <span class="edit-notes" onclick="editThis(this)">EDIT</span>
     <div class="note-btns">
       <button class="btn note-btn btn-done" title="Done" onclick="itemHandler(this)">
@@ -250,11 +311,36 @@ function loadNotes(src) {
         <img src="clarity_edit-line.svg" alt="clarity_edit-line" />
       </button>
     </div>
-    <span class="note-bg" id="itembgtext">${src[i].title}</span>
+    <span class="note-bg" id="itembgtext">${firstChars + "..."}</span>
   </div>
     `;
+      } else {
+        newContent += `<div class="note-item">
+        <h3 class="note-head">${src[i].title}</h3>
+        <input type="text" name="note-edit" class="note-edit-input edit-title input-none" placeholder="Title: ${src[i].title}" oninput="key(this, event.target.value)">
+        <p class="note-para">
+          ${src[i].note}
+        </p>
+        <input type="text" name="note-edit" class="note-edit-input edit-note input-none" placeholder="Note: ${src[i].note}" oninput="key(this, event.target.value)">
+        <span class="edit-notes" onclick="editThis(this)">EDIT</span>
+        <div class="note-btns">
+          <button class="btn note-btn btn-done" title="Done" onclick="itemHandler(this)">
+            <img src="clarity_check-line.svg" alt="clarity_check-line" />
+          </button>
+          <button class="btn note-btn btn-top" title="Send to top" onclick="itemHandler(this)">
+            <img src="clarity_arrow-line.svg" alt="clarity_arrow-line" />
+          </button>
+          <button class="btn note-btn btn-edit" title="Edit" onclick="itemHandler(this)">
+            <img src="clarity_edit-line.svg" alt="clarity_edit-line" />
+          </button>
+        </div>
+        <span class="note-bg" id="itembgtext">${src[i].title}</span>
+      </div>
+        `;
+      }
+      renderArea.innerHTML = newContent;
     }
-    renderArea.innerHTML = newContent;
+    noteSpan.textContent = notes.length;
   }
 }
 
@@ -295,11 +381,16 @@ function itemHandler(el) {
     document.querySelector(".section-area").firstElementChild.innerText;
   const noteList = document.querySelector(".note-list");
   const sectionArea = document.querySelector(".section-area");
+  const noteSpan = document.getElementById("notenum");
   if (elClass.contains("btn-done")) {
     if (index) {
-      notes.splice(index, 1);
-      elParent.remove();
-      localStorage.setItem("notes", JSON.stringify(notes));
+      elParent.classList.add("bye");
+      setTimeout(function () {
+        notes.splice(index, 1);
+        elParent.remove();
+        localStorage.setItem("notes", JSON.stringify(notes));
+        noteSpan.textContent = notes.length;
+      }, 500);
     }
   } else if (elClass.contains("btn-top")) {
     if (firstChild.match(title.textContent)) {
@@ -308,8 +399,11 @@ function itemHandler(el) {
       console.log("Not at the top!");
       const content = elParent.innerHTML;
       const newDiv = document.createElement("div");
-      newDiv.className = "note-item";
+      newDiv.className = "note-item showEl";
       sectionArea.prepend(newDiv);
+      setTimeout(function () {
+        newDiv.className = "note-item";
+      }, 6000);
       newDiv.innerHTML = content;
       /* Remove object at index, remove one element */
       notes.splice(index, 1);
@@ -318,6 +412,7 @@ function itemHandler(el) {
         title: title.textContent,
         note: note.textContent,
       });
+      window.scrollTo(0, elParent.scrollTop);
       elParent.remove();
       localStorage.setItem("notes", JSON.stringify(notes));
     }
@@ -334,5 +429,27 @@ function itemHandler(el) {
         note.classList.remove("note-hidden");
       }
     });
+  }
+}
+
+searchInput.addEventListener("input", (e) => createSearch(e.target.value));
+
+/* Search Function */
+function createSearch(searchTerm) {
+  const entries = document.querySelectorAll(".note-item");
+  searchArray.push(Array.from(entries));
+  for (let i = 0; i < searchArray[0].length; i++) {
+    if (
+      searchArray[0][i].innerText
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+    ) {
+      console.log(`Search match found: ${searchArray[0][i].innerText}`);
+      setTimeout(function () {
+        searchArray[0][i].classList.remove("hide");
+      }, 1000);
+    } else {
+      searchArray[0][i].classList.add("hide");
+    }
   }
 }

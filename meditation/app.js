@@ -114,6 +114,7 @@ let bellObj = [];
 /* Variable for chosen bell */
 let bellClass = "";
 
+/* Progress Bar variables */
 let progress = 0;
 let progTime = 0;
 

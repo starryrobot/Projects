@@ -25,6 +25,10 @@ img {
   width: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Manrope", sans-serif;
   background-color: var(--cs-1);
@@ -81,6 +85,24 @@ nav .notifs .notif-ul li img {
   display: inline;
 }
 
+header .search-area {
+  display: flex;
+  justify-content: right;
+  padding: 1rem 4rem;
+}
+
+header .search-area #searchbar {
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--cs-1);
+  width: 450px;
+  transition: all 500ms ease-out;
+}
+
+header .search-area #searchbar:focus {
+  outline: 1px solid var(--accent);
+}
+
 .header {
   font-size: 24px;
   margin: 0;
@@ -134,12 +156,50 @@ section .sa-item {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   padding: 2rem 2rem;
-  transition: all 100ms ease-out;
+  transition: all 300ms linear;
   margin-bottom: 2rem;
+}
+
+.hide {
+  display: none;
+}
+
+.note-item:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
 .note-item.note-done {
   background-color: #ffffff93;
+}
+
+.note-item.bye {
+  animation: byenote 500ms 1 forwards;
+}
+
+@keyframes byenote {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.showEl {
+  animation: showing 6s 1 both linear;
+}
+
+@keyframes showing {
+  0% {
+    box-shadow: var(--accent) 0px 10px 45px 0px, var(--accent) 0px 0px 0px 1px;
+  }
+  100% {
+    box-shadow: none;
+  }
 }
 
 section .sa-item:hover {
@@ -281,4 +341,17 @@ article.note-menu > .note-form {
 .note-hidden,
 .input-none {
   display: none;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 1rem 4rem;
+}
+
+footer .footer-area .foot {
+  background-color: var(--white);
+  padding: 0.5rem;
+  border-radius: 20px;
 }
